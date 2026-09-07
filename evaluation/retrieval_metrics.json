@@ -1,0 +1,12 @@
+{
+  "recall_at_1": 0.0833,
+  "recall_at_3": 0.45,
+  "recall_at_5": 0.5333,
+  "precision_at_1": 0.1667,
+  "precision_at_3": 0.2778,
+  "precision_at_5": 0.2,
+  "hit_rate": 0.8333,
+  "mrr": 0.4261,
+  "ndcg": 0.3858,
+  "average_retrieval_time": 0.0033
+}

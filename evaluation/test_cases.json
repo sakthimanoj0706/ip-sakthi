@@ -1,0 +1,948 @@
+[
+  {
+    "id": "TC001",
+    "innovation_input": {
+      "title": "Neem + Turmeric Topical Ointment",
+      "ingredients": ["Neem", "Turmeric"],
+      "process": "Simple mixing of powders in petroleum jelly base",
+      "intended_use": "Wound healing and anti-septic application",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3P-001", "TKDL-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3P-001",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(p)",
+        "score": 0.78
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC002",
+    "innovation_input": {
+      "title": "Ashwagandha Stress Relief Capsule",
+      "ingredients": ["Ashwagandha"],
+      "process": "Standard root powder encapsulation",
+      "intended_use": "Stress relief and anxiety reduction",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3P-001", "DCA-3A-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3P-001",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(p)",
+        "score": 0.72
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC003",
+    "innovation_input": {
+      "title": "Supercritical CO2 Herbal Extraction Process for Withanolides",
+      "ingredients": ["Ashwagandha"],
+      "process": "Supercritical CO2 extraction with selective pressure control yielding 95% pure withanolides",
+      "intended_use": "Enhanced anti-inflammatory therapeutic formulation",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "extraction_method",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3P-003", "PA-3E-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3P-003",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(p) - Scope of Exclusion",
+        "score": 0.75
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC004",
+    "innovation_input": {
+      "title": "Traditional Siddha Nilavembu Kudineer Powder",
+      "ingredients": ["Nilavembu", "Vettiver", "Vilamichan ver", "Chukku", "Milagu"],
+      "process": "Classical decoction method per Siddha Pharmacopoeia",
+      "intended_use": "Fever management and viral prevention",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["DCA-3A-001", "TKDL-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "DCA-3A-001",
+        "law": "The Drugs and Cosmetics Act, 1940",
+        "section": "Section 3(a)",
+        "score": 0.82
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC005",
+    "innovation_input": {
+      "title": "Western Ghats Wild Herbal Bio-Extract",
+      "ingredients": ["Rauvolfia serpentina", "Gymnema sylvestre"],
+      "process": "Aqueous extraction of wild harvested roots from Tamil Nadu forests",
+      "intended_use": "Blood pressure management",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["BDA-2023-003", "BDA-2023-005"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "BDA-2023-003",
+        "law": "Biological Diversity (Amendment) Act, 2023",
+        "section": "Section 6(1A)",
+        "score": 0.80
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC006",
+    "innovation_input": {
+      "title": "Nano-Liposomal Curcumin & Piperine Dermal Gel",
+      "ingredients": ["Turmeric", "Black Pepper"],
+      "process": "Nano-emulsification producing 50nm liposomal drug delivery vesicles",
+      "intended_use": "Targeted skin penetration and joint pain topical therapy",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "extraction_method",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3E-001", "PA-3P-003"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3E-001",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(e)",
+        "score": 0.85
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC007",
+    "innovation_input": {
+      "title": "Kumkumadi & Saffron Radiance Facial Serum",
+      "ingredients": ["Saffron", "Sandalwood", "Lotus"],
+      "process": "Cold pressed oil formulation with herbal essence infusion",
+      "intended_use": "Skin brightening and anti-aging cosmetic application",
+      "product_category": "Cosmetic / Skin Care",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "formulation",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["DCA-3H-001", "BDA-2023-005"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "DCA-3H-001",
+        "law": "The Drugs and Cosmetics Act, 1940",
+        "section": "Rule 158-B",
+        "score": 0.65
+      }
+    ],
+    "expected_evidence_status": "PARTIALLY_SUPPORTED"
+  },
+  {
+    "id": "TC008",
+    "innovation_input": {
+      "title": "Ayurveda Aahara Chyawanprash Wellness Energy Bar",
+      "ingredients": ["Amla", "Honey", "Ghee", "Cardamom"],
+      "process": "Standard food blending and vacuum bar pressing per FSSAI regulations",
+      "intended_use": "Daily nutritional dietary supplement and energy snack",
+      "product_category": "Nutraceutical / Food Supplement",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "dosage_form",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["FSSAI-AAHARA-001", "BDA-2023-005"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "FSSAI-AAHARA-001",
+        "law": "Food Safety and Standards (Ayurveda Aahara) Regulations, 2022",
+        "section": "General Framework",
+        "score": 0.88
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC009",
+    "innovation_input": {
+      "title": "Classical Triphala Churna",
+      "ingredients": ["Amalaki", "Bibhitaki", "Haritaki"],
+      "process": "Equal ratio pulverization according to Charaka Samhita Samhita recipe",
+      "intended_use": "Digestive wellness and mild laxative",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["DCA-3A-001", "PA-3P-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "DCA-3A-001",
+        "law": "The Drugs and Cosmetics Act, 1940",
+        "section": "Section 3(a)",
+        "score": 0.91
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC010",
+    "innovation_input": {
+      "title": "Continuous Low-Temperature Vacuum Fermentation for Asava",
+      "ingredients": ["Draksha", "Jaggery", "Dhataki"],
+      "process": "Automated bioreactor continuous fermentation at 22C with real-time Brix monitoring",
+      "intended_use": "Consistent alcohol content and accelerated manufacturing of medicinal wines",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "process",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3P-003", "DCA-3H-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3P-003",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(p) - Scope of Exclusion",
+        "score": 0.79
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC011",
+    "innovation_input": {
+      "title": "Brahmi & Shankhpushpi Memory Booster Syrup",
+      "ingredients": ["Brahmi", "Shankhpushpi"],
+      "process": "Boiling herbs in water syrup base without novel extraction technique",
+      "intended_use": "Memory enhancement and cognitive support",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["TKDL-001", "PA-3P-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "TKDL-001",
+        "law": "Traditional Knowledge Digital Library Framework",
+        "section": "Purpose and Function",
+        "score": 0.83
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC012",
+    "innovation_input": {
+      "title": "Synergistic Anti-Diabetic Polyherbal Composition (BC-42)",
+      "ingredients": ["Gudmar", "Karela", "Jamun Seed", "Methi"],
+      "process": "Specific 3:2:1:1 ratio producing statistically proven 4-fold glucose uptake synergy in vitro",
+      "intended_use": "Type 2 diabetes glycemic control",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "composition",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3E-001", "PA-3P-003"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3E-001",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(e)",
+        "score": 0.87
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC013",
+    "innovation_input": {
+      "title": "Cultivated Medicinal Plants Form 8 Compliance Case",
+      "ingredients": ["Tulsi", "Ginger"],
+      "process": "Sourced from BMC-certified organic farms in Kerala",
+      "intended_use": "Respiratory comfort tea",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["BDA-2023-003", "BDA-2023-005"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "BDA-2023-005",
+        "law": "Biological Diversity (Amendment) Act, 2023",
+        "section": "Section 7",
+        "score": 0.82
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC014",
+    "innovation_input": {
+      "title": "Purified Standardized Curcuminoid Phytopharmaceutical (4-Marker)",
+      "ingredients": ["Turmeric Extract"],
+      "process": "High purity chromatographic fractionation isolating 4 specific bioactive marker compounds",
+      "intended_use": "Adjuvant cancer therapeutic agent",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "extraction_method",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["NDCT-2EC-001", "PA-3E-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "NDCT-2EC-001",
+        "law": "New Drugs and Clinical Trials Rules, 2019",
+        "section": "Rule 2(ec)",
+        "score": 0.89
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC015",
+    "innovation_input": {
+      "title": "Quantum Entangled Herbal Frequency Transducer",
+      "ingredients": ["Unspecified Spectral Frequency"],
+      "process": "Non-physical frequency resonance beam generator",
+      "intended_use": "Vibrational energetic rebalancing",
+      "product_category": "Medical Device / Equipment",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": false,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "LOW_INDICATION",
+      "abs": "LOW_RISK",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": [],
+    "synthetic_evidence_inputs": [],
+    "expected_evidence_status": "ABSTAIN"
+  },
+  {
+    "id": "TC016",
+    "innovation_input": {
+      "title": "Shatavari & Licorice Fast-Melt Sublingual Tablet",
+      "ingredients": ["Shatavari", "Yashtimadhu"],
+      "process": "Direct compression with superdisintegrants for sublingual absorption within 15 seconds",
+      "intended_use": "Rapid hormone balance and acid reflux relief",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "dosage_form",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3E-001", "DCA-3H-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3E-001",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(e)",
+        "score": 0.74
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC017",
+    "innovation_input": {
+      "title": "Controlled-Release Triphala Gastro-Retentive Matrix",
+      "ingredients": ["Amla", "Haritaki", "Bibhitaki"],
+      "process": "HPMC polymer swelling matrix providing 12-hour sustained colon delivery",
+      "intended_use": "Chronic constipation and IBS management",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "delivery_method",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3P-003", "PA-3E-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3P-003",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(p)",
+        "score": 0.76
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC018",
+    "innovation_input": {
+      "title": "Tulsi & Sunthi Anti-Microbial Nasal Spray",
+      "ingredients": ["Tulsi", "Sunthi"],
+      "process": "Isotonic micro-emulsion nasal aerosol delivery system",
+      "intended_use": "Upper respiratory viral protection",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "delivery_method",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["DCA-3H-001", "PA-3E-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "DCA-3H-001",
+        "law": "Drugs and Cosmetics Rules, 1945",
+        "section": "Rule 158-B",
+        "score": 0.73
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC019",
+    "innovation_input": {
+      "title": "Micro-Fluidized Shuddha Guggulu Resin Suspension",
+      "ingredients": ["Guggulu"],
+      "process": "High-pressure homogenizing at 1000 bar creating sub-micron resin particles",
+      "intended_use": "Cholesterol reduction and lipid management",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "process",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3P-003", "PA-3E-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3P-003",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(p)",
+        "score": 0.81
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC020",
+    "innovation_input": {
+      "title": "Bio-Fermented Probiotic Shatavari Elixir",
+      "ingredients": ["Shatavari", "Lactobacillus plantarum"],
+      "process": "Targeted enzymatic bio-fermentation producing bioactive aglycones",
+      "intended_use": "Women's reproductive health and gut microbiome enhancement",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "process",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3E-001", "FSSAI-AAHARA-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3E-001",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(e)",
+        "score": 0.77
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC021",
+    "innovation_input": {
+      "title": "Manjistha & Henna Ammonia-Free Organic Hair Color",
+      "ingredients": ["Manjistha", "Henna", "Indigo"],
+      "process": "Standard herb powder blending in gel substrate",
+      "intended_use": "Natural hair coloring and scalp conditioning",
+      "product_category": "Cosmetic / Skin Care",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "formulation",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["DCA-3H-001", "BDA-2023-005"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "DCA-3H-001",
+        "law": "Drugs and Cosmetics Act, 1940",
+        "section": "Rule 158-B",
+        "score": 0.62
+      }
+    ],
+    "expected_evidence_status": "PARTIALLY_SUPPORTED"
+  },
+  {
+    "id": "TC022",
+    "innovation_input": {
+      "title": "High-Yield Ultrasound Extraction of Glycyrrhizin",
+      "ingredients": ["Yashtimadhu"],
+      "process": "Ultrasound-assisted cavitation extraction operating at 40kHz for 15 minutes",
+      "intended_use": "Anti-ulcer therapeutic preparation",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "extraction_method",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3P-003", "PA-3E-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3P-003",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(p)",
+        "score": 0.83
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC023",
+    "innovation_input": {
+      "title": "Farmer-Conserved High-Curcumin Haridra Landrace",
+      "ingredients": ["Curcuma longa var. Western Ghats"],
+      "process": "Selective agronomic propagation of native landrace cultivar",
+      "intended_use": "High yield spice and raw material for extraction",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "process",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PPVFRA-001", "BDA-2023-005"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PPVFRA-001",
+        "law": "Protection of Plant Varieties and Farmers' Rights Act, 2001",
+        "section": "Section 14",
+        "score": 0.84
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC024",
+    "innovation_input": {
+      "title": "Malabar Geographical Indication Sahacharadi Thailam",
+      "ingredients": ["Sahachara", "Devadaru", "Shunti"],
+      "process": "Traditional copper vessel oil boiling per Malabar regional heritage recipe",
+      "intended_use": "Vata disorders and joint stiffness massage oil",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["GI-001", "DCA-3A-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "GI-001",
+        "law": "Geographical Indications of Goods Act, 1999",
+        "section": "General",
+        "score": 0.72
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC025",
+    "innovation_input": {
+      "title": "Synthetic Paracetamol Micro-Pellets",
+      "ingredients": ["Paracetamol", "Microcrystalline Cellulose"],
+      "process": "Fluidized bed granulation of synthetic drug entity",
+      "intended_use": "Analgesic and antipyretic pharmaceutical tablet",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "process",
+      "bio_resource": false,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "LOW_INDICATION",
+      "abs": "LOW_RISK",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3E-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3E-001",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(e)",
+        "score": 0.45
+      }
+    ],
+    "expected_evidence_status": "PARTIALLY_SUPPORTED"
+  },
+  {
+    "id": "TC026",
+    "innovation_input": {
+      "title": "Guduchi & Pippali Immune Enhancement Decoction",
+      "ingredients": ["Guduchi", "Pippali"],
+      "process": "Water extraction followed by spray drying into soluble granules",
+      "intended_use": "Immunity enhancement and seasonal flu protection",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "formulation",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["DCA-3H-001", "TKDL-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "DCA-3H-001",
+        "law": "Drugs and Cosmetics Rules, 1945",
+        "section": "Rule 158-B",
+        "score": 0.79
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC027",
+    "innovation_input": {
+      "title": "Bakul & Clove Herbal Oral Care Toothpaste",
+      "ingredients": ["Bakul", "Clove", "Neem Bark"],
+      "process": "Blending fine bark powders in calcium carbonate toothpaste base",
+      "intended_use": "Gum strengthening and plaque reduction cosmetic oral care",
+      "product_category": "Cosmetic / Skin Care",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "formulation",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["DCA-3H-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "DCA-3H-001",
+        "law": "Drugs and Cosmetics Act, 1940",
+        "section": "Cosmetics Rules",
+        "score": 0.68
+      }
+    ],
+    "expected_evidence_status": "PARTIALLY_SUPPORTED"
+  },
+  {
+    "id": "TC028",
+    "innovation_input": {
+      "title": "Cold-Pressed Neem Seed Oil Micro-Encapsulation",
+      "ingredients": ["Neem Seed Oil"],
+      "process": "Sodium alginate cross-linking creating micro-beads for pest control & skin care",
+      "intended_use": "Slow-release topical application and botanical pesticide",
+      "product_category": "Process / Method",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "extraction_method",
+      "bio_resource": true,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "REVIEW_REQUIRED",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["PA-3P-003", "BDA-2023-003"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "PA-3P-003",
+        "law": "The Patents Act, 1970",
+        "section": "Section 3(p)",
+        "score": 0.81
+      }
+    ],
+    "expected_evidence_status": "SUPPORTED"
+  },
+  {
+    "id": "TC029",
+    "innovation_input": {
+      "title": "Amazonian Guaraná Energy Blend",
+      "ingredients": ["Guaraná", "Acai Berry"],
+      "process": "Alcohol extraction of non-Indian tropical berries",
+      "intended_use": "Natural caffeine alertness drink",
+      "product_category": "Nutraceutical / Food Supplement",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "formulation",
+      "bio_resource": false,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "POSSIBLE",
+      "traditional_knowledge": "LOW_INDICATION",
+      "abs": "LOW_RISK",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": ["FSSAI-AAHARA-001"],
+    "synthetic_evidence_inputs": [
+      {
+        "id": "FSSAI-AAHARA-001",
+        "law": "Food Safety and Standards Regulations",
+        "section": "General",
+        "score": 0.35
+      }
+    ],
+    "expected_evidence_status": "INSUFFICIENT_EVIDENCE"
+  },
+  {
+    "id": "TC030",
+    "innovation_input": {
+      "title": "Generic Botanical Mixture Without Details",
+      "ingredients": [],
+      "process": "",
+      "intended_use": "",
+      "product_category": "Ayurvedic Medicine / Formulation",
+      "language": "English"
+    },
+    "expected_fingerprint": {
+      "novelty": "other",
+      "bio_resource": false,
+      "tk_indicator": true
+    },
+    "expected_decision": {
+      "patent": "HIGH_RISK",
+      "traditional_knowledge": "OVERLAP_POSSIBLE",
+      "abs": "LOW_RISK",
+      "regulatory": "CLASSIFICATION_REQUIRED"
+    },
+    "expected_retrieval_doc_ids": [],
+    "synthetic_evidence_inputs": [],
+    "expected_evidence_status": "ABSTAIN"
+  }
+]

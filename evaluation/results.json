@@ -1,0 +1,122 @@
+{
+  "fingerprint_accuracy": 0.5833,
+  "fingerprint_details": {
+    "ingredient_accuracy": 1.0,
+    "process_accuracy": 0.0333,
+    "intended_use_accuracy": 1.0,
+    "novelty_accuracy": 0.3333,
+    "bio_resource_accuracy": 0.1333,
+    "tk_indicator_accuracy": 1.0,
+    "overall_fingerprint_accuracy": 0.5833
+  },
+  "overall_decision_accuracy": 0.975,
+  "decision_engine": {
+    "patent": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0
+    },
+    "traditional_knowledge": {
+      "accuracy": 0.9,
+      "precision": 0.95,
+      "recall": 0.5,
+      "f1_score": 0.4737
+    },
+    "abs": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0
+    },
+    "regulatory": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0
+    },
+    "patent_accuracy": 1.0,
+    "tk_accuracy": 0.9,
+    "abs_accuracy": 1.0,
+    "regulatory_accuracy": 1.0,
+    "overall_decision_accuracy": 0.975
+  },
+  "retrieval": {
+    "recall_at_1": 0.0833,
+    "recall_at_3": 0.45,
+    "recall_at_5": 0.5333,
+    "precision_at_1": 0.1667,
+    "precision_at_3": 0.2778,
+    "precision_at_5": 0.2,
+    "hit_rate": 0.8333,
+    "mrr": 0.4261,
+    "ndcg": 0.3858,
+    "average_retrieval_time": 0.0033
+  },
+  "evidence_validation_accuracy": 1.0,
+  "evidence_validation_details": {
+    "evidence_classification_accuracy": 1.0,
+    "average_confidence": 0.7087,
+    "abstention_rate": 0.0667
+  },
+  "evidence_distribution": {
+    "SUPPORTED": 23,
+    "PARTIALLY_SUPPORTED": 4,
+    "INSUFFICIENT_EVIDENCE": 1,
+    "ABSTAIN": 2
+  },
+  "interview_improvement": 253.6,
+  "smart_interview": {
+    "avg_completeness_before": 0.1514,
+    "avg_completeness_after": 0.5355,
+    "interview_improvement_percent": 253.6,
+    "avg_questions_required": 5.0,
+    "question_efficiency": 61.54
+  },
+  "system_success_rate": 1.0,
+  "average_processing_time": 3.4031,
+  "average_confidence": 0.7087,
+  "abstention_rate": 0.0667,
+  "system_performance": {
+    "total_test_cases": 30,
+    "successful_cases": 30,
+    "failed_cases": 0,
+    "system_success_rate": 1.0,
+    "average_processing_time": 3.4031,
+    "average_confidence": 0.7087,
+    "abstention_rate": 0.0667
+  },
+  "raw_confidence_scores": [
+    0.78,
+    0.72,
+    0.75,
+    0.82,
+    0.8,
+    0.85,
+    0.65,
+    0.88,
+    0.91,
+    0.79,
+    0.83,
+    0.87,
+    0.82,
+    0.89,
+    0.0,
+    0.74,
+    0.76,
+    0.73,
+    0.81,
+    0.77,
+    0.62,
+    0.83,
+    0.84,
+    0.72,
+    0.45,
+    0.79,
+    0.68,
+    0.81,
+    0.35,
+    0.0
+  ],
+  "failure_logs": []
+}

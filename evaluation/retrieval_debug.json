@@ -1,0 +1,2321 @@
+[
+  {
+    "test_case": "TC001",
+    "title": "Neem + Turmeric Topical Ointment",
+    "query": "Neem + Turmeric Topical Ointment Neem Turmeric Simple mixing of powders in petroleum jelly base",
+    "expanded_query": [
+      "neem",
+      "turmeric",
+      "topical",
+      "ointment",
+      "simple",
+      "mixing",
+      "of",
+      "powders",
+      "in",
+      "petroleum",
+      "jelly",
+      "base",
+      "azadirachta",
+      "indica",
+      "nimba",
+      "veppam",
+      "veppu",
+      "bark",
+      "seed",
+      "oil",
+      "curcuma",
+      "longa",
+      "haridra",
+      "manjal",
+      "curcumin",
+      "curcuminoids",
+      "haldi"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6772,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6477,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.592,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5449,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5327,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3P-001",
+      "TKDL-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC002",
+    "title": "Ashwagandha Stress Relief Capsule",
+    "query": "Ashwagandha Stress Relief Capsule Ashwagandha Standard root powder encapsulation",
+    "expanded_query": [
+      "ashwagandha",
+      "stress",
+      "relief",
+      "capsule",
+      "standard",
+      "root",
+      "powder",
+      "encapsulation",
+      "withania",
+      "somnifera",
+      "asgandh",
+      "amukkuram",
+      "indian",
+      "ginseng",
+      "withanolides",
+      "anxiety",
+      "adaptogen",
+      "reduction",
+      "mental",
+      "wellness"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6795,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6475,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6196,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5581,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.553,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3P-001",
+      "DCA-3A-001"
+    ],
+    "result": "MISS"
+  },
+  {
+    "test_case": "TC003",
+    "title": "Supercritical CO2 Herbal Extraction Process for Withanolides",
+    "query": "Supercritical CO2 Herbal Extraction Process for Withanolides Ashwagandha Supercritical CO2 extraction with selective pressure control yielding 95% pure withanolides",
+    "expanded_query": [
+      "supercritical",
+      "co2",
+      "herbal",
+      "extraction",
+      "process",
+      "for",
+      "withanolides",
+      "ashwagandha",
+      "with",
+      "selective",
+      "pressure",
+      "control",
+      "yielding",
+      "95",
+      "pure",
+      "withania",
+      "somnifera",
+      "asgandh",
+      "amukkuram",
+      "indian",
+      "ginseng",
+      "nano",
+      "ultrasound",
+      "fractionation",
+      "phytopharmaceutical"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6516,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6464,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6165,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6116,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5474,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3P-003",
+      "PA-3E-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC004",
+    "title": "Traditional Siddha Nilavembu Kudineer Powder",
+    "query": "Traditional Siddha Nilavembu Kudineer Powder Nilavembu Vettiver Vilamichan ver Chukku Milagu Classical decoction method per Siddha Pharmacopoeia",
+    "expanded_query": [
+      "traditional",
+      "siddha",
+      "nilavembu",
+      "kudineer",
+      "powder",
+      "vettiver",
+      "vilamichan",
+      "ver",
+      "chukku",
+      "milagu",
+      "classical",
+      "decoction",
+      "method",
+      "per",
+      "pharmacopoeia",
+      "andrographis",
+      "paniculata",
+      "kalmegh",
+      "king",
+      "of",
+      "bitters"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6738,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6429,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3A-001",
+        "title": "",
+        "score": 0.6196,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.552,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.54,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "DCA-3A-001",
+      "TKDL-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC005",
+    "title": "Western Ghats Wild Herbal Bio-Extract",
+    "query": "Western Ghats Wild Herbal Bio-Extract Rauvolfia serpentina Gymnema sylvestre Aqueous extraction of wild harvested roots from Tamil Nadu forests",
+    "expanded_query": [
+      "western",
+      "ghats",
+      "wild",
+      "herbal",
+      "bio",
+      "extract",
+      "rauvolfia",
+      "serpentina",
+      "gymnema",
+      "sylvestre",
+      "aqueous",
+      "extraction",
+      "of",
+      "harvested",
+      "roots",
+      "from",
+      "tamil",
+      "nadu",
+      "forests",
+      "sarpagandha",
+      "indian",
+      "snakeroot",
+      "gudmar",
+      "gurmar",
+      "sugar",
+      "destroyer",
+      "nano",
+      "supercritical",
+      "ultrasound",
+      "fractionation",
+      "phytopharmaceutical"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6706,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6419,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.61,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5704,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5693,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "BDA-2023-003",
+      "BDA-2023-005"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC006",
+    "title": "Nano-Liposomal Curcumin & Piperine Dermal Gel",
+    "query": "Nano-Liposomal Curcumin & Piperine Dermal Gel Turmeric Black Pepper Nano-emulsification producing 50nm liposomal drug delivery vesicles",
+    "expanded_query": [
+      "nano",
+      "liposomal",
+      "curcumin",
+      "piperine",
+      "dermal",
+      "gel",
+      "turmeric",
+      "black",
+      "pepper",
+      "emulsification",
+      "producing",
+      "50nm",
+      "drug",
+      "delivery",
+      "vesicles",
+      "curcuma",
+      "longa",
+      "haridra",
+      "manjal",
+      "curcuminoids",
+      "haldi",
+      "piper",
+      "nigrum",
+      "maricha",
+      "milagu"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6719,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6329,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6092,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.5847,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5468,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3E-001",
+      "PA-3P-003"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC007",
+    "title": "Kumkumadi & Saffron Radiance Facial Serum",
+    "query": "Kumkumadi & Saffron Radiance Facial Serum Saffron Sandalwood Lotus Cold pressed oil formulation with herbal essence infusion",
+    "expanded_query": [
+      "kumkumadi",
+      "saffron",
+      "radiance",
+      "facial",
+      "serum",
+      "sandalwood",
+      "lotus",
+      "cold",
+      "pressed",
+      "oil",
+      "formulation",
+      "with",
+      "herbal",
+      "essence",
+      "infusion",
+      "crocus",
+      "sativus",
+      "kumkuma",
+      "kesar",
+      "santalum",
+      "album",
+      "chandana",
+      "sandal"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6872,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6671,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6353,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6094,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5677,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "DCA-3H-001",
+      "BDA-2023-005"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC008",
+    "title": "Ayurveda Aahara Chyawanprash Wellness Energy Bar",
+    "query": "Ayurveda Aahara Chyawanprash Wellness Energy Bar Amla Honey Ghee Cardamom Standard food blending and vacuum bar pressing per FSSAI regulations",
+    "expanded_query": [
+      "ayurveda",
+      "aahara",
+      "chyawanprash",
+      "wellness",
+      "energy",
+      "bar",
+      "amla",
+      "honey",
+      "ghee",
+      "cardamom",
+      "standard",
+      "food",
+      "blending",
+      "and",
+      "vacuum",
+      "pressing",
+      "per",
+      "fssai",
+      "regulations",
+      "emblica",
+      "officinalis",
+      "phyllanthus",
+      "amalaki",
+      "fruit",
+      "indian",
+      "gooseberry"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6828,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6359,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6155,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6091,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5455,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "FSSAI-AAHARA-001",
+      "BDA-2023-005"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC009",
+    "title": "Classical Triphala Churna",
+    "query": "Classical Triphala Churna Amalaki Bibhitaki Haritaki Equal ratio pulverization according to Charaka Samhita Samhita recipe",
+    "expanded_query": [
+      "classical",
+      "triphala",
+      "churna",
+      "amalaki",
+      "bibhitaki",
+      "haritaki",
+      "equal",
+      "ratio",
+      "pulverization",
+      "according",
+      "to",
+      "charaka",
+      "samhita",
+      "recipe",
+      "three",
+      "fruits",
+      "myrobalans",
+      "terminalia",
+      "chebula",
+      "kadukkai",
+      "karakkaya",
+      "chebulic",
+      "myrobalan",
+      "bellirica",
+      "thani",
+      "baheda",
+      "belleric"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6962,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.65,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6219,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5595,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.5576,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "DCA-3A-001",
+      "PA-3P-001"
+    ],
+    "result": "MISS"
+  },
+  {
+    "test_case": "TC010",
+    "title": "Continuous Low-Temperature Vacuum Fermentation for Asava",
+    "query": "Continuous Low-Temperature Vacuum Fermentation for Asava Draksha Jaggery Dhataki Automated bioreactor continuous fermentation at 22C with real-time Brix monitoring",
+    "expanded_query": [
+      "continuous",
+      "low",
+      "temperature",
+      "vacuum",
+      "fermentation",
+      "for",
+      "asava",
+      "draksha",
+      "jaggery",
+      "dhataki",
+      "automated",
+      "bioreactor",
+      "at",
+      "22c",
+      "with",
+      "real",
+      "time",
+      "brix",
+      "monitoring",
+      "arishta",
+      "bio",
+      "fermented",
+      "elixir"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6875,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6549,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6253,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6024,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.566,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3P-003",
+      "DCA-3H-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC011",
+    "title": "Brahmi & Shankhpushpi Memory Booster Syrup",
+    "query": "Brahmi & Shankhpushpi Memory Booster Syrup Brahmi Shankhpushpi Boiling herbs in water syrup base without novel extraction technique",
+    "expanded_query": [
+      "brahmi",
+      "shankhpushpi",
+      "memory",
+      "booster",
+      "syrup",
+      "boiling",
+      "herbs",
+      "in",
+      "water",
+      "base",
+      "without",
+      "novel",
+      "extraction",
+      "technique",
+      "bacopa",
+      "monnieri",
+      "hyssop",
+      "herb",
+      "bacosides",
+      "convolvulus",
+      "pluricaulis",
+      "efe",
+      "shankhahuli",
+      "nano",
+      "supercritical",
+      "ultrasound",
+      "fractionation",
+      "phytopharmaceutical"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.7002,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6627,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6047,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5549,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5421,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "TKDL-001",
+      "PA-3P-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC012",
+    "title": "Synergistic Anti-Diabetic Polyherbal Composition (BC-42)",
+    "query": "Synergistic Anti-Diabetic Polyherbal Composition (BC-42) Gudmar Karela Jamun Seed Methi Specific 3:2:1:1 ratio producing statistically proven 4-fold glucose uptake synergy in vitro",
+    "expanded_query": [
+      "synergistic",
+      "anti",
+      "diabetic",
+      "polyherbal",
+      "composition",
+      "bc",
+      "42",
+      "gudmar",
+      "karela",
+      "jamun",
+      "seed",
+      "methi",
+      "specific",
+      "ratio",
+      "producing",
+      "statistically",
+      "proven",
+      "fold",
+      "glucose",
+      "uptake",
+      "synergy",
+      "in",
+      "vitro"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6685,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6463,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3E-001",
+        "title": "",
+        "score": 0.6273,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6126,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.588,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3E-001",
+      "PA-3P-003"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC013",
+    "title": "Cultivated Medicinal Plants Form 8 Compliance Case",
+    "query": "Cultivated Medicinal Plants Form 8 Compliance Case Tulsi Ginger Sourced from BMC-certified organic farms in Kerala",
+    "expanded_query": [
+      "cultivated",
+      "medicinal",
+      "plants",
+      "form",
+      "compliance",
+      "case",
+      "tulsi",
+      "ginger",
+      "sourced",
+      "from",
+      "bmc",
+      "certified",
+      "organic",
+      "farms",
+      "in",
+      "kerala",
+      "ocimum",
+      "sanctum",
+      "tenuiflorum",
+      "holy",
+      "basil",
+      "tulasi",
+      "zingiber",
+      "officinale",
+      "sunthi",
+      "shunti",
+      "chukku",
+      "gingerol"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6659,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6397,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6123,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.603,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5598,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "BDA-2023-003",
+      "BDA-2023-005"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC014",
+    "title": "Purified Standardized Curcuminoid Phytopharmaceutical (4-Marker)",
+    "query": "Purified Standardized Curcuminoid Phytopharmaceutical (4-Marker) Turmeric Extract High purity chromatographic fractionation isolating 4 specific bioactive marker compounds",
+    "expanded_query": [
+      "purified",
+      "standardized",
+      "curcuminoid",
+      "phytopharmaceutical",
+      "marker",
+      "turmeric",
+      "extract",
+      "high",
+      "purity",
+      "chromatographic",
+      "fractionation",
+      "isolating",
+      "specific",
+      "bioactive",
+      "compounds",
+      "curcuma",
+      "longa",
+      "haridra",
+      "manjal",
+      "curcumin",
+      "curcuminoids",
+      "haldi"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6582,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "NDCT-2EC-001",
+        "title": "",
+        "score": 0.621,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6157,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.604,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5412,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "NDCT-2EC-001",
+      "PA-3E-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC015",
+    "title": "Quantum Entangled Herbal Frequency Transducer",
+    "query": "Quantum Entangled Herbal Frequency Transducer Unspecified Spectral Frequency Non-physical frequency resonance beam generator",
+    "expanded_query": [
+      "quantum",
+      "entangled",
+      "herbal",
+      "frequency",
+      "transducer",
+      "unspecified",
+      "spectral",
+      "non",
+      "physical",
+      "resonance",
+      "beam",
+      "generator"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6974,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6395,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6263,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5654,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5519,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [],
+    "result": "MISS"
+  },
+  {
+    "test_case": "TC016",
+    "title": "Shatavari & Licorice Fast-Melt Sublingual Tablet",
+    "query": "Shatavari & Licorice Fast-Melt Sublingual Tablet Shatavari Yashtimadhu Direct compression with superdisintegrants for sublingual absorption within 15 seconds",
+    "expanded_query": [
+      "shatavari",
+      "licorice",
+      "fast",
+      "melt",
+      "sublingual",
+      "tablet",
+      "yashtimadhu",
+      "direct",
+      "compression",
+      "with",
+      "superdisintegrants",
+      "for",
+      "absorption",
+      "within",
+      "15",
+      "seconds",
+      "asparagus",
+      "racemosus",
+      "satavar",
+      "root",
+      "saponins",
+      "glycyrrhiza",
+      "glabra",
+      "liquorice",
+      "mulethi",
+      "athimathuram",
+      "glycyrrhizin"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6987,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6508,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6299,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6043,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5669,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3E-001",
+      "DCA-3H-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC017",
+    "title": "Controlled-Release Triphala Gastro-Retentive Matrix",
+    "query": "Controlled-Release Triphala Gastro-Retentive Matrix Amla Haritaki Bibhitaki HPMC polymer swelling matrix providing 12-hour sustained colon delivery",
+    "expanded_query": [
+      "controlled",
+      "release",
+      "triphala",
+      "gastro",
+      "retentive",
+      "matrix",
+      "amla",
+      "haritaki",
+      "bibhitaki",
+      "hpmc",
+      "polymer",
+      "swelling",
+      "providing",
+      "12",
+      "hour",
+      "sustained",
+      "colon",
+      "delivery",
+      "churna",
+      "amalaki",
+      "three",
+      "fruits",
+      "myrobalans",
+      "emblica",
+      "officinalis",
+      "phyllanthus",
+      "fruit",
+      "indian",
+      "gooseberry",
+      "terminalia",
+      "chebula",
+      "kadukkai",
+      "karakkaya",
+      "chebulic",
+      "myrobalan",
+      "bellirica",
+      "thani",
+      "baheda",
+      "belleric"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6925,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6438,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6192,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.5941,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-003",
+        "title": "",
+        "score": 0.5637,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3P-003",
+      "PA-3E-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC018",
+    "title": "Tulsi & Sunthi Anti-Microbial Nasal Spray",
+    "query": "Tulsi & Sunthi Anti-Microbial Nasal Spray Tulsi Sunthi Isotonic micro-emulsion nasal aerosol delivery system",
+    "expanded_query": [
+      "tulsi",
+      "sunthi",
+      "anti",
+      "microbial",
+      "nasal",
+      "spray",
+      "isotonic",
+      "micro",
+      "emulsion",
+      "aerosol",
+      "delivery",
+      "system",
+      "ocimum",
+      "sanctum",
+      "tenuiflorum",
+      "holy",
+      "basil",
+      "tulasi"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.697,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6625,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6292,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6036,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "GI-001",
+        "title": "",
+        "score": 0.5837,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "DCA-3H-001",
+      "PA-3E-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC019",
+    "title": "Micro-Fluidized Shuddha Guggulu Resin Suspension",
+    "query": "Micro-Fluidized Shuddha Guggulu Resin Suspension Guggulu High-pressure homogenizing at 1000 bar creating sub-micron resin particles",
+    "expanded_query": [
+      "micro",
+      "fluidized",
+      "shuddha",
+      "guggulu",
+      "resin",
+      "suspension",
+      "high",
+      "pressure",
+      "homogenizing",
+      "at",
+      "1000",
+      "bar",
+      "creating",
+      "sub",
+      "micron",
+      "particles",
+      "commiphora",
+      "mukul",
+      "wightii",
+      "guggulsterones"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.703,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6622,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6322,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6065,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5692,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3P-003",
+      "PA-3E-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC020",
+    "title": "Bio-Fermented Probiotic Shatavari Elixir",
+    "query": "Bio-Fermented Probiotic Shatavari Elixir Shatavari Lactobacillus plantarum Targeted enzymatic bio-fermentation producing bioactive aglycones",
+    "expanded_query": [
+      "bio",
+      "fermented",
+      "probiotic",
+      "shatavari",
+      "elixir",
+      "lactobacillus",
+      "plantarum",
+      "targeted",
+      "enzymatic",
+      "fermentation",
+      "producing",
+      "bioactive",
+      "aglycones",
+      "asparagus",
+      "racemosus",
+      "satavar",
+      "root",
+      "saponins",
+      "asava",
+      "arishta"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6945,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6486,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6276,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6021,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5641,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3E-001",
+      "FSSAI-AAHARA-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC021",
+    "title": "Manjistha & Henna Ammonia-Free Organic Hair Color",
+    "query": "Manjistha & Henna Ammonia-Free Organic Hair Color Manjistha Henna Indigo Standard herb powder blending in gel substrate",
+    "expanded_query": [
+      "manjistha",
+      "henna",
+      "ammonia",
+      "free",
+      "organic",
+      "hair",
+      "color",
+      "indigo",
+      "standard",
+      "herb",
+      "powder",
+      "blending",
+      "in",
+      "gel",
+      "substrate",
+      "rubia",
+      "cordifolia",
+      "manjishtha",
+      "indian",
+      "madder",
+      "lawsonia",
+      "inermis",
+      "mehendi",
+      "maruthani"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6967,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.672,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.637,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.611,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5704,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "DCA-3H-001",
+      "BDA-2023-005"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC022",
+    "title": "High-Yield Ultrasound Extraction of Glycyrrhizin",
+    "query": "High-Yield Ultrasound Extraction of Glycyrrhizin Yashtimadhu Ultrasound-assisted cavitation extraction operating at 40kHz for 15 minutes",
+    "expanded_query": [
+      "high",
+      "yield",
+      "ultrasound",
+      "extraction",
+      "of",
+      "glycyrrhizin",
+      "yashtimadhu",
+      "assisted",
+      "cavitation",
+      "operating",
+      "at",
+      "40khz",
+      "for",
+      "15",
+      "minutes",
+      "glycyrrhiza",
+      "glabra",
+      "licorice",
+      "liquorice",
+      "mulethi",
+      "athimathuram",
+      "nano",
+      "supercritical",
+      "fractionation",
+      "phytopharmaceutical"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6653,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6552,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6152,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6104,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5515,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3P-003",
+      "PA-3E-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC023",
+    "title": "Farmer-Conserved High-Curcumin Haridra Landrace",
+    "query": "Farmer-Conserved High-Curcumin Haridra Landrace Curcuma longa var. Western Ghats Selective agronomic propagation of native landrace cultivar",
+    "expanded_query": [
+      "farmer",
+      "conserved",
+      "high",
+      "curcumin",
+      "haridra",
+      "landrace",
+      "curcuma",
+      "longa",
+      "var",
+      "western",
+      "ghats",
+      "selective",
+      "agronomic",
+      "propagation",
+      "of",
+      "native",
+      "cultivar"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6406,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6243,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.5968,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.5738,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5414,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PPVFRA-001",
+      "BDA-2023-005"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC024",
+    "title": "Malabar Geographical Indication Sahacharadi Thailam",
+    "query": "Malabar Geographical Indication Sahacharadi Thailam Sahachara Devadaru Shunti Traditional copper vessel oil boiling per Malabar regional heritage recipe",
+    "expanded_query": [
+      "malabar",
+      "geographical",
+      "indication",
+      "sahacharadi",
+      "thailam",
+      "sahachara",
+      "devadaru",
+      "shunti",
+      "traditional",
+      "copper",
+      "vessel",
+      "oil",
+      "boiling",
+      "per",
+      "regional",
+      "heritage",
+      "recipe"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6701,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6315,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "GI-001",
+        "title": "",
+        "score": 0.5978,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.5894,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5419,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "GI-001",
+      "DCA-3A-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC025",
+    "title": "Synthetic Paracetamol Micro-Pellets",
+    "query": "Synthetic Paracetamol Micro-Pellets Paracetamol Microcrystalline Cellulose Fluidized bed granulation of synthetic drug entity",
+    "expanded_query": [
+      "synthetic",
+      "paracetamol",
+      "micro",
+      "pellets",
+      "microcrystalline",
+      "cellulose",
+      "fluidized",
+      "bed",
+      "granulation",
+      "of",
+      "drug",
+      "entity"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.7048,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6719,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6332,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6074,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5704,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3E-001"
+    ],
+    "result": "MISS"
+  },
+  {
+    "test_case": "TC026",
+    "title": "Guduchi & Pippali Immune Enhancement Decoction",
+    "query": "Guduchi & Pippali Immune Enhancement Decoction Guduchi Pippali Water extraction followed by spray drying into soluble granules",
+    "expanded_query": [
+      "guduchi",
+      "pippali",
+      "immune",
+      "enhancement",
+      "decoction",
+      "water",
+      "extraction",
+      "followed",
+      "by",
+      "spray",
+      "drying",
+      "into",
+      "soluble",
+      "granules",
+      "tinospora",
+      "cordifolia",
+      "amrita",
+      "giloy",
+      "seenthil",
+      "chinnode",
+      "nano",
+      "supercritical",
+      "ultrasound",
+      "fractionation",
+      "phytopharmaceutical"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.7068,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6555,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6528,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6082,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "GI-001",
+        "title": "",
+        "score": 0.5783,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "DCA-3H-001",
+      "TKDL-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC027",
+    "title": "Bakul & Clove Herbal Oral Care Toothpaste",
+    "query": "Bakul & Clove Herbal Oral Care Toothpaste Bakul Clove Neem Bark Blending fine bark powders in calcium carbonate toothpaste base",
+    "expanded_query": [
+      "bakul",
+      "clove",
+      "herbal",
+      "oral",
+      "care",
+      "toothpaste",
+      "neem",
+      "bark",
+      "blending",
+      "fine",
+      "powders",
+      "in",
+      "calcium",
+      "carbonate",
+      "base",
+      "azadirachta",
+      "indica",
+      "nimba",
+      "veppam",
+      "veppu",
+      "seed",
+      "oil",
+      "syzygium",
+      "aromaticum",
+      "lavanga",
+      "kirambu"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6916,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6644,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6319,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6189,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5595,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "DCA-3H-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC028",
+    "title": "Cold-Pressed Neem Seed Oil Micro-Encapsulation",
+    "query": "Cold-Pressed Neem Seed Oil Micro-Encapsulation Neem Seed Oil Sodium alginate cross-linking creating micro-beads for pest control & skin care",
+    "expanded_query": [
+      "cold",
+      "pressed",
+      "neem",
+      "seed",
+      "oil",
+      "micro",
+      "encapsulation",
+      "sodium",
+      "alginate",
+      "cross",
+      "linking",
+      "creating",
+      "beads",
+      "for",
+      "pest",
+      "control",
+      "skin",
+      "care",
+      "azadirachta",
+      "indica",
+      "nimba",
+      "veppam",
+      "veppu",
+      "bark"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.69,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6566,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6196,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.5946,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5652,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "PA-3P-003",
+      "BDA-2023-003"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC029",
+    "title": "Amazonian Guaran\u00e1 Energy Blend",
+    "query": "Amazonian Guaran\u00e1 Energy Blend Guaran\u00e1 Acai Berry Alcohol extraction of non-Indian tropical berries",
+    "expanded_query": [
+      "amazonian",
+      "guaran\u00e1",
+      "energy",
+      "blend",
+      "acai",
+      "berry",
+      "alcohol",
+      "extraction",
+      "of",
+      "non",
+      "indian",
+      "tropical",
+      "berries",
+      "nano",
+      "supercritical",
+      "ultrasound",
+      "fractionation",
+      "phytopharmaceutical"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6935,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "PA-3P-003",
+        "title": "",
+        "score": 0.6639,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6475,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6251,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5631,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [
+      "FSSAI-AAHARA-001"
+    ],
+    "result": "HIT"
+  },
+  {
+    "test_case": "TC030",
+    "title": "Generic Botanical Mixture Without Details",
+    "query": "Generic Botanical Mixture Without Details  ",
+    "expanded_query": [
+      "generic",
+      "botanical",
+      "mixture",
+      "without",
+      "details"
+    ],
+    "detected_regimes": [
+      "PATENT",
+      "TRADITIONAL_KNOWLEDGE",
+      "ABS",
+      "REGULATORY"
+    ],
+    "retrieved_documents": [
+      {
+        "id": "TKDL-001",
+        "title": "",
+        "score": 0.6817,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "DCA-3H-001",
+        "title": "",
+        "score": 0.6492,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "FSSAI-AAHARA-001",
+        "title": "",
+        "score": 0.6141,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-005",
+        "title": "",
+        "score": 0.5547,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      },
+      {
+        "id": "BDA-2023-001",
+        "title": "",
+        "score": 0.5418,
+        "bm25_score": 0.0,
+        "semantic_score": 0.0
+      }
+    ],
+    "expected_documents": [],
+    "result": "MISS"
+  }
+]

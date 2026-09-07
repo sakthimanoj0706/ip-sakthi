@@ -1,0 +1,249 @@
+{
+  "metadata": {
+    "project": "IP-SAKTI Sahayak",
+    "ps_number": "SIH26045",
+    "purpose": "Curated legal knowledge base for RAG retrieval. Each chunk is a retrievable unit with citation metadata. Verified against primary/secondary legal sources where noted; VERIFY_NEEDED flags indicate text that should be cross-checked against indiacode.nic.in / egazette.gov.in before production use.",
+    "jurisdiction_scope": "India only (MVP scope)",
+    "last_updated": "2026 — corpus revised to reflect Biological Diversity (Amendment) Act, 2023 (in force 1 April 2024)",
+    "revision_note": "v2: Replaced outdated 2002-only Biological Diversity Act provisions with corrected 2023 Amendment text (Section 6, 6(1A), 6(1B), 7, 55). Added Ayurveda Aahara (FSSAI) and Classical vs Proprietary ASU distinction to formulation taxonomy per gap analysis.",
+    "disclaimer": "This corpus is for an informational assistant, not a substitute for legal advice. All answers generated from this corpus must carry that disclaimer."
+  },
+  "formulation_taxonomy": [
+    {"class": "classical_asu", "label": "Classical ASU (Ayurveda/Siddha/Unani)", "definition": "Recipe published in an authoritative ancient text listed in the First Schedule of the Drugs and Cosmetics Act, 1940 (e.g., Charaka Samhita, Sushruta Samhita), prepared without modification.", "governing_law": "Drugs and Cosmetics Act, 1940 - Section 3(a); licensed under Form 25D"},
+    {"class": "proprietary_asu", "label": "Patent / Proprietary ASU medicine", "definition": "Contains First-Schedule ingredients but with altered ratios, novel combinations, or modified dosage form.", "governing_law": "Drugs and Cosmetics Act, 1940 - Section 3(h); Rule 158-B of the D&C Rules, 1945"},
+    {"class": "phytopharmaceutical", "label": "Phytopharmaceutical Drug", "definition": "A purified, standardized fraction with a minimum of four bioactive/phytochemical marker compounds extracted from a medicinal plant.", "governing_law": "New Drugs and Clinical Trials Rules, 2019 - Rule 2(ec), Rule 2(w); regulated by CDSCO, not State AYUSH Licensing Authorities"},
+    {"class": "cosmetic", "label": "Ayurveda-based Cosmetic", "definition": "Personal-care/cosmetic product formulated using Ayurvedic ingredients or principles, not making therapeutic drug claims.", "governing_law": "Drugs and Cosmetics Act, 1940 (cosmetics provisions) + general consumer product regulation"},
+    {"class": "ayurveda_aahara", "label": "Ayurveda Aahara (food/dietary product)", "definition": "Food product prepared per recipes/processes/principles described in authoritative Ayurvedic literature; positioned as food, not drug.", "governing_law": "FSS (Ayurveda Aahara) Regulations, 2022 - enforced by FSSAI"},
+    {"class": "plant_variety_landrace", "label": "Farmer-conserved plant variety / landrace", "definition": "A distinct, traditionally conserved cultivar of a medicinal plant species maintained by farming communities, not a formulation per se.", "governing_law": "Protection of Plant Varieties and Farmers' Rights Act, 2001 - Sections 14, 15, 2(l)"}
+  ],
+  "chunks": [
+    {
+      "id": "PA-3P-001",
+      "law": "The Patents Act, 1970",
+      "section": "Section 3(p)",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu", "proprietary_asu"],
+      "text": "What are not inventions - The following are not inventions within the meaning of this Act: ... (p) an invention which, in effect, is traditional knowledge or which is an aggregation or duplication of known properties of traditionally known component or components.",
+      "plain_explanation": "If your formulation is essentially traditional knowledge (passed down, commonly known), or just combines already-known ingredients/properties without a genuinely new inventive step, it cannot be patented under Indian law.",
+      "source_note": "Exact statutory text confirmed via IndianKanoon (indiankanoon.org/doc/199387231) and cross-referenced in multiple legal commentaries (Lexology, Mondaq, 2024).",
+      "case_reference": "Zero Brand Zone Pvt. Ltd. & Anand, Jayashree v. Assistant Controller of Patents and Designs - Madras High Court interpreted 'in effect traditional knowledge' as excluding attempts to patent traditional knowledge by disguising known components; clarified the bar is not absolute if applicant proves genuine inventive modification beyond traditional knowledge.",
+      "confidence": "high"
+    },
+    {
+      "id": "PA-3P-002",
+      "law": "The Patents Act, 1970",
+      "section": "Section 3(p) - Legislative Intent",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu"],
+      "text": "Clause (p) was inserted into Section 3 by the Patents (Amendment) Act, 2002, based on the recommendations of the Joint Parliamentary Committee Report on the Patents (Second Amendment) Bill, 1999, specifically 'to protect the country's traditional knowledge from being patented.'",
+      "plain_explanation": "This section exists specifically to stop people (including foreign entities) from patenting India's traditional knowledge, like Ayurvedic formulations, as if it were a new invention.",
+      "source_note": "Confirmed via Lexology/Mondaq commentary on Madras HC ruling (2024), citing the JPC Report para 10.",
+      "confidence": "high"
+    },
+    {
+      "id": "PA-3P-003",
+      "law": "The Patents Act, 1970",
+      "section": "Section 3(p) - Scope of Exclusion",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu", "proprietary_asu", "phytopharmaceutical"],
+      "text": "The exclusion under Section 3(p) is not absolute. Unlike Section 3(k) ('computer programme per se'), the term 'traditional knowledge' in 3(p) is not qualified by 'per se'. Courts have held the exclusion does not completely bar inventions that draw on traditional knowledge, provided the applicant can establish the product or process can no longer be described as being, 'in effect,' traditional knowledge.",
+      "plain_explanation": "You are not automatically blocked just because your formulation has roots in a classical recipe - if you can show a genuine, non-obvious modification or new application, patentability may still be possible. This needs case-specific legal assessment.",
+      "source_note": "Confirmed via multiple 2024 Lexology commentaries on Madras HC interpretation.",
+      "confidence": "medium - this is a nuanced legal interpretation and should always trigger a 'consult a lawyer for case-specific assessment' response, not a definitive yes/no."
+    },
+    {
+      "id": "PA-3E-001",
+      "law": "The Patents Act, 1970",
+      "section": "Section 3(e)",
+      "jurisdiction": "India",
+      "formulation_types": ["proprietary_asu", "phytopharmaceutical"],
+      "text": "What are not inventions - the following are not inventions: ... (e) a substance obtained by a mere admixture resulting only in the aggregation of the properties of the components thereof or a process for producing such substance.",
+      "plain_explanation": "If your polyherbal formulation is just a mixture of known ingredients where the effect is simply the sum of each ingredient's known properties, it fails patentability under 3(e). To overcome this, you generally need to show a 'synergistic' effect - evidence that the combination works better than expected from the individual ingredients (e.g., comparative efficacy data).",
+      "source_note": "General patentability-bar framework widely documented in Indian patent law commentary (Patenevo and others); exact statutory phrasing should be verified against indiacode.nic.in before citing verbatim to users.",
+      "confidence": "medium - core concept confirmed across multiple sources; exact clause wording flagged VERIFY_NEEDED against primary Act text."
+    },
+    {
+      "id": "BDA-2023-001",
+      "law": "The Biological Diversity Act, 2002 (as amended by the Biological Diversity (Amendment) Act, 2023)",
+      "section": "Preamble / Long Title",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu", "phytopharmaceutical", "cosmetic", "ayurveda_aahara"],
+      "text": "An Act to provide for conservation of biological diversity, sustainable use of its components, and fair and equitable sharing of the benefits arising out of the use of biological resources, knowledge, and for matters connected therewith or incidental thereto. Original Act: No. 18 of 2003 (assented 5 February 2003). Amended by the Biological Diversity (Amendment) Act, 2023 (No. 10 of 2023), enacted 3 August 2023, brought into force 1 April 2024.",
+      "plain_explanation": "This law governs how biological resources (plants, herbs used in your formulation) and any traditional knowledge about them can be accessed and commercially used. IMPORTANT: the Act was significantly amended in 2023 - the rules below reflect the current, in-force version, not the original 2002 text.",
+      "source_note": "Amendment date confirmed via official e-Gazette notification (egazette.gov.in/WritereadData/2023/247815.pdf) and multiple law-firm commentaries (Conventus Law, Lexplosion, LKS Attorneys, 2023-2024).",
+      "confidence": "high"
+    },
+    {
+      "id": "BDA-2023-002",
+      "law": "Biological Diversity (Amendment) Act, 2023",
+      "section": "Section 6(1) - Foreign/Foreign-Controlled Entities",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu", "proprietary_asu", "phytopharmaceutical"],
+      "text": "Foreign entities, non-resident citizens, and foreign-controlled domestic entities (as defined under Section 3(2)(c)(ii), referencing 'control' under Clause (27) of Section 2 of the Companies Act, 2013) must obtain mandatory PRIOR approval from the National Biodiversity Authority (NBA) BEFORE the grant of a patent, using statutory Form 7.",
+      "plain_explanation": "If your company has foreign ownership/control, or you are a foreign entity, you must get NBA approval BEFORE your patent is granted - this pre-grant approval requirement has NOT changed for foreign-controlled entities under the 2023 amendment.",
+      "source_note": "Confirmed via Conventus Law and LKS Attorneys legal commentary on the 2023 Amendment (both 2023-2024 publications analyzing the amended Section 6).",
+      "confidence": "medium-high - core rule confirmed across 2 independent legal-commentary sources; exact subsection text should be verified against the official amendment gazette (egazette.gov.in/WritereadData/2023/247815.pdf) before production citation."
+    },
+    {
+      "id": "BDA-2023-003",
+      "law": "Biological Diversity (Amendment) Act, 2023",
+      "section": "Section 6(1A) - Domestic Entities (Pre-Grant)",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu", "proprietary_asu", "phytopharmaceutical"],
+      "text": "Domestic Indian citizens and Indian-controlled entities are EXEMPT from obtaining prior NBA approval before applying for or receiving a patent grant. Instead, under Section 6(1A), such domestic applicants must complete a statutory REGISTRATION with the NBA before the patent is granted, using statutory Form 8. This is a registration requirement, not an approval requirement - it does not block or delay the grant.",
+      "plain_explanation": "IMPORTANT CHANGE FROM THE ORIGINAL 2002 LAW: If you're an Indian citizen or Indian-owned company, you do NOT need to wait for NBA approval before your patent is granted anymore. You only need to REGISTER with the NBA (Form 8) - a lighter-touch requirement than the old approval process. This is one of the most significant practical changes for domestic AYUSH innovators introduced by the 2023 Amendment.",
+      "source_note": "Confirmed via Conventus Law (2023), LKS Attorneys, and Intepat legal commentary on Section 6(1A) - consistent across all three independent sources.",
+      "confidence": "medium-high - core distinction (registration vs. approval) confirmed across 3 independent sources; exact form numbers and subsection lettering flagged VERIFY_NEEDED against official gazette text before production use."
+    },
+    {
+      "id": "BDA-2023-004",
+      "law": "Biological Diversity (Amendment) Act, 2023",
+      "section": "Section 6(1B) - Domestic Entities (Commercialization Stage)",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu", "proprietary_asu", "phytopharmaceutical"],
+      "text": "For domestic applicants, formal NBA approval and any associated benefit-sharing negotiations are DEFERRED to the commercialization phase (after the patent is granted), rather than required before or at the time of grant. Actual commercial exploitation of a granted patent based on Indian biological resources requires NBA approval at that later stage.",
+      "plain_explanation": "You can get your patent granted with just registration (Form 8), but before you actually start commercially selling/exploiting the patented product, you need to go back and get separate NBA approval covering benefit-sharing terms. Filing and getting the patent granted is now decoupled from the commercialization approval step.",
+      "source_note": "Confirmed via Conventus Law and LKS Attorneys 2023-2024 commentary on the phased Section 6(1A)/6(1B) structure.",
+      "confidence": "medium - sequencing/logic confirmed across sources; exact subsection wording flagged VERIFY_NEEDED against official gazette."
+    },
+    {
+      "id": "BDA-2023-005",
+      "law": "Biological Diversity (Amendment) Act, 2023",
+      "section": "Section 7 - Commercial Utilization & SBB Intimation Exemptions",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu", "proprietary_asu", "phytopharmaceutical", "ayurveda_aahara"],
+      "text": "Domestic entities/individuals commercially exploiting biological resources are generally required to give PRIOR INTIMATION to the State Biodiversity Board (SBB) before commercial exploitation. However, the 2023 Amendment introduces specific EXEMPTIONS from this intimation requirement for: (i) users accessing codified traditional knowledge, (ii) registered AYUSH practitioners (vaids/hakims) practicing indigenous medicine for their livelihood, and (iii) cultivated medicinal plants and their products - the last exemption applies strictly when the cultivator/user holds a Certificate of Origin issued by the local Biodiversity Management Committee (BMC).",
+      "plain_explanation": "Big practical change: if you use CULTIVATED (farm-grown) medicinal plants - not wild-harvested - and you have a BMC Certificate of Origin, you don't need to notify the State Biodiversity Board at all before commercializing. But if your ingredients are wild-harvested (e.g., bought from forest traders without cultivation records), this exemption does NOT apply and you still need prior SBB intimation. This distinction (wild vs. certified-cultivated) is critical and easy to get wrong.",
+      "source_note": "Confirmed via Conventus Law and LKS Attorneys 2023-2024 commentary on Section 7 exemptions - consistent across both sources.",
+      "confidence": "medium-high - core exemption logic confirmed across 2 sources; exact subsection numbering (7(1) proviso / 7(2)) flagged VERIFY_NEEDED against official gazette."
+    },
+    {
+      "id": "BDA-2023-006",
+      "law": "Biological Diversity (Amendment) Act, 2023",
+      "section": "Section 55 - Penalties (Decriminalization)",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu", "proprietary_asu", "phytopharmaceutical", "cosmetic", "ayurveda_aahara"],
+      "text": "The 2023 Amendment DECRIMINALIZED non-compliance under the Act. Previously, violations could carry imprisonment of up to five years. Under the amended Section 55, non-compliance now attracts CIVIL administrative penalties ranging between Rs. 1 lakh and Rs. 50 lakhs, extendable up to Rs. 1 crore for continuing non-compliance.",
+      "plain_explanation": "If you fail to comply with biodiversity access/benefit-sharing requirements, you will now face financial penalties (up to Rs. 1 crore for ongoing violations), not criminal prosecution or jail time. This is a significant liberalization compared to the pre-2023 law - but the fines can still be very substantial for a small business.",
+      "source_note": "Confirmed via Conventus Law, LKS Attorneys, and Lexplosion 2023-2024 commentary - consistent across all three sources on the decriminalization and the penalty range.",
+      "confidence": "high"
+    },
+    {
+      "id": "BDA-2023-007",
+      "law": "Biological Diversity Act, 2002 (retained provision, not amended in 2023)",
+      "section": "Section 18(4) - NBA Powers to Oppose Foreign IP Grants",
+      "jurisdiction": "India / International",
+      "formulation_types": ["classical_asu", "phytopharmaceutical"],
+      "text": "The National Biodiversity Authority may, on behalf of the Central Government, take any measures necessary to oppose the grant of intellectual property rights in any country outside India on any biological resource obtained from India or knowledge associated with such biological resource which is derived from India.",
+      "plain_explanation": "If a foreign company tries to patent something based on an Indian biological resource or traditional knowledge (like has happened historically with turmeric, neem), the NBA has the power to formally oppose that patent internationally. This provision was not changed by the 2023 amendment.",
+      "source_note": "Confirmed via IndianKanoon full-text (indiankanoon.org/doc/548841) and WIPO Lex; no amendment to this specific sub-section noted in 2023 Amendment commentary.",
+      "confidence": "high"
+    },
+    {
+      "id": "BDA-2023-008",
+      "law": "Biological Diversity (Amendment) Act, 2023",
+      "section": "Section 21 - Benefit Sharing (framework retained, procedure updated)",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu", "phytopharmaceutical", "cosmetic"],
+      "text": "The National Biodiversity Authority, while granting approvals, shall ensure equitable sharing of benefits arising out of the use of accessed biological resources and associated traditional knowledge, in accordance with mutually agreed terms between the applicant, local bodies concerned, and the benefit claimers. Benefit sharing may take the form of: (a) joint ownership of IP rights with the NBA or identified benefit claimers; (b) transfer of technology; (c) monetary compensation; among other mechanisms.",
+      "plain_explanation": "If your formulation commercializes traditional knowledge from a specific community, that community (or the NBA on their behalf) may be entitled to a share of the benefits - this could mean joint IP ownership, royalties, or other compensation arrangements. Under the 2023 amendment, for domestic applicants this benefit-sharing negotiation is now tied to the commercialization stage (see Section 6(1B)), not the patent-filing stage.",
+      "source_note": "Base framework confirmed via WIPO's official Traditional Knowledge law database; timing update (commercialization-stage linkage) inferred from Conventus Law's description of the 6(1A)/6(1B) structure - VERIFY_NEEDED for exact interaction between Section 21 and Section 6(1B) against official gazette.",
+      "confidence": "medium - core benefit-sharing mechanism is high-confidence; the specific timing interaction with the 2023 amendment structure needs verification."
+    },
+    {
+      "id": "GI-001",
+      "law": "The Geographical Indications of Goods (Registration and Protection) Act, 1999",
+      "section": "General Applicability",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu"],
+      "text": "A Geographical Indication (GI) identifies goods as originating from a specific geographical territory, where a given quality, reputation, or other characteristic is essentially attributable to that origin. Ayurvedic formulations tied to a specific region's traditional preparation method (e.g., a formulation historically and exclusively prepared in a particular district or state) may qualify for GI protection, which protects the name/reputation associated with that regional product rather than the formulation itself as an invention.",
+      "plain_explanation": "If your Ayurveda formulation isn't patentable because it's traditional knowledge, but it's specifically and traditionally tied to one geographic region of India, a GI tag might protect the name and reputation of that product instead of a patent.",
+      "source_note": "General GI framework description - VERIFY_NEEDED: exact section numbers for registration procedure should be confirmed against the consolidated GI Act text on indiacode.nic.in before citing specific sections to users.",
+      "confidence": "medium - general legal framework is correct; specific procedural sections need verification before the corpus is called 'complete' for MVP demo."
+    },
+    {
+      "id": "DCA-3A-001",
+      "law": "The Drugs and Cosmetics Act, 1940",
+      "section": "Section 3(a) - Classical ASU Medicines",
+      "jurisdiction": "India",
+      "formulation_types": ["classical_asu"],
+      "text": "Classical Ayurvedic, Siddha, and Unani (ASU) medicines are defined as those manufactured strictly in accordance with recipes published in the authoritative ancient texts listed in the First Schedule of the Act, such as the Charaka Samhita or Sushruta Samhita. Licensing for classical formulations is obtained under Form 25D, which requires validation of textual citation to the classical source rather than preclinical toxicity studies or clinical trials.",
+      "plain_explanation": "If you're manufacturing a formulation exactly as described in a recognized classical Ayurvedic text, you get a simpler licensing path (Form 25D) - you just need to prove the recipe matches the classical text, not run expensive clinical trials.",
+      "source_note": "Confirmed via multiple pharma-regulatory sources (RJPT, Scribd regulatory documents) on classical ASU licensing under Section 3(a)/Form 25D.",
+      "confidence": "medium-high - core licensing pathway confirmed; exact section/form numbers flagged VERIFY_NEEDED against Drugs and Cosmetics Act primary text."
+    },
+    {
+      "id": "DCA-3H-001",
+      "law": "The Drugs and Cosmetics Act, 1940 / Drugs and Cosmetics Rules, 1945",
+      "section": "Section 3(h) and Rule 158-B - Proprietary ASU Medicines",
+      "jurisdiction": "India",
+      "formulation_types": ["proprietary_asu"],
+      "text": "Patent or Proprietary ASU medicines are defined under Section 3(h) as containing ingredients mentioned in First Schedule texts but featuring altered ratios, novel combinations, or modified dosage formats. These fall under Rule 158-B of the Drugs and Cosmetics Rules, which establishes safety and effectiveness requirements. Licensing authorities require pilot observational studies aligned with ASU protocols, rather than full-scale pharmaceutical clinical trials.",
+      "plain_explanation": "If you've modified a classical formulation - changed the ratio of ingredients, combined ingredients differently, or changed the dosage form - you need proprietary ASU licensing under Rule 158-B, which requires pilot safety studies (less burdensome than full clinical trials, but more than the classical pathway).",
+      "source_note": "Confirmed via RJPT pharmaceutical regulatory comparison article and Scribd regulatory document on ASU drug regulations.",
+      "confidence": "medium-high - core rule confirmed across 2 sources; exact rule numbering flagged VERIFY_NEEDED against Drugs and Cosmetics Rules primary text."
+    },
+    {
+      "id": "NDCT-2EC-001",
+      "law": "New Drugs and Clinical Trials Rules, 2019",
+      "section": "Rule 2(ec), Rule 2(w) - Phytopharmaceutical Drugs",
+      "jurisdiction": "India",
+      "formulation_types": ["phytopharmaceutical"],
+      "text": "A phytopharmaceutical drug is defined as a purified and standardized fraction containing a minimum of four bioactive or phytochemical marker compounds extracted from a medicinal plant. Phytopharmaceuticals are categorized as 'new drugs' under Rule 2(w), placing them outside the jurisdiction of State AYUSH Licensing Authorities. They are instead regulated directly by the Central Drugs Standard Control Organization (CDSCO), requiring comprehensive preclinical toxicological characterization, chemical standardization, and full Phase I, Phase II, and Phase III clinical trials comparable to synthetic new chemical entities.",
+      "plain_explanation": "If your product is a purified plant extract with 4+ identified active compounds, it is NOT treated as a normal Ayurvedic drug - it's regulated as a 'new drug' by the central CDSCO, requiring the same rigorous clinical trial process as a synthetic pharmaceutical. This is a much higher regulatory bar than classical or proprietary ASU products.",
+      "source_note": "Confirmed via PMC academic article (pmc.ncbi.nlm.nih.gov/articles/PMC4840792) on phytopharmaceutical regulation in India, and cross-referenced with jopcr.com regulatory review.",
+      "confidence": "high"
+    },
+    {
+      "id": "FSSAI-AAHARA-001",
+      "law": "Food Safety and Standards (Ayurveda Aahara) Regulations, 2022",
+      "section": "General Framework",
+      "jurisdiction": "India",
+      "formulation_types": ["ayurveda_aahara"],
+      "text": "Enacted by FSSAI in consultation with the Ministry of Ayush, these regulations govern food products prepared in accordance with the recipes, processes, and principles described in authoritative Ayurvedic literature. They provide a commercialization route for dietary supplements and botanical foods that avoids pharmaceutical drug licensing, while imposing packaging, heavy metal, microbiological, and labeling standards, including mandatory display of the designated Ayush-Aahara visual logo.",
+      "plain_explanation": "If your product is positioned as a FOOD (not a drug) that follows Ayurvedic principles - like an herbal tea or wellness snack - you may be able to use the simpler FSSAI 'Ayurveda Aahara' food licensing route instead of drug licensing, as long as you meet food-safety labeling standards and display the Ayush-Aahara logo. This is a completely different (and generally simpler) pathway than the drug-licensing routes above - but you cannot make therapeutic/disease-treatment claims under this route.",
+      "source_note": "Confirmed via foodsafetyworks.com coverage of the FSSAI gazette notification and vikaspedia.in government-affiliated summary (2022 regulations).",
+      "confidence": "high"
+    },
+    {
+      "id": "PPVFRA-001",
+      "law": "Protection of Plant Varieties and Farmers' Rights Act, 2001",
+      "section": "Sections 14, 15, 2(l)",
+      "jurisdiction": "India",
+      "formulation_types": ["plant_variety_landrace"],
+      "text": "Because Section 3(p) of the Patents Act strictly bars patenting plants, plant varieties, or traditional botanical uses, the PPV&FRA provides an alternate intellectual property route. Under Sections 14, 15, and 2(l), plant breeders and farming communities can register: (1) New Varieties - evaluated against Novelty, Distinctiveness, Uniformity, and Stability (DUS) criteria; (2) Extant Varieties and Farmers' Varieties (FVs) - relieved of the absolute novelty requirement, allowing traditional cultivators to obtain exclusive marketing and commercial propagation rights over conserved agricultural landraces of medicinal species.",
+      "plain_explanation": "If you (or your farming community) have developed or conserved a distinctive strain of a medicinal plant (like a special Ashwagandha or Brahmi variety), you can't patent the plant itself, but you can register it under the Plant Varieties Act to get exclusive rights to market and propagate that specific variety commercially.",
+      "source_note": "Confirmed via candcip.com PVP law summary and ICAR academic publication on farmers' varieties.",
+      "confidence": "medium-high - core mechanism confirmed across 2 sources; exact section numbering flagged VERIFY_NEEDED against PPV&FRA primary text."
+    },
+    {
+      "id": "TKDL-001",
+      "law": "Traditional Knowledge Digital Library (TKDL) - Administrative Framework",
+      "section": "Purpose and Function",
+      "jurisdiction": "India / International",
+      "formulation_types": ["classical_asu"],
+      "text": "TKDL is a documentation initiative (jointly by CSIR and Ministry of Ayush) containing over 450,000 digitized classical formulation entries, translated into structured international patent classification frameworks (Traditional Knowledge Resource Classification - TKRC), made available to international patent offices under non-disclosure agreements to prevent wrongful grant of patents on India's traditional knowledge. Direct access to the full TKDL database is legally restricted; only a public Prior-Art Metadata Catalogue (bibliographic citations, classical text references, plant ingredient lists) is publicly accessible.",
+      "plain_explanation": "TKDL is not itself a law, but a defensive documentation tool - if your formulation is already recorded in TKDL as traditional knowledge, patent offices worldwide can access this to reject patent applications that wrongly claim it as a new invention. Important limitation: an AI tool cannot directly search the full confidential TKDL database - only its public metadata catalogue is accessible, so this tool can point you toward TKDL as a resource but cannot definitively confirm whether your specific formulation is documented there.",
+      "source_note": "Function and scale (450,000+ entries) confirmed via PMC academic article and CSIR official page; access restriction confirmed via PIB press release and WIPO documentation.",
+      "confidence": "high (as descriptive/contextual information, not as statutory text)"
+    }
+  ],
+  "abstention_triggers": [
+    "Questions about international jurisdictions/treaties (WIPO, TRIPS, Nagoya Protocol) - not covered in MVP corpus",
+    "Questions requiring case-specific legal judgment (e.g., 'will MY specific formulation be granted a patent') - always redirect to a registered IP lawyer or patent agent",
+    "Questions about exact procedural steps, fees, or forms for filing - corpus covers substantive law only, not procedural/administrative detail",
+    "Requests to confirm whether a specific formulation IS or IS NOT documented in TKDL - the tool cannot search the confidential TKDL database, only point to it as a resource",
+    "Any query where top retrieval similarity score falls below the confidence threshold"
+  ],
+  "verification_status": {
+    "high_confidence_chunks": ["PA-3P-001", "PA-3P-002", "BDA-2023-001", "BDA-2023-006", "BDA-2023-007", "NDCT-2EC-001", "FSSAI-AAHARA-001", "TKDL-001"],
+    "needs_verification_before_production": [
+      "PA-3E-001 (exact clause wording)",
+      "BDA-2023-002, 003, 004, 005, 008 (exact subsection lettering - confirm against egazette.gov.in/WritereadData/2023/247815.pdf)",
+      "GI-001 (specific procedural sections)",
+      "DCA-3A-001, DCA-3H-001 (exact section/rule numbers)",
+      "PPVFRA-001 (exact section numbering)"
+    ],
+    "recommended_next_step": "Before the internal hackathon demo, download the official Biological Diversity (Amendment) Act, 2023 gazette PDF (egazette.gov.in/WritereadData/2023/247815.pdf) and cross-check all BDA-2023-* chunks against it directly. This is the highest-priority verification since the amendment is recent and the exact subsection numbering varies across secondary sources."
+  }
+}
