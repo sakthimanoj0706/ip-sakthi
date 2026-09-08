@@ -2,7 +2,7 @@
 IP-SAKTI Sahayak - Smart Interview State & Question Priority Manager
 Eliminates duplicate interview questions, normalizes paraphrased queries,
 evaluates question priorities (CRITICAL/HIGH/MEDIUM/LOW), tracks known vs missing fields,
-and manages dynamic interview length (1 to 5 questions max).
+and manages dynamic interview length (Min 3 to Max 8 questions).
 """
 
 import sys
@@ -14,10 +14,12 @@ try:
     from backend.fingerprint_schema import InnovationFingerprint
     from backend.nlp_service import NLPService
     from backend.gemini_service import GeminiService
+    from backend.question_deduplicator import QuestionDeduplicator, CANONICAL_QUESTIONS, DeduplicatedQuestionItem
 except ImportError:
     from fingerprint_schema import InnovationFingerprint
     from nlp_service import NLPService
     from gemini_service import GeminiService
+    from question_deduplicator import QuestionDeduplicator, CANONICAL_QUESTIONS, DeduplicatedQuestionItem
 
 
 class QuestionPriorityItem(BaseModel):
@@ -25,13 +27,16 @@ class QuestionPriorityItem(BaseModel):
 
     field_name: str
     question_text: str
-    question_type: str = "text"  # text, select, boolean, list
+    question_type: str = "text"  # boolean, select, multiselect, text, entity_input
     options: Optional[List[str]] = None
     required: bool = True
     help_text: Optional[str] = None
     priority_level: str = "HIGH"  # CRITICAL, HIGH, MEDIUM, LOW
     priority_score: int = 80  # 0 to 100
     why_asking: str = ""  # Explanation for UI: "Why are we asking this?"
+    question_id: str = ""
+    total_dynamic_questions: int = 5
+    current_dynamic_step: int = 1
 
 
 class DetailedInterviewSessionState(BaseModel):
@@ -40,6 +45,8 @@ class DetailedInterviewSessionState(BaseModel):
     session_id: str
     current_step: int = 1
     total_steps: int = 5
+    min_questions: int = 3
+    max_questions: int = 8
     completed: bool = False
     is_sufficient: bool = False
     asked_questions: List[str] = Field(default_factory=list)
@@ -89,111 +96,14 @@ class QuestionPriorityEngine:
 class InterviewStateManager:
     """
     State manager for IP-SAKTI smart interview.
-    Ensures zero duplicate questions and adaptive dynamic length.
+    Ensures zero duplicate questions and adaptive dynamic length (Min 3 to Max 8).
     """
-
-    QUESTIONS: Dict[str, QuestionPriorityItem] = {
-        "ingredients": QuestionPriorityItem(
-            field_name="ingredients",
-            question_text="What herbs, minerals, or ingredients are used in your formulation?",
-            question_type="list",
-            required=True,
-            help_text="e.g., Neem, Turmeric",
-            priority_level="CRITICAL",
-            priority_score=95,
-            why_asking="Identifies classical Ayurvedic plants and checks TKDL prior art records.",
-        ),
-        "intended_use": QuestionPriorityItem(
-            field_name="intended_use",
-            question_text="What is the primary therapeutic or commercial intended use?",
-            question_type="text",
-            required=False,
-            help_text="e.g., Wound healing, Immunity booster",
-            priority_level="HIGH",
-            priority_score=80,
-            why_asking="Determines whether AYUSH ASU drug licensing or FSSAI food rules apply.",
-        ),
-        "novelty_detected": QuestionPriorityItem(
-            field_name="novelty_detected",
-            question_text="Does your innovation introduce a novel aspect (process, extraction, or delivery method)?",
-            question_type="boolean",
-            required=True,
-            priority_level="CRITICAL",
-            priority_score=90,
-            why_asking="Crucial to assess patent eligibility under Section 3(p) and Section 3(e).",
-        ),
-        "novelty_type": QuestionPriorityItem(
-            field_name="novelty_type",
-            question_text="What type of novelty does your innovation introduce?",
-            question_type="select",
-            options=["extraction_method", "formulation", "process", "delivery_method"],
-            required=True,
-            priority_level="HIGH",
-            priority_score=85,
-            why_asking="Focuses patentability analysis on process vs composition.",
-        ),
-        "novelty_description": QuestionPriorityItem(
-            field_name="novelty_description",
-            question_text="Please describe the novel process or extraction method in detail.",
-            question_type="text",
-            required=True,
-            help_text="e.g., Nano-extraction process to improve skin absorption",
-            priority_level="HIGH",
-            priority_score=85,
-            why_asking="Assesses whether technical synergy or unexpected benefit is claimed.",
-        ),
-        "biological_resource_used": QuestionPriorityItem(
-            field_name="biological_resource_used",
-            question_text="Does your innovation use Indian biological resources (herbs, biological materials)?",
-            question_type="boolean",
-            required=True,
-            priority_level="CRITICAL",
-            priority_score=90,
-            why_asking="Required for Biological Diversity (Amendment) Act 2023 compliance.",
-        ),
-        "source_location": QuestionPriorityItem(
-            field_name="source_location",
-            question_text="What is the geographical source location of the biological resources in India?",
-            question_type="text",
-            required=False,
-            help_text="e.g., Tamil Nadu, Kerala",
-            priority_level="HIGH",
-            priority_score=80,
-            why_asking="Identifies relevant State Biodiversity Board (SBB) jurisdiction.",
-        ),
-        "cultivation_status": QuestionPriorityItem(
-            field_name="cultivation_status",
-            question_text="Are the biological materials cultivated or collected from the wild?",
-            question_type="select",
-            options=["Cultivated Farm", "Wild Harvested", "Both", "Unknown"],
-            required=False,
-            priority_level="HIGH",
-            priority_score=75,
-            why_asking="Cultivated plants with BMC Certificate of Origin enjoy SBB intimation exemptions.",
-        ),
-        "product_category": QuestionPriorityItem(
-            field_name="product_category",
-            question_text="What product category best fits your innovation?",
-            question_type="select",
-            options=[
-                "Ayurvedic Medicine / Formulation",
-                "Nano Formulation",
-                "Cosmetic Product",
-                "Ayurveda Aahara / Food Product",
-                "Nutraceutical",
-                "Extraction Process",
-            ],
-            required=False,
-            priority_level="HIGH",
-            priority_score=75,
-            why_asking="Selects exact regulatory licensing track under Drugs & Cosmetics Act 1940.",
-        ),
-    }
 
     def __init__(self, session_id: str = "sess_default"):
         self.state = DetailedInterviewSessionState(session_id=session_id)
         self.local_nlp = NLPService()
         self.gemini_service = GeminiService()
+        self.deduplicator = QuestionDeduplicator()
 
     def normalize_field_name(self, raw_field: str) -> str:
         """Normalizes field aliases into canonical field keys."""
@@ -253,42 +163,36 @@ class InterviewStateManager:
         self._recalculate_completeness()
 
     def _recalculate_completeness(self):
-        """Updates completeness percentage and checks if sufficient."""
-        total_possible = len(self.QUESTIONS)
-        known_count = len([k for k in self.QUESTIONS.keys() if self.is_field_already_known(k)])
+        """Updates completeness percentage and dynamic question bounds."""
+        total_possible = len(CANONICAL_QUESTIONS)
+        known_count = len([k for k in CANONICAL_QUESTIONS.keys() if self.is_field_already_known(CANONICAL_QUESTIONS[k].field)])
         pct = round((known_count / total_possible) * 100, 1)
         self.state.completeness_percentage = min(100.0, pct)
 
-        # Dynamic early completion rule: if 4+ questions asked or >75% completeness
-        if len(self.state.asked_questions) >= 5 or pct >= 80.0:
+        # Dynamic bounds
+        min_q, max_q = self.deduplicator.calculate_dynamic_bounds(pct, complexity_score=55)
+        self.state.min_questions = min_q
+        self.state.max_questions = max_q
+        self.state.total_steps = max_q
+
+        asked_count = len(self.state.asked_questions)
+        if asked_count >= max_q or pct >= 80.0 or (asked_count >= min_q and pct >= 70.0):
             self.state.completed = True
             self.state.is_sufficient = True
 
     def get_next_question(self) -> Optional[QuestionPriorityItem]:
         """
-        Returns highest-priority unasked question prompt, or None if interview complete.
+        Returns highest-priority unasked deduplicated question prompt, or None if interview complete.
         """
         self._recalculate_completeness()
         if self.state.completed:
             return None
 
-        # Filter out already known or asked questions
-        candidates: List[tuple[int, QuestionPriorityItem]] = []
-        for field, q_info in self.QUESTIONS.items():
-            if not self.is_field_already_known(field):
-                score, priority_lvl, why_str = QuestionPriorityEngine.score_field(field, self.state.known_fields)
-                q_info_copy = QuestionPriorityItem(
-                    field_name=q_info.field_name,
-                    question_text=q_info.question_text,
-                    question_type=q_info.question_type,
-                    options=q_info.options,
-                    required=q_info.required,
-                    help_text=q_info.help_text,
-                    priority_level=priority_lvl,
-                    priority_score=score,
-                    why_asking=why_str,
-                )
-                candidates.append((score, q_info_copy))
+        candidates: List[tuple[int, DeduplicatedQuestionItem]] = []
+        for q_id, q_item in CANONICAL_QUESTIONS.items():
+            if not self.is_field_already_known(q_item.field) and not self.deduplicator.is_duplicate(q_item):
+                score, priority_lvl, why_str = QuestionPriorityEngine.score_field(q_item.field, self.state.known_fields)
+                candidates.append((score, q_item))
 
         if not candidates:
             self.state.completed = True
@@ -299,11 +203,28 @@ class InterviewStateManager:
         candidates.sort(key=lambda x: x[0], reverse=True)
         top_q = candidates[0][1]
 
-        # Record in asked list
-        if top_q.field_name not in self.state.asked_questions:
-            self.state.asked_questions.append(top_q.field_name)
+        # Record in asked list & deduplicator
+        self.deduplicator.mark_asked(top_q)
+        if top_q.field not in self.state.asked_questions:
+            self.state.asked_questions.append(top_q.field)
 
-        return top_q
+        score, priority_lvl, why_str = QuestionPriorityEngine.score_field(top_q.field, self.state.known_fields)
+        current_step_num = min(self.state.max_questions, len(self.state.asked_questions))
+
+        return QuestionPriorityItem(
+            field_name=top_q.field,
+            question_text=top_q.question,
+            question_type=top_q.question_type,
+            options=top_q.options,
+            required=True,
+            help_text=top_q.help_text,
+            priority_level=priority_lvl,
+            priority_score=score,
+            why_asking=why_str or top_q.why_asking,
+            question_id=top_q.id,
+            total_dynamic_questions=self.state.max_questions,
+            current_dynamic_step=current_step_num,
+        )
 
     def submit_answer(self, field_name: str, answer: Any):
         """Submits user answer and updates state."""
@@ -344,7 +265,8 @@ if __name__ == "__main__":
     q1 = mgr.get_next_question()
     print("Next Highest Priority Question:")
     if q1:
-        print(f"  Field: {q1.field_name} (Priority: {q1.priority_level}, Score: {q1.priority_score})")
+        print(f"  Q ID: {q1.question_id} | Field: {q1.field_name} (Priority: {q1.priority_level})")
+        print(f"  Progress: QUESTION {q1.current_dynamic_step} OF {q1.total_dynamic_questions}")
         print(f"  Q: {q1.question_text}")
         print(f"  Why Asking: {q1.why_asking}")
 

@@ -7,6 +7,8 @@ import { useAnalysis } from '../hooks/useAnalysis';
 import { DecisionCard } from './DecisionCard';
 import { Disclaimer } from './Disclaimer';
 import { AnalysisTimeline } from './AnalysisTimeline';
+import { LegalRegimeExplorer } from './LegalRegimeExplorer';
+import { SystemStatus } from './SystemStatus';
 
 export const DecisionMap: React.FC = () => {
   const router = useRouter();
@@ -81,6 +83,12 @@ export const DecisionMap: React.FC = () => {
           />
         ))}
       </div>
+
+      {/* Legal Regime Explorer Component */}
+      <LegalRegimeExplorer />
+
+      {/* AI System Status Panel */}
+      <SystemStatus />
 
       {/* Bottom Call to Action Section */}
       <div className="bg-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 border border-slate-800">

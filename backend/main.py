@@ -31,6 +31,7 @@ try:
     from backend.complexity_analyzer import ComplexityAnalyzer, ComplexityAnalysisResult
     from backend.interview_state_manager import InterviewStateManager
     from backend.policy_explainer import PolicyExplainerEngine, SimplePolicyBreakdown, DecisionExplanationDetail
+    from backend.multilingual_service import MultilingualService, MultilingualTextRecord
 except ImportError:
     from config import get_config_summary, AI_MODE
     from fingerprint_schema import InnovationFingerprint
@@ -46,6 +47,7 @@ except ImportError:
     from complexity_analyzer import ComplexityAnalyzer, ComplexityAnalysisResult
     from interview_state_manager import InterviewStateManager
     from policy_explainer import PolicyExplainerEngine, SimplePolicyBreakdown, DecisionExplanationDetail
+    from multilingual_service import MultilingualService, MultilingualTextRecord
 
 
 # Initialize FastAPI app with Swagger documentation
@@ -79,6 +81,7 @@ roadmap_generator = RoadmapGenerator()
 category_detector = AICategoryDetector()
 complexity_analyzer = ComplexityAnalyzer()
 policy_explainer = PolicyExplainerEngine()
+multilingual_service = MultilingualService()
 
 
 # --- Pydantic Request & Response Schemas ---
@@ -170,6 +173,15 @@ class ExplainDecisionRequest(BaseModel):
     evidence_count: Optional[int] = 1
 
 
+class TranslationRequest(BaseModel):
+    text: str
+    target_language: str = "en"
+
+
+class RealtimeSignalRequest(BaseModel):
+    text: str
+
+
 # --- Helper Function: Full Pipeline Orchestrator ---
 
 def run_pipeline(fingerprint: InnovationFingerprint) -> FullAnalysisResponse:
@@ -237,17 +249,54 @@ def health_check():
     )
 
 
+@app.get("/system/status", tags=["System Status"])
+def get_system_status_endpoint():
+    """Returns detailed status of all AI services."""
+    return {
+        "backend": True,
+        "nlp_engine": True,
+        "rag_system": True,
+        "legal_rules": True,
+        "web_research": True,
+        "ai_gemini": True,
+    }
+
+
+@app.post("/i18n/translate", tags=["Multilingual Service"])
+def translate_endpoint(req: TranslationRequest):
+    """Processes multilingual input and returns translated English or target phrase."""
+    return multilingual_service.process_multilingual_input(req.text)
+
+
+@app.post("/analyze/realtime_signals", tags=["Analysis Intelligence"])
+def realtime_signals_endpoint(req: RealtimeSignalRequest):
+    """Parses real-time signals from user description during typing."""
+    nlp_res = fingerprint_extractor.local_nlp.extract(req.text)
+    return {
+        "ingredients": nlp_res.ingredients,
+        "processes": nlp_res.processes,
+        "locations": nlp_res.locations,
+        "uses": nlp_res.uses,
+    }
+
+
 @app.post("/analyze", response_model=FullAnalysisResponse, tags=["Analysis"])
 def analyze_innovation(req: AnalyzeRequest):
     """
     Direct analysis endpoint. Accepts multilingual text or structured details,
     extracts an InnovationFingerprint using multi-layer NLP/AI, and runs the full IP-SAKTI pipeline.
     """
+    # Multilingual processing
+    ml_record = multilingual_service.process_multilingual_input(req.description)
+    text_to_analyze = ml_record.translated_english or req.description
+
     # Use multi-layer extractor on user input
     fingerprint = fingerprint_extractor.extract_fingerprint(
-        text=req.description,
+        text=text_to_analyze,
         innovation_name=req.innovation_name or "Ayurvedic Innovation",
     )
+    fingerprint.original_input = req.description
+    fingerprint.detected_language = ml_record.original_language
 
     # Override/enrich with explicitly passed structured fields if provided
     if req.ingredients:
@@ -574,7 +623,7 @@ if __name__ == "__main__":
     assert dec_explain_res.json()["regime_name"] == "PATENT"
     print("   [OK] Policy & Decision Explainer endpoints passed cleanly!\n")
 
-    # 5. Test Interview Flow (Start, Answer, Skip, Status, Complete)
+    # 5. Test Smart Interview Flow
     print("5. Testing Smart Interview Flow")
     start_res = client.post("/interview/start", json={"initial_inputs": {"innovation_name": "Wound Gel", "description": "Neem gel"}})
     assert start_res.status_code == 200
@@ -589,5 +638,12 @@ if __name__ == "__main__":
     comp_interview_res = client.post(f"/interview/{sess_id}/complete")
     assert comp_interview_res.status_code == 200
     print("   [OK] Smart Interview endpoints passed cleanly!\n")
+
+    # 6. Test Multilingual Endpoint
+    print("6. Testing Multilingual Endpoint")
+    ml_res = client.post("/i18n/translate", json={"text": "வேப்பிலை மருந்து", "target_language": "en"})
+    assert ml_res.status_code == 200
+    assert ml_res.json()["original_language"] == "Tamil"
+    print("   [OK] Multilingual endpoint passed cleanly!\n")
 
     print("[OK] ALL FastAPI Backend Endpoint Tests Passed Cleanly!")

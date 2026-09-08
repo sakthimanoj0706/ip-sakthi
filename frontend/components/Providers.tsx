@@ -2,7 +2,12 @@
 
 import React from 'react';
 import { AnalysisProvider } from '../hooks/useAnalysis';
+import { LanguageProvider } from '../context/LanguageContext';
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <AnalysisProvider>{children}</AnalysisProvider>;
+  return (
+    <LanguageProvider>
+      <AnalysisProvider>{children}</AnalysisProvider>
+    </LanguageProvider>
+  );
 }

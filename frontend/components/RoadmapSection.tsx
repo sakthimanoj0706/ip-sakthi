@@ -9,6 +9,7 @@ import { Disclaimer } from './Disclaimer';
 import { RoadmapItem } from '../lib/types';
 import { AnalysisTimeline } from './AnalysisTimeline';
 import { PolicyExplanationCard } from './PolicyExplanationCard';
+import { DecisionDashboard } from './DecisionDashboard';
 
 export const RoadmapSection: React.FC = () => {
   const router = useRouter();
@@ -52,8 +53,13 @@ export const RoadmapSection: React.FC = () => {
       {/* Visual Timeline */}
       <AnalysisTimeline currentStep={5} />
 
-      {/* Disclaimer */}
+      {/* Mandatory Disclaimer */}
       <Disclaimer variant="info" customText={roadmap?.disclaimer} />
+
+      {/* Decision Dashboard Report */}
+      {fullAnalysisResponse && (
+        <DecisionDashboard analysis={fullAnalysisResponse} />
+      )}
 
       {/* Innovation Summary Header */}
       {roadmap?.innovation_summary && (

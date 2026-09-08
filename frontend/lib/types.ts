@@ -72,6 +72,8 @@ export interface QuestionPrompt {
   help_text?: string | null;
   priority_level?: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | string;
   why_asking?: string | null;
+  current_dynamic_step?: number;
+  total_dynamic_questions?: number;
 }
 
 export interface SimplePolicyBreakdown {

@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ArrowLeft, ArrowRight, Sparkles, FlaskConical, Microscope, Pill, Settings, HelpCircle, SkipForward, ShieldAlert, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Check, ArrowLeft, ArrowRight, Sparkles, FlaskConical, Microscope, Pill, Settings, HelpCircle, SkipForward, ShieldAlert, CheckCircle2, AlertCircle, Plus, X } from 'lucide-react';
 import { useAnalysis } from '../hooks/useAnalysis';
 import { skipInterviewQuestion } from '../lib/api';
+import { ExtractionConfirmation } from './ExtractionConfirmation';
 
 interface OptionCard {
   id: string;
@@ -53,13 +54,20 @@ export const SmartInterview: React.FC = () => {
     fingerprint,
   } = useAnalysis();
 
-  // Local state for current step answer
+  // Local states
   const [selectedNoveltyTypes, setSelectedNoveltyTypes] = useState<string[]>(['extraction_method']);
   const [textAnswer, setTextAnswer] = useState<string>('');
+  const [booleanAnswer, setBooleanAnswer] = useState<string>('Yes');
+  const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
+  const [entityList, setEntityList] = useState<string[]>(['Neem', 'Turmeric']);
+  const [newEntityInput, setNewEntityInput] = useState<string>('');
+  const [showExtractionConfirm, setShowExtractionConfirm] = useState<boolean>(false);
 
-  // Reset text input whenever question changes to prevent stale input bug
+  // Reset local state on field change
   useEffect(() => {
     setTextAnswer('');
+    setBooleanAnswer('Yes');
+    setMultiSelectAnswers([]);
   }, [currentQuestion?.field_name]);
 
   const handleOptionToggle = (id: string) => {
@@ -70,10 +78,36 @@ export const SmartInterview: React.FC = () => {
     }
   };
 
+  const handleMultiSelectToggle = (val: string) => {
+    if (multiSelectAnswers.includes(val)) {
+      setMultiSelectAnswers(multiSelectAnswers.filter((v) => v !== val));
+    } else {
+      setMultiSelectAnswers([...multiSelectAnswers, val]);
+    }
+  };
+
+  const handleAddEntity = () => {
+    if (newEntityInput.trim() && !entityList.includes(newEntityInput.trim())) {
+      setEntityList([...entityList, newEntityInput.trim()]);
+      setNewEntityInput('');
+    }
+  };
+
+  const handleRemoveEntity = (item: string) => {
+    setEntityList(entityList.filter((e) => e !== item));
+  };
+
   const handleNext = async () => {
     const fieldName = currentQuestion?.field_name || 'novelty_type';
     let val: any = selectedNoveltyTypes;
-    if (currentQuestion?.question_type === 'text' || currentQuestion?.question_type === 'list') {
+
+    if (currentQuestion?.question_type === 'boolean') {
+      val = booleanAnswer === 'Yes';
+    } else if (currentQuestion?.question_type === 'multiselect') {
+      val = multiSelectAnswers.length > 0 ? multiSelectAnswers : ['None'];
+    } else if (currentQuestion?.question_type === 'entity_input') {
+      val = entityList;
+    } else if (currentQuestion?.question_type === 'text' || currentQuestion?.question_type === 'list') {
       val = textAnswer.trim() || 'UNKNOWN';
     } else if (currentQuestion?.options && currentQuestion.options.length > 0) {
       val = textAnswer.trim() || currentQuestion.options[0];
@@ -82,8 +116,7 @@ export const SmartInterview: React.FC = () => {
     await submitAnswer(fieldName, val);
 
     if (isInterviewComplete || interviewProgress >= 80) {
-      await runFullAnalysis();
-      router.push('/fingerprint');
+      setShowExtractionConfirm(true);
     }
   };
 
@@ -92,9 +125,13 @@ export const SmartInterview: React.FC = () => {
     await submitAnswer(fieldName, 'UNKNOWN');
 
     if (isInterviewComplete || interviewProgress >= 80) {
-      await runFullAnalysis();
-      router.push('/fingerprint');
+      setShowExtractionConfirm(true);
     }
+  };
+
+  const handleConfirmExtractionAndAnalyze = async () => {
+    await runFullAnalysis();
+    router.push('/fingerprint');
   };
 
   const getPriorityBadge = (priority?: string) => {
@@ -109,6 +146,18 @@ export const SmartInterview: React.FC = () => {
         return 'bg-slate-500/20 text-slate-300 border-slate-500/40';
     }
   };
+
+  if (showExtractionConfirm && fingerprint) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <ExtractionConfirmation
+          fingerprint={fingerprint}
+          onConfirm={handleConfirmExtractionAndAnalyze}
+          onEdit={() => setShowExtractionConfirm(false)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -201,7 +250,7 @@ export const SmartInterview: React.FC = () => {
           <div className="bg-slate-900 rounded-xl shadow-lg border border-slate-800 p-6 sm:p-8 text-slate-100">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
               <span className="text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-3 py-1 rounded-full font-mono">
-                QUESTION {Math.ceil((interviewProgress / 100) * 5) || 2} OF 5
+                QUESTION {currentQuestion?.current_dynamic_step || Math.ceil((interviewProgress / 100) * 5) || 2} OF {currentQuestion?.total_dynamic_questions || 5}
               </span>
 
               {currentQuestion?.priority_level && (
@@ -230,8 +279,86 @@ export const SmartInterview: React.FC = () => {
               </div>
             )}
 
-            {/* Selectable Cards for Novelty or Option Questions */}
-            {(!currentQuestion || currentQuestion.question_type === 'select') ? (
+            {/* INPUT TYPE 1: BOOLEAN ([ Yes ] [ No ] [ Not Sure ]) */}
+            {currentQuestion?.question_type === 'boolean' ? (
+              <div className="flex flex-wrap gap-3 mb-8">
+                {['Yes', 'No', 'Not Sure'].map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => setBooleanAnswer(opt)}
+                    className={`px-6 py-3 rounded-xl border text-sm font-bold transition-all ${
+                      booleanAnswer === opt
+                        ? 'border-emerald-500 bg-emerald-600 text-white shadow-md'
+                        : 'border-slate-800 bg-slate-950 text-slate-300 hover:bg-slate-800'
+                    }`}
+                  >
+                    [ {opt} ]
+                  </button>
+                ))}
+              </div>
+            ) : currentQuestion?.question_type === 'multiselect' ? (
+              /* INPUT TYPE 2: MULTISELECT (Checkboxes) */
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                {currentQuestion.options?.map((opt) => {
+                  const isChecked = multiSelectAnswers.includes(opt);
+                  return (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => handleMultiSelectToggle(opt)}
+                      className={`p-3 rounded-xl border text-left text-xs font-semibold flex items-center justify-between transition-all ${
+                        isChecked
+                          ? 'border-emerald-500 bg-emerald-950/40 text-emerald-300 ring-1 ring-emerald-500'
+                          : 'border-slate-800 bg-slate-950 text-slate-300 hover:bg-slate-900'
+                      }`}
+                    >
+                      <span>☐ {opt}</span>
+                      {isChecked && <Check className="h-4 w-4 text-emerald-400" />}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : currentQuestion?.question_type === 'entity_input' ? (
+              /* INPUT TYPE 3: ENTITY CHIPS (+ Add Ingredient) */
+              <div className="mb-8 space-y-4">
+                <div className="flex flex-wrap gap-2">
+                  {entityList.map((item) => (
+                    <span
+                      key={item}
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-950/80 px-3 py-1.5 text-xs font-bold text-emerald-300 border border-emerald-500/30"
+                    >
+                      🌿 {item}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveEntity(item)}
+                        className="hover:text-rose-400 text-slate-400"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={newEntityInput}
+                    onChange={(e) => setNewEntityInput(e.target.value)}
+                    placeholder="Add another ingredient..."
+                    className="flex-1 px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 text-xs focus:ring-2 focus:ring-emerald-500 outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddEntity}
+                    className="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all flex items-center gap-1"
+                  >
+                    <Plus className="h-4 w-4" /> Add
+                  </button>
+                </div>
+              </div>
+            ) : (!currentQuestion || currentQuestion.question_type === 'select') ? (
+              /* INPUT TYPE 4: SELECT CARDS */
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                 {NOVELTY_OPTION_CARDS.map((card) => {
                   const isSelected = selectedNoveltyTypes.includes(card.id);
@@ -270,34 +397,15 @@ export const SmartInterview: React.FC = () => {
                 })}
               </div>
             ) : (
-              /* Text Input */
+              /* INPUT TYPE 5: TEXT AREA */
               <div className="mb-8 space-y-3">
-                {currentQuestion?.options && currentQuestion.options.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {currentQuestion.options.map((opt) => (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => setTextAnswer(opt)}
-                        className={`p-3 rounded-lg border text-left text-xs font-semibold transition-all ${
-                          textAnswer === opt
-                            ? 'border-emerald-500 bg-emerald-950/40 text-emerald-300 ring-1 ring-emerald-500'
-                            : 'border-slate-800 bg-slate-950 text-slate-300 hover:bg-slate-900'
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <input
-                    type="text"
-                    value={textAnswer}
-                    onChange={(e) => setTextAnswer(e.target.value)}
-                    placeholder="Type your answer here..."
-                    className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
-                  />
-                )}
+                <textarea
+                  rows={4}
+                  value={textAnswer}
+                  onChange={(e) => setTextAnswer(e.target.value)}
+                  placeholder="Type your answer in detail..."
+                  className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none leading-relaxed"
+                />
               </div>
             )}
 
