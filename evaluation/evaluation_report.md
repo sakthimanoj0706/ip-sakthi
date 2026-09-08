@@ -84,7 +84,7 @@ This report documents the empirical evaluation results for **IP-SAKTI Sahayak** 
 ## 6. System Performance & Latency
 
 - **System Success Rate**: **100.0%**
-- **Average Processing Time per Innovation**: **12.556 seconds**
+- **Average Processing Time per Innovation**: **6.540 seconds**
 - **Total Test Cases**: 30 (30 passed, 0 failed)
 
 ---

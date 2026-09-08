@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { BookOpen, CheckCircle2, ShieldAlert, Sparkles, ChevronDown, ChevronUp, FileText } from 'lucide-react';
 import { SimplePolicyBreakdown } from '../lib/types';
+import { useTranslation } from '../context/LanguageContext';
 
 interface PolicyExplanationCardProps {
   policy: SimplePolicyBreakdown;
@@ -13,6 +14,7 @@ export const PolicyExplanationCard: React.FC<PolicyExplanationCardProps> = ({
   policy,
   onViewReasoningPath,
 }) => {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState<boolean>(false);
   const [viewMode, setViewMode] = useState<'simple' | 'legal'>('simple');
 
@@ -43,7 +45,7 @@ export const PolicyExplanationCard: React.FC<PolicyExplanationCardProps> = ({
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              Simple Explanation
+              {t('decision.simpleExp', 'Simple Explanation')}
             </button>
             <button
               type="button"
@@ -54,7 +56,7 @@ export const PolicyExplanationCard: React.FC<PolicyExplanationCardProps> = ({
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              Detailed Legal View
+              {t('decision.detailedLegal', 'Detailed Legal View')}
             </button>
           </div>
 
@@ -65,7 +67,7 @@ export const PolicyExplanationCard: React.FC<PolicyExplanationCardProps> = ({
               className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-500 transition-colors shadow-sm"
             >
               <Sparkles className="h-3.5 w-3.5" />
-              Why did IP-SAKTI say this?
+              {t('decision.whySayThis', 'Why did IP-SAKTI say this?')}
             </button>
           )}
         </div>

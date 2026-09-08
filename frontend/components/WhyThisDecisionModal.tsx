@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Sparkles, CheckCircle2, ArrowRight, ShieldCheck, FileText, Cpu, AlertCircle } from 'lucide-react';
 import { DecisionExplanationDetail, InnovationFingerprint } from '../lib/types';
 import { getDecisionExplanation } from '../lib/api';
+import { useTranslation } from '../context/LanguageContext';
 
 interface WhyThisDecisionModalProps {
   isOpen: boolean;
@@ -20,6 +21,7 @@ export const WhyThisDecisionModal: React.FC<WhyThisDecisionModalProps> = ({
   fingerprint,
   decisionStatus,
 }) => {
+  const { t } = useTranslation();
   const [detail, setDetail] = useState<DecisionExplanationDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -58,7 +60,7 @@ export const WhyThisDecisionModal: React.FC<WhyThisDecisionModalProps> = ({
           </div>
           <div>
             <h3 className="text-lg font-bold flex items-center gap-2">
-              Why did IP-SAKTI say this?
+              {t('decision.whySayThis', 'Why did IP-SAKTI say this?')}
               <span className="rounded-full bg-emerald-900/60 px-2.5 py-0.5 text-xs text-emerald-300 font-mono border border-emerald-500/30">
                 {regime} REGIME
               </span>

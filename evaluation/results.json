@@ -74,7 +74,7 @@
     "question_efficiency": 61.54
   },
   "system_success_rate": 1.0,
-  "average_processing_time": 12.5558,
+  "average_processing_time": 6.5397,
   "average_confidence": 0.7087,
   "abstention_rate": 0.0667,
   "system_performance": {
@@ -82,7 +82,7 @@
     "successful_cases": 30,
     "failed_cases": 0,
     "system_success_rate": 1.0,
-    "average_processing_time": 12.5558,
+    "average_processing_time": 6.5397,
     "average_confidence": 0.7087,
     "abstention_rate": 0.0667
   },

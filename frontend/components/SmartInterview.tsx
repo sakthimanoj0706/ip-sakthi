@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ArrowLeft, ArrowRight, Sparkles, FlaskConical, Microscope, Pill, Settings, HelpCircle, SkipForward, ShieldAlert, CheckCircle2, AlertCircle, Plus, X } from 'lucide-react';
+import { Check, ArrowLeft, ArrowRight, Sparkles, FlaskConical, Microscope, Pill, Settings, HelpCircle, SkipForward, ShieldAlert, CheckCircle2, AlertCircle, Plus, X, Mic, Globe } from 'lucide-react';
 import { useAnalysis } from '../hooks/useAnalysis';
 import { skipInterviewQuestion } from '../lib/api';
 import { ExtractionConfirmation } from './ExtractionConfirmation';
+import { useTranslation } from '../context/LanguageContext';
 
 interface OptionCard {
   id: string;
@@ -43,6 +44,7 @@ const NOVELTY_OPTION_CARDS: OptionCard[] = [
 
 export const SmartInterview: React.FC = () => {
   const router = useRouter();
+  const { t } = useTranslation();
   const {
     innovationName,
     currentQuestion,
@@ -58,6 +60,7 @@ export const SmartInterview: React.FC = () => {
   const [selectedNoveltyTypes, setSelectedNoveltyTypes] = useState<string[]>(['extraction_method']);
   const [textAnswer, setTextAnswer] = useState<string>('');
   const [booleanAnswer, setBooleanAnswer] = useState<string>('Yes');
+  const [voiceNotice, setVoiceNotice] = useState<boolean>(false);
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
   const [entityList, setEntityList] = useState<string[]>(['Neem', 'Turmeric']);
   const [newEntityInput, setNewEntityInput] = useState<string>('');
@@ -398,14 +401,46 @@ export const SmartInterview: React.FC = () => {
               </div>
             ) : (
               /* INPUT TYPE 5: TEXT AREA */
-              <div className="mb-8 space-y-3">
-                <textarea
-                  rows={4}
-                  value={textAnswer}
-                  onChange={(e) => setTextAnswer(e.target.value)}
-                  placeholder="Type your answer in detail..."
-                  className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none leading-relaxed"
-                />
+              <div className="mb-8 space-y-2">
+                <div className="flex items-center justify-end">
+                  <span className="text-[11px] font-mono text-emerald-400 bg-slate-950 px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
+                    <Globe className="w-3 h-3 text-emerald-400" />
+                    <span>
+                      {t('input.detectedLang', 'Detected:')}{' '}
+                      {/[\u0B80-\u0BFF]/.test(textAnswer)
+                        ? 'தமிழ் (Tamil)'
+                        : /[\u0900-\u097F]/.test(textAnswer)
+                        ? 'हिन्दी (Hindi)'
+                        : 'English'}
+                    </span>
+                  </span>
+                </div>
+
+                <div className="relative">
+                  <textarea
+                    rows={4}
+                    value={textAnswer}
+                    onChange={(e) => setTextAnswer(e.target.value)}
+                    placeholder={t('input.descPlaceholder', 'Type your answer in detail in English, Tamil, Hindi, or Tanglish...')}
+                    className="w-full px-4 py-3 pr-10 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 font-medium text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none leading-relaxed"
+                  />
+
+                  {/* Voice Microphone Prep */}
+                  <button
+                    type="button"
+                    onClick={() => setVoiceNotice(true)}
+                    className="absolute right-3 bottom-3 p-1.5 text-slate-400 hover:text-emerald-400 bg-slate-900 hover:bg-slate-800 rounded-lg border border-slate-700 transition-colors"
+                    title={t('input.micTooltip', 'Voice Input (Coming Soon)')}
+                  >
+                    <Mic className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {voiceNotice && (
+                  <p className="text-[11px] text-amber-400 font-mono flex items-center gap-1 mt-1">
+                    🎙️ Voice Input architecture ready. Speech-to-text recording coming in next release.
+                  </p>
+                )}
               </div>
             )}
 
@@ -414,29 +449,29 @@ export const SmartInterview: React.FC = () => {
               <button
                 type="button"
                 onClick={() => router.push('/analyze')}
-                className="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition-colors flex items-center space-x-1.5"
+                className="px-4 py-2 rounded-lg text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors flex items-center space-x-1.5"
               >
                 <ArrowLeft className="w-4 h-4" />
-                <span>Back</span>
+                <span>{t('button.back', 'Back')}</span>
               </button>
 
               <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={handleSkip}
-                  className="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-amber-300 hover:bg-slate-800 border border-slate-800 transition-colors flex items-center space-x-1.5"
+                  className="px-4 py-2 rounded-lg text-xs font-bold text-slate-300 hover:text-amber-300 hover:bg-slate-800 border border-slate-800 transition-colors flex items-center space-x-1.5"
                 >
                   <SkipForward className="w-3.5 h-3.5" />
-                  <span>Skip for now</span>
+                  <span>{t('button.skip', 'Skip for now')}</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={handleNext}
                   disabled={isLoading}
-                  className="px-6 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md transition-all flex items-center space-x-2 disabled:opacity-50"
+                  className="px-6 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-md transition-all flex items-center space-x-2 disabled:opacity-50"
                 >
-                  <span>{isLoading ? 'Processing...' : 'Continue'}</span>
+                  <span>{isLoading ? t('interview.processing', 'IP-SAKTI is analyzing your innovation...') : t('button.continue', 'Continue')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
