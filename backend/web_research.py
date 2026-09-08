@@ -127,6 +127,8 @@ class WebResearchEngine:
                 if validated_sources:
                     results[regime] = [s.model_dump() for s in validated_sources]
 
+        return results
+
     def research_regimes(
         self,
         fp: InnovationFingerprint,

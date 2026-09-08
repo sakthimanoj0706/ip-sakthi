@@ -6,10 +6,11 @@ import { Compass, ArrowRight, Sparkles } from 'lucide-react';
 import { useAnalysis } from '../hooks/useAnalysis';
 import { DecisionCard } from './DecisionCard';
 import { Disclaimer } from './Disclaimer';
+import { AnalysisTimeline } from './AnalysisTimeline';
 
 export const DecisionMap: React.FC = () => {
   const router = useRouter();
-  const { decisionMap, runFullAnalysis, isLoading } = useAnalysis();
+  const { decisionMap, fingerprint, runFullAnalysis, isLoading } = useAnalysis();
 
   const handleGenerateRoadmap = async () => {
     await runFullAnalysis();
@@ -49,20 +50,22 @@ export const DecisionMap: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 space-y-8">
-      
       {/* Header */}
       <div className="text-center">
-        <span className="inline-block px-3 py-1 bg-emerald-50 text-emerald-700 font-semibold text-xs rounded-full border border-emerald-200 mb-3">
-          STEP 4 OF 5
+        <span className="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 font-semibold text-xs rounded-full border border-emerald-500/30 mb-3 font-mono">
+          STEP 4 OF 5 — MULTI-REGIME EVALUATION
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center justify-center space-x-2">
-          <Compass className="w-8 h-8 text-emerald-600" />
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 flex items-center justify-center space-x-2">
+          <Compass className="w-8 h-8 text-emerald-400" />
           <span>Your Innovation Decision Map</span>
         </h1>
-        <p className="mt-2 text-sm text-slate-600 max-w-2xl mx-auto">
-          Based on the information provided, IP-SAKTI identified the following areas for preliminary exploration.
+        <p className="mt-2 text-sm text-slate-400 max-w-2xl mx-auto">
+          Evaluates Section 3(p), Section 3(e), TKDL prior art, Biological Diversity Act 2023, and AYUSH Rule 158-B.
         </p>
       </div>
+
+      {/* Visual Analysis Timeline */}
+      <AnalysisTimeline currentStep={4} />
 
       {/* Mandatory Disclaimer */}
       <Disclaimer variant="warning" />
@@ -73,35 +76,35 @@ export const DecisionMap: React.FC = () => {
           <DecisionCard
             key={index}
             item={item}
+            fingerprint={fingerprint || undefined}
             onExploreEvidence={() => router.push('/roadmap')}
           />
         ))}
       </div>
 
       {/* Bottom Call to Action Section */}
-      <div className="bg-slate-900 rounded-xl p-6 sm:p-8 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-6 border border-slate-800">
+      <div className="bg-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 border border-slate-800">
         <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">
-            NEXT STEP
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 font-mono">
+            FINAL STEP
           </span>
           <h3 className="text-lg font-bold text-white mt-1">
             View Your Personalized Action Roadmap
           </h3>
           <p className="text-xs text-slate-300 mt-1 max-w-lg leading-relaxed">
-            Get structured, step-by-step guidance on what we detected, why it matters under Indian law, and supporting legal citations.
+            Get structured, step-by-step guidance formatted as: WHAT WE DETECTED → WHY IT MATTERS → WHAT TO CHECK NEXT.
           </p>
         </div>
 
         <button
           onClick={handleGenerateRoadmap}
           disabled={isLoading}
-          className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm shadow-sm transition-all flex items-center justify-center space-x-2 shrink-0 disabled:opacity-50"
+          className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center space-x-2 shrink-0 disabled:opacity-50"
         >
           <span>{isLoading ? 'Generating Roadmap...' : 'Generate Action Roadmap'}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
-
     </div>
   );
 };

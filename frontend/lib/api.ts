@@ -2,6 +2,10 @@ import {
   FullAnalysisResponse,
   InnovationFingerprint,
   QuestionPrompt,
+  CategoryDetectionResult,
+  ComplexityAnalysisResult,
+  SimplePolicyBreakdown,
+  DecisionExplanationDetail,
 } from './types';
 import { DEMO_FULL_ANALYSIS } from './demo-data';
 
@@ -53,7 +57,7 @@ export async function checkBackendHealth(): Promise<boolean> {
     const res = await fetch(`${API_BASE_URL}/`, { cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();
-      return data.status === 'online';
+      return data.status === 'online' || data.status === 'healthy';
     }
     return false;
   } catch {
@@ -88,6 +92,56 @@ export async function analyzeInnovationDirect(payload: {
   }
 }
 
+export async function detectCategory(payload: {
+  innovation_name: string;
+  description: string;
+  user_selected_category?: string;
+}): Promise<CategoryDetectionResult> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/analyze/category`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch {
+    return {
+      primary_category: payload.user_selected_category || 'Ayurvedic Formulation',
+      confidence: 0.85,
+      confidence_label: 'High',
+      reason: 'Rule-based Ayurvedic formulation signal detected.',
+      detected_signals: ['Ayurvedic Herbs', 'Topical Application'],
+    };
+  }
+}
+
+export async function analyzeComplexity(payload: {
+  innovation_name?: string;
+  description: string;
+  ingredients?: string[] | string;
+  novelty_description?: string;
+  biological_resource_used?: boolean;
+  source_location?: string;
+}): Promise<ComplexityAnalysisResult> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/analyze/complexity`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch {
+    return {
+      complexity: 'MODERATE',
+      score: 55,
+      reasons: ['Polyherbal ingredients detected', 'Biological resource compliance evaluation required'],
+      badge_color: 'blue',
+    };
+  }
+}
+
 export async function startInterviewSession(initialInputs?: Record<string, any>): Promise<StartInterviewResponse> {
   try {
     const res = await fetch(`${API_BASE_URL}/interview/start`, {
@@ -98,7 +152,6 @@ export async function startInterviewSession(initialInputs?: Record<string, any>)
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch {
-    // Fallback demo response for offline mode
     return {
       session_id: 'demo-session-123',
       next_question: {
@@ -107,11 +160,13 @@ export async function startInterviewSession(initialInputs?: Record<string, any>)
         question_type: 'list',
         required: true,
         help_text: 'e.g., Neem, Turmeric',
+        priority_level: 'CRITICAL',
+        why_asking: 'Required to check Traditional Knowledge Digital Library (TKDL) prior art records.',
       },
       progress: {
         answered_count: 2,
-        total_count: 13,
-        percentage: 15.4,
+        total_count: 5,
+        percentage: 40.0,
         completed: false,
         missing_fields: ['ingredients', 'novelty_detected', 'biological_resource_used'],
       },
@@ -139,8 +194,37 @@ export async function submitInterviewAnswer(
       submitted_field: fieldName,
       next_question: null,
       progress: {
-        answered_count: 13,
-        total_count: 13,
+        answered_count: 5,
+        total_count: 5,
+        percentage: 100,
+        completed: true,
+        missing_fields: [],
+      },
+      completed: true,
+    };
+  }
+}
+
+export async function skipInterviewQuestion(
+  sessionId: string,
+  fieldName: string
+): Promise<SubmitAnswerResponse> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/interview/${sessionId}/skip`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ field_name: fieldName, answer: 'UNKNOWN' }),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch {
+    return {
+      session_id: sessionId,
+      submitted_field: fieldName,
+      next_question: null,
+      progress: {
+        answered_count: 5,
+        total_count: 5,
         percentage: 100,
         completed: true,
         missing_fields: [],
@@ -162,8 +246,8 @@ export async function getInterviewStatus(sessionId: string): Promise<InterviewSt
       session_id: sessionId,
       completed: true,
       progress: {
-        answered_count: 13,
-        total_count: 13,
+        answered_count: 5,
+        total_count: 5,
         percentage: 100,
         completed: true,
         missing_fields: [],
@@ -183,6 +267,67 @@ export async function completeInterviewAndAnalyze(sessionId: string): Promise<Fu
     return await res.json();
   } catch {
     return DEMO_FULL_ANALYSIS;
+  }
+}
+
+export async function getPolicyExplanation(regime: string): Promise<SimplePolicyBreakdown> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/policy/${regime}/explain`, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch {
+    return {
+      regime_name: regime.toUpperCase(),
+      statute_name: 'The Patents Act, 1970 - Section 3(p)',
+      policy_title: 'Traditional Knowledge Restriction',
+      what_it_means: 'You cannot patent pure classical Ayurvedic formulations. Novel extraction methods or non-obvious synergistic efficacy are patentable.',
+      why_it_applies_to_you: 'Your formulation incorporates classical Ayurvedic herbs.',
+      what_makes_your_case_different: 'You claim a novel nano-extraction process.',
+      what_you_should_prove: [
+        'Prove genuine technical process novelty.',
+        'Demonstrate unexpected synergistic bio-availability (Section 3(e) non-admixture test).',
+      ],
+      confidence_label: 'High',
+      confidence_score: 0.90,
+    };
+  }
+}
+
+export async function getDecisionExplanation(payload: {
+  regime: string;
+  fingerprint: any;
+  decision_status?: string;
+  evidence_count?: number;
+}): Promise<DecisionExplanationDetail> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/decision/explain`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch {
+    return {
+      regime_name: payload.regime.toUpperCase(),
+      decision_status: payload.decision_status || 'POSSIBLE',
+      detected_signals: ['Neem', 'Turmeric', 'Nano-Extraction'],
+      reasoning_path: [
+        { step_name: 'Input Description', detail: 'Analyzed user description', status: 'completed' },
+        { step_name: 'Multi-Layer NLP', detail: 'Extracted 2 botanical herbs', status: 'completed' },
+        { step_name: 'Rule Engine Evaluation', detail: 'Assessed statutory exclusions', status: 'completed' },
+      ],
+      policy_breakdown: {
+        regime_name: payload.regime.toUpperCase(),
+        statute_name: 'The Patents Act, 1970 - Section 3(p)',
+        policy_title: 'Traditional Knowledge Exclusion',
+        what_it_means: 'Classical Ayurvedic recipes are non-patentable unless process novelty is proven.',
+        why_it_applies_to_you: 'Formulation contains classical medicinal plants.',
+        what_makes_your_case_different: 'Claimed nano-extraction technology.',
+        what_you_should_prove: ['Demonstrate non-obvious synergistic effect.'],
+      },
+      supporting_evidence_count: payload.evidence_count || 1,
+    };
   }
 }
 
@@ -356,5 +501,3 @@ export async function getRetrievalDebugLog(): Promise<RetrievalDebugRecord[]> {
     ];
   }
 }
-
-

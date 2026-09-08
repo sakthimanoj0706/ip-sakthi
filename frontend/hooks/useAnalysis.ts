@@ -38,6 +38,7 @@ export interface AnalysisContextType {
   retrievedEvidence: Record<string, { query: string; evidence: EvidenceSource[] }> | null;
   evidenceValidation: Record<string, EvidenceValidation> | null;
   roadmap: FullActionRoadmap | null;
+  fullAnalysisResponse: FullAnalysisResponse | null;
   isLoading: boolean;
   isBackendConnected: boolean;
   isDemoMode: boolean;
@@ -80,6 +81,7 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [retrievedEvidence, setRetrievedEvidence] = useState<Record<string, { query: string; evidence: EvidenceSource[] }> | null>(DEMO_FULL_ANALYSIS.retrieved_evidence);
   const [evidenceValidation, setEvidenceValidation] = useState<Record<string, EvidenceValidation> | null>(DEMO_FULL_ANALYSIS.evidence_validation);
   const [roadmap, setRoadmap] = useState<FullActionRoadmap | null>(DEMO_ROADMAP);
+  const [fullAnalysisResponse, setFullAnalysisResponse] = useState<FullAnalysisResponse | null>(DEMO_FULL_ANALYSIS);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isBackendConnected, setIsBackendConnected] = useState<boolean>(false);
@@ -116,6 +118,8 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           question_type: 'list',
           required: true,
           help_text: 'e.g., Neem, Turmeric',
+          priority_level: 'CRITICAL',
+          why_asking: 'Required to check Traditional Knowledge Digital Library (TKDL) prior art records.',
         });
         setInterviewProgress(20);
         setIsInterviewComplete(false);
@@ -168,12 +172,12 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setError(null);
     try {
       if (isDemoMode || !isBackendConnected) {
-        // Use demo analysis data
         setFingerprint(DEMO_FINGERPRINT);
         setDecisionMap(DEMO_DECISION_MAP);
         setRetrievedEvidence(DEMO_FULL_ANALYSIS.retrieved_evidence);
         setEvidenceValidation(DEMO_FULL_ANALYSIS.evidence_validation);
         setRoadmap(DEMO_ROADMAP);
+        setFullAnalysisResponse(DEMO_FULL_ANALYSIS);
       } else {
         let res: FullAnalysisResponse;
         if (sessionId && isInterviewComplete) {
@@ -196,6 +200,7 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setRetrievedEvidence(res.retrieved_evidence);
         setEvidenceValidation(res.evidence_validation);
         setRoadmap(res.roadmap);
+        setFullAnalysisResponse(res);
       }
     } catch (err: any) {
       setError(err.message || 'Error executing analysis pipeline.');
@@ -221,6 +226,7 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setFingerprint(DEMO_FINGERPRINT);
       setDecisionMap(DEMO_DECISION_MAP);
       setRoadmap(DEMO_ROADMAP);
+      setFullAnalysisResponse(DEMO_FULL_ANALYSIS);
     }
   };
 
@@ -238,6 +244,7 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     retrievedEvidence,
     evidenceValidation,
     roadmap,
+    fullAnalysisResponse,
     isLoading,
     isBackendConnected,
     isDemoMode,

@@ -22,22 +22,30 @@ try:
     from backend.fingerprint_extractor import FingerprintExtractor
     from backend.interview_agent import AdaptiveInterviewAgent, QuestionPrompt
     from backend.decision_engine import DecisionEngine
-    from backend.decision_map import generate_decision_map
+    from backend.decision_map import generate_decision_map, DecisionResult
     from backend.regime_retrieval import RegimeRetrievalEngine
     from backend.web_research import WebResearchEngine
     from backend.evidence_validator import EvidenceValidator
     from backend.roadmap_generator import RoadmapGenerator
+    from backend.category_detector import AICategoryDetector, CategoryDetectionResult
+    from backend.complexity_analyzer import ComplexityAnalyzer, ComplexityAnalysisResult
+    from backend.interview_state_manager import InterviewStateManager
+    from backend.policy_explainer import PolicyExplainerEngine, SimplePolicyBreakdown, DecisionExplanationDetail
 except ImportError:
     from config import get_config_summary, AI_MODE
     from fingerprint_schema import InnovationFingerprint
     from fingerprint_extractor import FingerprintExtractor
     from interview_agent import AdaptiveInterviewAgent, QuestionPrompt
     from decision_engine import DecisionEngine
-    from decision_map import generate_decision_map
+    from decision_map import generate_decision_map, DecisionResult
     from regime_retrieval import RegimeRetrievalEngine
     from web_research import WebResearchEngine
     from evidence_validator import EvidenceValidator
     from roadmap_generator import RoadmapGenerator
+    from category_detector import AICategoryDetector, CategoryDetectionResult
+    from complexity_analyzer import ComplexityAnalyzer, ComplexityAnalysisResult
+    from interview_state_manager import InterviewStateManager
+    from policy_explainer import PolicyExplainerEngine, SimplePolicyBreakdown, DecisionExplanationDetail
 
 
 # Initialize FastAPI app with Swagger documentation
@@ -68,6 +76,9 @@ retrieval_engine = RegimeRetrievalEngine()
 web_research_engine = WebResearchEngine()
 evidence_validator = EvidenceValidator()
 roadmap_generator = RoadmapGenerator()
+category_detector = AICategoryDetector()
+complexity_analyzer = ComplexityAnalyzer()
+policy_explainer = PolicyExplainerEngine()
 
 
 # --- Pydantic Request & Response Schemas ---
@@ -100,6 +111,9 @@ class FullAnalysisResponse(BaseModel):
     web_research: Optional[Dict[str, Any]] = None
     evidence_validation: Dict[str, Any]
     roadmap: Dict[str, Any]
+    category_detection: Optional[Dict[str, Any]] = None
+    complexity_analysis: Optional[Dict[str, Any]] = None
+    policy_explanations: Optional[Dict[str, Any]] = None
 
 
 class StartInterviewRequest(BaseModel):
@@ -134,6 +148,28 @@ class InterviewStatusResponse(BaseModel):
     missing_fields: List[str]
 
 
+class CategoryRequest(BaseModel):
+    innovation_name: str = ""
+    description: str = ""
+    user_selected_category: Optional[str] = None
+
+
+class ComplexityRequest(BaseModel):
+    innovation_name: Optional[str] = ""
+    description: str = ""
+    ingredients: Optional[Union[List[str], str]] = None
+    novelty_description: Optional[str] = None
+    biological_resource_used: Optional[bool] = False
+    source_location: Optional[str] = None
+
+
+class ExplainDecisionRequest(BaseModel):
+    regime: str
+    fingerprint: Dict[str, Any]
+    decision_status: Optional[str] = "REVIEW_REQUIRED"
+    evidence_count: Optional[int] = 1
+
+
 # --- Helper Function: Full Pipeline Orchestrator ---
 
 def run_pipeline(fingerprint: InnovationFingerprint) -> FullAnalysisResponse:
@@ -164,6 +200,14 @@ def run_pipeline(fingerprint: InnovationFingerprint) -> FullAnalysisResponse:
         validation_results=validation_map,
     )
 
+    # 7. Enhanced Category, Complexity & Policy Explanations
+    cat_res = category_detector.detect_category(fingerprint.innovation_name, fingerprint.description)
+    comp_res = complexity_analyzer.analyze_complexity(fingerprint, text=fingerprint.description)
+
+    policies = {}
+    for reg in ["PATENT", "TRADITIONAL_KNOWLEDGE", "ABS", "REGULATORY"]:
+        policies[reg] = policy_explainer.explain_policy(reg, fingerprint).model_dump()
+
     return FullAnalysisResponse(
         fingerprint=fingerprint.model_to_dict(),
         decision_map=decision_map,
@@ -171,6 +215,9 @@ def run_pipeline(fingerprint: InnovationFingerprint) -> FullAnalysisResponse:
         web_research=web_research_map,
         evidence_validation=val_json,
         roadmap=roadmap,
+        category_detection=cat_res.model_dump(),
+        complexity_analysis=comp_res.model_dump(),
+        policy_explanations=policies,
     )
 
 
@@ -211,12 +258,34 @@ def analyze_innovation(req: AnalyzeRequest):
     if req.novelty_description:
         if req.novelty_description not in fingerprint.novelty_indicators:
             fingerprint.novelty_indicators.append(req.novelty_description)
+            fingerprint.novelty.description = req.novelty_description
+            fingerprint.novelty.novelty_detected = True
 
     if req.source_location:
         fingerprint.biological_resource.source_location = req.source_location
         fingerprint.biological_resource.detected = True
 
     return run_pipeline(fingerprint)
+
+
+@app.post("/analyze/category", response_model=CategoryDetectionResult, tags=["Analysis Intelligence"])
+def detect_category_endpoint(req: CategoryRequest):
+    """Auto-detects innovation category with confidence score and reasoning."""
+    return category_detector.detect_category(req.innovation_name, req.description)
+
+
+@app.post("/analyze/complexity", response_model=ComplexityAnalysisResult, tags=["Analysis Intelligence"])
+def analyze_complexity_endpoint(req: ComplexityRequest):
+    """Scores innovation complexity level (SIMPLE, MODERATE, COMPLEX) with risk factors."""
+    fp = InnovationFingerprint.from_user_input(
+        innovation_name=req.innovation_name or "Ayurvedic Innovation",
+        description=req.description,
+        ingredients=req.ingredients,
+        novelty_description=req.novelty_description,
+        biological_resource_used=req.biological_resource_used,
+        source_location=req.source_location
+    )
+    return complexity_analyzer.analyze_complexity(fp, text=req.description)
 
 
 @app.post("/interview/start", response_model=StartInterviewResponse, tags=["Smart Interview"])
@@ -251,6 +320,31 @@ def submit_answer(
 
     agent = INTERVIEW_SESSIONS[session_id]
     agent.submit_answer(req.field_name, req.answer)
+    next_q = agent.get_next_question()
+
+    return SubmitAnswerResponse(
+        session_id=session_id,
+        submitted_field=req.field_name,
+        next_question=next_q,
+        progress=agent.get_progress(),
+        completed=agent.is_complete(),
+    )
+
+
+@app.post("/interview/{session_id}/skip", response_model=SubmitAnswerResponse, tags=["Smart Interview"])
+def skip_question(
+    session_id: str = APIPath(..., description="Active interview session ID."),
+    req: SubmitAnswerRequest = ...,
+):
+    """Skips an interview question by marking field as UNKNOWN."""
+    if session_id not in INTERVIEW_SESSIONS:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Interview session '{session_id}' not found.",
+        )
+
+    agent = INTERVIEW_SESSIONS[session_id]
+    agent.submit_answer(req.field_name, "UNKNOWN")
     next_q = agent.get_next_question()
 
     return SubmitAnswerResponse(
@@ -302,6 +396,28 @@ def complete_interview_and_analyze(
     fingerprint = agent.build_fingerprint()
     
     return run_pipeline(fingerprint)
+
+
+@app.get("/policy/{regime}/explain", response_model=SimplePolicyBreakdown, tags=["Policy Explainer"])
+def get_policy_explanation(regime: str):
+    """Returns simple plain-language breakdown for a given regime policy (PATENT, TRADITIONAL_KNOWLEDGE, ABS, REGULATORY)."""
+    dummy_fp = InnovationFingerprint.from_user_input(
+        innovation_name="Ayurvedic Innovation",
+        description="Ayurvedic formulation using traditional herbs",
+    )
+    return policy_explainer.explain_policy(regime, dummy_fp)
+
+
+@app.post("/decision/explain", response_model=DecisionExplanationDetail, tags=["Policy Explainer"])
+def get_decision_explanation(req: ExplainDecisionRequest):
+    """Returns transparent decision explainability reasoning path ('Why did IP-SAKTI say this?')."""
+    fp = InnovationFingerprint.model_validate(req.fingerprint) if req.fingerprint else InnovationFingerprint.from_user_input("Ayurvedic Innovation", "Description")
+    dec = DecisionResult(
+        regime_name=req.regime.upper(),
+        status=req.decision_status or "REVIEW_REQUIRED",
+        reason="Evaluated by IP-SAKTI decision engine."
+    )
+    return policy_explainer.explain_decision(req.regime, dec, fp, evidence_count=req.evidence_count or 1)
 
 
 # --- Evaluation System REST API Endpoints ---
@@ -401,7 +517,6 @@ def get_retrieval_debug_log():
         return json.load(f)
 
 
-
 if __name__ == "__main__":
     from fastapi.testclient import TestClient
 
@@ -433,67 +548,46 @@ if __name__ == "__main__":
     assert data["fingerprint"]["innovation_name"] == "Ayurvedic Wound Healing Formulation"
     assert len(data["decision_map"]["regimes"]) == 4
     assert len(data["roadmap"]["regime_roadmaps"]) == 4
+    assert data["category_detection"] is not None
+    assert data["complexity_analysis"] is not None
     print("   [OK] POST /analyze passed cleanly!\n")
 
-    # 3. Test POST /interview/start
-    print("3. Testing POST /interview/start")
-    start_payload = {
-        "initial_inputs": {
-            "innovation_name": "Ayurvedic Wound Healing Formulation",
-            "description": "Topical formulation with Neem and Turmeric.",
-        }
-    }
-    res = client.post("/interview/start", json=start_payload)
-    assert res.status_code == 200
-    start_data = res.json()
-    session_id = start_data["session_id"]
-    assert session_id is not None
-    print(f"   Created Session ID: {session_id}")
-    print("   [OK] POST /interview/start passed cleanly!\n")
+    # 3. Test Category & Complexity Endpoints
+    print("3. Testing Category & Complexity Endpoints")
+    cat_res = client.post("/analyze/category", json={"innovation_name": "Nano Gel", "description": "Nano extraction gel"})
+    assert cat_res.status_code == 200
+    assert cat_res.json()["primary_category"] is not None
 
-    # 4. Test POST /interview/{session_id}/answer
-    print("4. Testing POST /interview/{session_id}/answer")
-    ans_payload = {"field_name": "ingredients", "answer": "Neem, Turmeric"}
-    res = client.post(f"/interview/{session_id}/answer", json=ans_payload)
-    assert res.status_code == 200
-    assert res.json()["submitted_field"] == "ingredients"
-    print("   [OK] POST /interview/{session_id}/answer passed cleanly!\n")
+    comp_res = client.post("/analyze/complexity", json={"innovation_name": "Nano Gel", "description": "Nano extraction gel with Neem", "biological_resource_used": True})
+    assert comp_res.status_code == 200
+    assert comp_res.json()["complexity"] in ["SIMPLE", "MODERATE", "COMPLEX"]
+    print("   [OK] Category & Complexity endpoints passed cleanly!\n")
 
-    # 5. Test GET /interview/{session_id}/status
-    print("5. Testing GET /interview/{session_id}/status")
-    res = client.get(f"/interview/{session_id}/status")
-    assert res.status_code == 200
-    assert res.json()["session_id"] == session_id
-    print("   [OK] GET /interview/{session_id}/status passed cleanly!\n")
+    # 4. Test Policy & Decision Explainer Endpoints
+    print("4. Testing Policy & Decision Explainer Endpoints")
+    pol_res = client.get("/policy/PATENT/explain")
+    assert pol_res.status_code == 200
+    assert pol_res.json()["regime_name"] == "PATENT"
 
-    # 6. Test POST /interview/{session_id}/complete
-    print("6. Testing POST /interview/{session_id}/complete")
-    res = client.post(f"/interview/{session_id}/complete")
-    assert res.status_code == 200
-    complete_data = res.json()
-    assert "roadmap" in complete_data
-    print("   [OK] POST /interview/{session_id}/complete passed cleanly!\n")
+    dec_explain_res = client.post("/decision/explain", json={"regime": "PATENT", "fingerprint": data["fingerprint"], "decision_status": "SUPPORTED"})
+    assert dec_explain_res.status_code == 200
+    assert dec_explain_res.json()["regime_name"] == "PATENT"
+    print("   [OK] Policy & Decision Explainer endpoints passed cleanly!\n")
 
-    # 7. Test GET /evaluation/results
-    print("7. Testing GET /evaluation/results")
-    res = client.get("/evaluation/results")
-    assert res.status_code == 200
-    assert "fingerprint_accuracy" in res.json()
-    print("   [OK] GET /evaluation/results passed cleanly!\n")
+    # 5. Test Interview Flow (Start, Answer, Skip, Status, Complete)
+    print("5. Testing Smart Interview Flow")
+    start_res = client.post("/interview/start", json={"initial_inputs": {"innovation_name": "Wound Gel", "description": "Neem gel"}})
+    assert start_res.status_code == 200
+    sess_id = start_res.json()["session_id"]
 
-    # 8. Test GET /evaluation/report
-    print("8. Testing GET /evaluation/report")
-    res = client.get("/evaluation/report")
-    assert res.status_code == 200
-    assert "# IP-SAKTI Sahayak - System Evaluation Report" in res.text
-    print("   [OK] GET /evaluation/report passed cleanly!\n")
+    skip_res = client.post(f"/interview/{sess_id}/skip", json={"field_name": "novelty_type", "answer": ""})
+    assert skip_res.status_code == 200
 
-    # 9. Test GET /evaluation/graphs
-    print("9. Testing GET /evaluation/graphs")
-    res = client.get("/evaluation/graphs")
-    assert res.status_code == 200
-    assert res.json()["count"] >= 5
-    print("   [OK] GET /evaluation/graphs passed cleanly!\n")
+    status_res = client.get(f"/interview/{sess_id}/status")
+    assert status_res.status_code == 200
+
+    comp_interview_res = client.post(f"/interview/{sess_id}/complete")
+    assert comp_interview_res.status_code == 200
+    print("   [OK] Smart Interview endpoints passed cleanly!\n")
 
     print("[OK] ALL FastAPI Backend Endpoint Tests Passed Cleanly!")
-

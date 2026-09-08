@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ArrowLeft, ArrowRight, Sparkles, FlaskConical, Microscope, Pill, Settings, HelpCircle } from 'lucide-react';
+import { Check, ArrowLeft, ArrowRight, Sparkles, FlaskConical, Microscope, Pill, Settings, HelpCircle, SkipForward, ShieldAlert, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useAnalysis } from '../hooks/useAnalysis';
+import { skipInterviewQuestion } from '../lib/api';
 
 interface OptionCard {
   id: string;
@@ -49,11 +50,17 @@ export const SmartInterview: React.FC = () => {
     submitAnswer,
     runFullAnalysis,
     isLoading,
+    fingerprint,
   } = useAnalysis();
 
   // Local state for current step answer
   const [selectedNoveltyTypes, setSelectedNoveltyTypes] = useState<string[]>(['extraction_method']);
-  const [textAnswer, setTextAnswer] = useState<string>('Neem, Turmeric');
+  const [textAnswer, setTextAnswer] = useState<string>('');
+
+  // Reset text input whenever question changes to prevent stale input bug
+  useEffect(() => {
+    setTextAnswer('');
+  }, [currentQuestion?.field_name]);
 
   const handleOptionToggle = (id: string) => {
     if (selectedNoveltyTypes.includes(id)) {
@@ -67,7 +74,9 @@ export const SmartInterview: React.FC = () => {
     const fieldName = currentQuestion?.field_name || 'novelty_type';
     let val: any = selectedNoveltyTypes;
     if (currentQuestion?.question_type === 'text' || currentQuestion?.question_type === 'list') {
-      val = textAnswer;
+      val = textAnswer.trim() || 'UNKNOWN';
+    } else if (currentQuestion?.options && currentQuestion.options.length > 0) {
+      val = textAnswer.trim() || currentQuestion.options[0];
     }
 
     await submitAnswer(fieldName, val);
@@ -78,94 +87,148 @@ export const SmartInterview: React.FC = () => {
     }
   };
 
+  const handleSkip = async () => {
+    const fieldName = currentQuestion?.field_name || 'novelty_type';
+    await submitAnswer(fieldName, 'UNKNOWN');
+
+    if (isInterviewComplete || interviewProgress >= 80) {
+      await runFullAnalysis();
+      router.push('/fingerprint');
+    }
+  };
+
+  const getPriorityBadge = (priority?: string) => {
+    switch (priority) {
+      case 'CRITICAL':
+        return 'bg-red-500/20 text-red-300 border-red-500/40';
+      case 'HIGH':
+        return 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+      case 'MEDIUM':
+        return 'bg-blue-500/20 text-blue-300 border-blue-500/40';
+      default:
+        return 'bg-slate-500/20 text-slate-300 border-slate-500/40';
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      
-      {/* Subtle Top Progress Bar */}
-      <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mb-8">
-        <div
-          className="bg-emerald-600 h-full transition-all duration-500 ease-out"
-          style={{ width: `${Math.max(15, interviewProgress)}%` }}
-        />
+      {/* Top Completeness & Progress Meter */}
+      <div className="mb-8 rounded-xl bg-slate-900 p-4 border border-slate-800 shadow-sm text-white flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold font-mono">
+            {Math.round(interviewProgress)}%
+          </div>
+          <div>
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
+              Profile Completeness
+            </span>
+            <span className="text-sm font-bold text-slate-100">
+              {interviewProgress >= 80 ? 'Sufficient Information Gathered' : 'Adaptive Priority Interview in Progress'}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex-1 max-w-md">
+          <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div
+              className="bg-emerald-500 h-full transition-all duration-500 ease-out"
+              style={{ width: `${Math.max(15, interviewProgress)}%` }}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* Left Side Desktop: Progress & Innovation Panel */}
+        {/* Left Side: Known vs Needed Fields Panel */}
         <div className="lg:col-span-4 space-y-6">
-          
           <div className="bg-slate-900 text-white rounded-xl p-6 shadow-sm border border-slate-800">
             <span className="text-[11px] font-semibold tracking-wider text-emerald-400 uppercase">
-              Active Innovation
+              Active Innovation Profile
             </span>
             <h3 className="font-bold text-lg text-white mt-1 leading-snug">
               {innovationName || 'Ayurvedic Innovation'}
             </h3>
             <p className="text-xs text-slate-400 mt-2">
-              Guided by IP-SAKTI adaptive rules engine.
+              Smart interview state manager eliminates duplicate questions.
             </p>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
-              Guided Analysis Steps
+          <div className="bg-slate-900/90 rounded-xl p-6 shadow-sm border border-slate-800 text-slate-100 space-y-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between border-b border-slate-800 pb-2">
+              <span>Known vs Needed Fields</span>
+              <span className="text-[10px] font-mono text-emerald-400">Zero Duplicates</span>
             </h4>
 
-            <ul className="space-y-3.5 text-xs font-medium">
-              <li className="flex items-center space-x-3 text-emerald-700">
-                <span className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold">
-                  ✓
+            <div className="space-y-2.5 text-xs">
+              <div className="rounded-lg bg-slate-950 p-3 border border-slate-800">
+                <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold block mb-1">
+                  ✓ Verified Extracted Signals:
                 </span>
-                <span>Innovation Description</span>
-              </li>
-              <li className="flex items-center space-x-3 text-slate-900 font-bold">
-                <span className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[10px]">
-                  ●
-                </span>
-                <span>Ingredients & Biological Origin</span>
-              </li>
-              <li className="flex items-center space-x-3 text-slate-500">
-                <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
-                  ○
-                </span>
-                <span>Novelty Indicators</span>
-              </li>
-              <li className="flex items-center space-x-3 text-slate-500">
-                <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
-                  ○
-                </span>
-                <span>Biological Diversity Compliance</span>
-              </li>
-              <li className="flex items-center space-x-3 text-slate-500">
-                <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
-                  ○
-                </span>
-                <span>Regulatory Classification</span>
-              </li>
-            </ul>
-          </div>
+                <ul className="space-y-1 text-slate-300">
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                    <span>Ingredients: {fingerprint?.ingredients?.join(', ') || 'Extracted from input'}</span>
+                  </li>
+                  {fingerprint?.biological_resources?.source_location && (
+                    <li className="flex items-center gap-1.5">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                      <span>Origin: {fingerprint.biological_resources.source_location}</span>
+                    </li>
+                  )}
+                  {fingerprint?.novelty?.description && (
+                    <li className="flex items-center gap-1.5">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                      <span>Claimed Novelty: {fingerprint.novelty.description.slice(0, 35)}...</span>
+                    </li>
+                  )}
+                </ul>
+              </div>
 
+              <div className="rounded-lg bg-slate-950 p-3 border border-slate-800">
+                <span className="text-[10px] font-mono uppercase text-amber-400 font-bold block mb-1">
+                  ! Current Targeted Gap:
+                </span>
+                <p className="text-slate-300 font-semibold">
+                  {currentQuestion?.field_name || 'Evaluating novelty & regulatory classification'}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Right Side: Question Card (Non-Chatbot Interface) */}
+        {/* Right Side: Question Card */}
         <div className="lg:col-span-8">
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
-            
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+          <div className="bg-slate-900 rounded-xl shadow-lg border border-slate-800 p-6 sm:p-8 text-slate-100">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <span className="text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-3 py-1 rounded-full font-mono">
                 QUESTION {Math.ceil((interviewProgress / 100) * 5) || 2} OF 5
               </span>
-              <span className="text-xs text-slate-400">
-                Adaptive Prompting
-              </span>
+
+              {currentQuestion?.priority_level && (
+                <span className={`text-xs font-bold border px-2.5 py-0.5 rounded-full font-mono uppercase ${getPriorityBadge(currentQuestion.priority_level)}`}>
+                  Priority: {currentQuestion.priority_level}
+                </span>
+              )}
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-100">
               {currentQuestion?.question_text || 'What novel aspect does your innovation introduce?'}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1 mb-6">
+
+            <p className="text-xs sm:text-sm text-slate-400 mt-1 mb-4">
               {currentQuestion?.help_text || 'Select the novel features or enter details to refine your Innovation Fingerprint.'}
             </p>
+
+            {/* "Why are we asking this?" Explanation Box */}
+            {currentQuestion?.why_asking && (
+              <div className="mb-6 rounded-lg bg-slate-950/80 p-3.5 border border-emerald-500/30 text-xs text-slate-300 flex items-start gap-2.5">
+                <HelpCircle className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-emerald-400 font-mono uppercase">Why are we asking this? </strong>
+                  {currentQuestion.why_asking}
+                </div>
+              </div>
+            )}
 
             {/* Selectable Cards for Novelty or Option Questions */}
             {(!currentQuestion || currentQuestion.question_type === 'select') ? (
@@ -178,28 +241,28 @@ export const SmartInterview: React.FC = () => {
                       onClick={() => handleOptionToggle(card.id)}
                       className={`p-4 rounded-xl border cursor-pointer transition-all ${
                         isSelected
-                          ? 'border-emerald-600 bg-emerald-50/50 shadow-xs ring-1 ring-emerald-600'
-                          : 'border-slate-200 hover:border-slate-300 bg-white'
+                          ? 'border-emerald-500 bg-emerald-950/30 ring-1 ring-emerald-500/50'
+                          : 'border-slate-800 hover:border-slate-700 bg-slate-950'
                       }`}
                     >
                       <div className="flex items-start justify-between">
-                        <div className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                        <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
                           {card.icon}
                         </div>
                         <div
                           className={`w-5 h-5 rounded-full border flex items-center justify-center text-xs ${
                             isSelected
-                              ? 'bg-emerald-600 border-emerald-600 text-white'
-                              : 'border-slate-300 bg-white'
+                              ? 'bg-emerald-500 border-emerald-500 text-white'
+                              : 'border-slate-700 bg-slate-900'
                           }`}
                         >
                           {isSelected && <Check className="w-3.5 h-3.5" />}
                         </div>
                       </div>
-                      <h4 className="font-bold text-sm text-slate-900 mt-3">
+                      <h4 className="font-bold text-sm text-slate-100 mt-3">
                         {card.title}
                       </h4>
-                      <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                      <p className="text-xs text-slate-400 mt-1 leading-relaxed">
                         {card.desc}
                       </p>
                     </div>
@@ -207,41 +270,71 @@ export const SmartInterview: React.FC = () => {
                 })}
               </div>
             ) : (
-              /* Text Input Fallback */
-              <div className="mb-8">
-                <input
-                  type="text"
-                  value={textAnswer}
-                  onChange={(e) => setTextAnswer(e.target.value)}
-                  placeholder="Enter details..."
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-900 text-sm focus:ring-2 focus:ring-slate-900 focus:border-slate-900"
-                />
+              /* Text Input */
+              <div className="mb-8 space-y-3">
+                {currentQuestion?.options && currentQuestion.options.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {currentQuestion.options.map((opt) => (
+                      <button
+                        key={opt}
+                        type="button"
+                        onClick={() => setTextAnswer(opt)}
+                        className={`p-3 rounded-lg border text-left text-xs font-semibold transition-all ${
+                          textAnswer === opt
+                            ? 'border-emerald-500 bg-emerald-950/40 text-emerald-300 ring-1 ring-emerald-500'
+                            : 'border-slate-800 bg-slate-950 text-slate-300 hover:bg-slate-900'
+                        }`}
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <input
+                    type="text"
+                    value={textAnswer}
+                    onChange={(e) => setTextAnswer(e.target.value)}
+                    placeholder="Type your answer here..."
+                    className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-950 text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                  />
+                )}
               </div>
             )}
 
             {/* Bottom Actions */}
-            <div className="flex items-center justify-between pt-6 border-t border-slate-100">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-slate-800">
               <button
+                type="button"
                 onClick={() => router.push('/analyze')}
-                className="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors flex items-center space-x-1.5"
+                className="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition-colors flex items-center space-x-1.5"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back</span>
               </button>
 
-              <button
-                onClick={handleNext}
-                disabled={isLoading}
-                className="px-6 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold shadow-sm transition-all flex items-center space-x-2 disabled:opacity-50"
-              >
-                <span>{isLoading ? 'Processing...' : 'Continue'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleSkip}
+                  className="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-amber-300 hover:bg-slate-800 border border-slate-800 transition-colors flex items-center space-x-1.5"
+                >
+                  <SkipForward className="w-3.5 h-3.5" />
+                  <span>Skip for now</span>
+                </button>
 
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={isLoading}
+                  className="px-6 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md transition-all flex items-center space-x-2 disabled:opacity-50"
+                >
+                  <span>{isLoading ? 'Processing...' : 'Continue'}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   );

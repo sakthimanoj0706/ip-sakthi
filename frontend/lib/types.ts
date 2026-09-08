@@ -34,6 +34,22 @@ export interface InnovationFingerprint {
   };
 }
 
+export interface CategoryDetectionResult {
+  primary_category: string;
+  secondary_category?: string | null;
+  confidence: number;
+  confidence_label: string;
+  reason: string;
+  detected_signals: string[];
+}
+
+export interface ComplexityAnalysisResult {
+  complexity: 'SIMPLE' | 'MODERATE' | 'COMPLEX' | string;
+  score: number;
+  reasons: string[];
+  badge_color: string;
+}
+
 export interface DecisionResultItem {
   name: string;
   status: 'POSSIBLE' | 'OVERLAP_POSSIBLE' | 'REVIEW_REQUIRED' | 'CLASSIFICATION_REQUIRED' | 'LOW_INDICATION' | 'HIGH_RISK' | 'EXEMPT' | 'SUPPORTED' | string;
@@ -54,6 +70,35 @@ export interface QuestionPrompt {
   options?: string[] | null;
   required: boolean;
   help_text?: string | null;
+  priority_level?: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | string;
+  why_asking?: string | null;
+}
+
+export interface SimplePolicyBreakdown {
+  regime_name: string;
+  statute_name: string;
+  policy_title: string;
+  what_it_means: string;
+  why_it_applies_to_you: string;
+  what_makes_your_case_different: string;
+  what_you_should_prove: string[];
+  confidence_label?: string;
+  confidence_score?: number;
+}
+
+export interface ReasoningPathStep {
+  step_name: string;
+  detail: string;
+  status: 'completed' | 'active' | 'pending';
+}
+
+export interface DecisionExplanationDetail {
+  regime_name: string;
+  decision_status: string;
+  detected_signals: string[];
+  reasoning_path: ReasoningPathStep[];
+  policy_breakdown: SimplePolicyBreakdown;
+  supporting_evidence_count: number;
 }
 
 export interface EvidenceSource {
@@ -116,4 +161,7 @@ export interface FullAnalysisResponse {
   web_research?: Record<string, any>;
   evidence_validation: Record<string, EvidenceValidation>;
   roadmap: FullActionRoadmap;
+  category_detection?: CategoryDetectionResult;
+  complexity_analysis?: ComplexityAnalysisResult;
+  policy_explanations?: Record<string, SimplePolicyBreakdown>;
 }
