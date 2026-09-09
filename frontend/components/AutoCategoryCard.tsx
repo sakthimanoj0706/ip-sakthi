@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, CheckCircle2, Edit3, Cpu, ShieldCheck } from 'lucide-react';
 import { CategoryDetectionResult } from '../lib/types';
 import { detectCategory } from '../lib/api';
+import { useTranslation } from '../context/LanguageContext';
 
 interface AutoCategoryCardProps {
   innovationName: string;
@@ -40,6 +41,7 @@ export const AutoCategoryCard: React.FC<AutoCategoryCardProps> = ({
   selectedCategory,
   onSelectCategory,
 }) => {
+  const { language } = useTranslation();
   const [detection, setDetection] = useState<CategoryDetectionResult | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -49,7 +51,7 @@ export const AutoCategoryCard: React.FC<AutoCategoryCardProps> = ({
     if (description && description.trim().length > 10) {
       let isMounted = true;
       setLoading(true);
-      detectCategory({ innovation_name: innovationName, description })
+      detectCategory({ innovation_name: innovationName, description, ui_language: language })
         .then((res) => {
           if (isMounted) {
             setDetection(res);
@@ -66,7 +68,7 @@ export const AutoCategoryCard: React.FC<AutoCategoryCardProps> = ({
         isMounted = false;
       };
     }
-  }, [description, innovationName]);
+  }, [description, innovationName, language]);
 
   const handleConfirm = () => {
     if (detection) {

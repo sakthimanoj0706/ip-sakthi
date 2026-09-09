@@ -75,6 +75,7 @@ export async function analyzeInnovationDirect(payload: {
   novelty_types?: string[];
   biological_resource_used?: boolean;
   source_location?: string;
+  ui_language?: string;
 }): Promise<FullAnalysisResponse> {
   try {
     const res = await fetch(`${API_BASE_URL}/analyze`, {
@@ -96,6 +97,7 @@ export async function detectCategory(payload: {
   innovation_name: string;
   description: string;
   user_selected_category?: string;
+  ui_language?: string;
 }): Promise<CategoryDetectionResult> {
   try {
     const res = await fetch(`${API_BASE_URL}/analyze/category`, {
@@ -123,6 +125,7 @@ export async function analyzeComplexity(payload: {
   novelty_description?: string;
   biological_resource_used?: boolean;
   source_location?: string;
+  ui_language?: string;
 }): Promise<ComplexityAnalysisResult> {
   try {
     const res = await fetch(`${API_BASE_URL}/analyze/complexity`, {
@@ -142,12 +145,15 @@ export async function analyzeComplexity(payload: {
   }
 }
 
-export async function startInterviewSession(initialInputs?: Record<string, any>): Promise<StartInterviewResponse> {
+export async function startInterviewSession(
+  initialInputs?: Record<string, any>,
+  uiLanguage: string = 'en'
+): Promise<StartInterviewResponse> {
   try {
     const res = await fetch(`${API_BASE_URL}/interview/start`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ initial_inputs: initialInputs || null }),
+      body: JSON.stringify({ initial_inputs: initialInputs || null, ui_language: uiLanguage }),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
@@ -156,12 +162,12 @@ export async function startInterviewSession(initialInputs?: Record<string, any>)
       session_id: 'demo-session-123',
       next_question: {
         field_name: 'ingredients',
-        question_text: 'What herbs, minerals, or ingredients are used in your formulation?',
+        question_text: uiLanguage === 'ta' ? 'உங்கள் தயாரிப்பில் பயன்படுத்தப்படும் மூலிகைகள், தாதுக்கள் அல்லது மூலப்பொருள்கள் யாவை?' : uiLanguage === 'hi' ? 'आपके फॉर्मूलेशन में कौन सी जड़ी-बूटियाँ, खनिज या सामग्री का उपयोग किया जाता है?' : 'What herbs, minerals, or ingredients are used in your formulation?',
         question_type: 'list',
         required: true,
-        help_text: 'e.g., Neem, Turmeric',
+        help_text: uiLanguage === 'ta' ? 'எ.கா. வேம்பு, மஞ்சள்' : uiLanguage === 'hi' ? 'उदा. नीम, हल्दी' : 'e.g., Neem, Turmeric',
         priority_level: 'CRITICAL',
-        why_asking: 'Required to check Traditional Knowledge Digital Library (TKDL) prior art records.',
+        why_asking: uiLanguage === 'ta' ? 'பாரம்பரிய அறிவு டிஜிட்டல் நூலக (TKDL) பதிவுகளை சரிபார்க்கிறது.' : uiLanguage === 'hi' ? 'पारंपरिक ज्ञान डिजिटल लाइब्रेरी (TKDL) रिकॉर्ड की जाँच करता है।' : 'Required to check Traditional Knowledge Digital Library (TKDL) prior art records.',
       },
       progress: {
         answered_count: 2,
@@ -178,13 +184,14 @@ export async function startInterviewSession(initialInputs?: Record<string, any>)
 export async function submitInterviewAnswer(
   sessionId: string,
   fieldName: string,
-  answer: any
+  answer: any,
+  uiLanguage: string = 'en'
 ): Promise<SubmitAnswerResponse> {
   try {
     const res = await fetch(`${API_BASE_URL}/interview/${sessionId}/answer`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ field_name: fieldName, answer }),
+      body: JSON.stringify({ field_name: fieldName, answer, ui_language: uiLanguage }),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
@@ -207,13 +214,14 @@ export async function submitInterviewAnswer(
 
 export async function skipInterviewQuestion(
   sessionId: string,
-  fieldName: string
+  fieldName: string,
+  uiLanguage: string = 'en'
 ): Promise<SubmitAnswerResponse> {
   try {
     const res = await fetch(`${API_BASE_URL}/interview/${sessionId}/skip`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ field_name: fieldName, answer: 'UNKNOWN' }),
+      body: JSON.stringify({ field_name: fieldName, answer: 'UNKNOWN', ui_language: uiLanguage }),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
@@ -234,9 +242,9 @@ export async function skipInterviewQuestion(
   }
 }
 
-export async function getInterviewStatus(sessionId: string): Promise<InterviewStatusResponse> {
+export async function getInterviewStatus(sessionId: string, uiLanguage: string = 'en'): Promise<InterviewStatusResponse> {
   try {
-    const res = await fetch(`${API_BASE_URL}/interview/${sessionId}/status`, {
+    const res = await fetch(`${API_BASE_URL}/interview/${sessionId}/status?ui_language=${uiLanguage}`, {
       cache: 'no-store',
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -258,9 +266,9 @@ export async function getInterviewStatus(sessionId: string): Promise<InterviewSt
   }
 }
 
-export async function completeInterviewAndAnalyze(sessionId: string): Promise<FullAnalysisResponse> {
+export async function completeInterviewAndAnalyze(sessionId: string, uiLanguage: string = 'en'): Promise<FullAnalysisResponse> {
   try {
-    const res = await fetch(`${API_BASE_URL}/interview/${sessionId}/complete`, {
+    const res = await fetch(`${API_BASE_URL}/interview/${sessionId}/complete?ui_language=${uiLanguage}`, {
       method: 'POST',
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -270,9 +278,9 @@ export async function completeInterviewAndAnalyze(sessionId: string): Promise<Fu
   }
 }
 
-export async function getPolicyExplanation(regime: string): Promise<SimplePolicyBreakdown> {
+export async function getPolicyExplanation(regime: string, uiLanguage: string = 'en'): Promise<SimplePolicyBreakdown> {
   try {
-    const res = await fetch(`${API_BASE_URL}/policy/${regime}/explain`, { cache: 'no-store' });
+    const res = await fetch(`${API_BASE_URL}/policy/${regime}/explain?ui_language=${uiLanguage}`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch {
@@ -298,6 +306,7 @@ export async function getDecisionExplanation(payload: {
   fingerprint: any;
   decision_status?: string;
   evidence_count?: number;
+  ui_language?: string;
 }): Promise<DecisionExplanationDetail> {
   try {
     const res = await fetch(`${API_BASE_URL}/decision/explain`, {

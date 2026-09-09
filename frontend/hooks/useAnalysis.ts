@@ -23,6 +23,7 @@ import {
   completeInterviewAndAnalyze,
   checkBackendHealth,
 } from '../lib/api';
+import { useTranslation } from '../context/LanguageContext';
 
 export interface AnalysisContextType {
   sessionId: string | null;
@@ -56,6 +57,7 @@ export interface AnalysisContextType {
 const AnalysisContext = createContext<AnalysisContextType | undefined>(undefined);
 
 export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { language } = useTranslation();
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [innovationName, setInnovationName] = useState<string>('Ayurvedic Wound Healing Formulation');
   const [description, setDescription] = useState<string>(
@@ -114,12 +116,12 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setSessionId('demo-session-1');
         setCurrentQuestion({
           field_name: 'ingredients',
-          question_text: 'What herbs, minerals, or ingredients are used in your formulation?',
+          question_text: language === 'ta' ? 'உங்கள் தயாரிப்பில் பயன்படுத்தப்படும் மூலிகைகள், தாதுக்கள் அல்லது மூலப்பொருள்கள் யாவை?' : language === 'hi' ? 'आपके फॉर्मूलेशन में कौन सी जड़ी-बूटियाँ, खनिज या सामग्री का उपयोग किया जाता है?' : 'What herbs, minerals, or ingredients are used in your formulation?',
           question_type: 'list',
           required: true,
-          help_text: 'e.g., Neem, Turmeric',
+          help_text: language === 'ta' ? 'எ.கா. வேம்பு, மஞ்சள்' : language === 'hi' ? 'उदा. नीम, हल्दी' : 'e.g., Neem, Turmeric',
           priority_level: 'CRITICAL',
-          why_asking: 'Required to check Traditional Knowledge Digital Library (TKDL) prior art records.',
+          why_asking: language === 'ta' ? 'பாரம்பரிய அறிவு டிஜிட்டல் நூலக (TKDL) பதிவுகளை சரிபார்க்கிறது.' : language === 'hi' ? 'पारंपरिक ज्ञान डिजिटल लाइब्रेरी (TKDL) रिकॉर्ड की जाँच करता है।' : 'Required to check Traditional Knowledge Digital Library (TKDL) prior art records.',
         });
         setInterviewProgress(20);
         setIsInterviewComplete(false);
@@ -128,7 +130,7 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           innovation_name: innovationName,
           description: description,
           product_category: innovationArea,
-        });
+        }, language);
         setSessionId(res.session_id);
         setCurrentQuestion(res.next_question);
         setInterviewProgress(res.progress.percentage);
@@ -155,7 +157,7 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           setCurrentQuestion(null);
         }
       } else {
-        const res = await submitInterviewAnswer(sessionId, fieldName, answer);
+        const res = await submitInterviewAnswer(sessionId, fieldName, answer, language);
         setCurrentQuestion(res.next_question);
         setInterviewProgress(res.progress.percentage);
         setIsInterviewComplete(res.completed);
@@ -181,7 +183,7 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       } else {
         let res: FullAnalysisResponse;
         if (sessionId && isInterviewComplete) {
-          res = await completeInterviewAndAnalyze(sessionId);
+          res = await completeInterviewAndAnalyze(sessionId, language);
         } else {
           res = await analyzeInnovationDirect({
             innovation_name: innovationName,
@@ -193,6 +195,7 @@ export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             novelty_types: interviewAnswers.novelty_type,
             biological_resource_used: interviewAnswers.biological_resource_used,
             source_location: interviewAnswers.source_location,
+            ui_language: language,
           });
         }
         setFingerprint(res.fingerprint);

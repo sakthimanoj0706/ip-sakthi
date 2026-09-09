@@ -105,6 +105,7 @@ class AnalyzeRequest(BaseModel):
     novelty_types: Optional[List[str]] = Field(default=None, description="Types of novelty (e.g. extraction_method).")
     biological_resource_used: Optional[bool] = Field(default=False, description="Whether Indian biological resources are used.")
     source_location: Optional[str] = Field(default=None, description="Source state or location in India.")
+    ui_language: Optional[str] = Field(default="en", description="Target UI language for analysis output ('en', 'ta', 'hi').")
 
 
 class FullAnalysisResponse(BaseModel):
@@ -121,6 +122,7 @@ class FullAnalysisResponse(BaseModel):
 
 class StartInterviewRequest(BaseModel):
     initial_inputs: Optional[Dict[str, Any]] = Field(default=None, description="Optional pre-filled input values.")
+    ui_language: Optional[str] = Field(default="en", description="Target UI language ('en', 'ta', 'hi').")
 
 
 class StartInterviewResponse(BaseModel):
@@ -133,6 +135,7 @@ class StartInterviewResponse(BaseModel):
 class SubmitAnswerRequest(BaseModel):
     field_name: str = Field(..., description="Name of the field being answered.")
     answer: Any = Field(..., description="User's answer value.")
+    ui_language: Optional[str] = Field(default="en", description="Target UI language ('en', 'ta', 'hi').")
 
 
 class SubmitAnswerResponse(BaseModel):
@@ -155,6 +158,7 @@ class CategoryRequest(BaseModel):
     innovation_name: str = ""
     description: str = ""
     user_selected_category: Optional[str] = None
+    ui_language: Optional[str] = Field(default="en", description="Target UI language ('en', 'ta', 'hi').")
 
 
 class ComplexityRequest(BaseModel):
@@ -164,6 +168,7 @@ class ComplexityRequest(BaseModel):
     novelty_description: Optional[str] = None
     biological_resource_used: Optional[bool] = False
     source_location: Optional[str] = None
+    ui_language: Optional[str] = Field(default="en", description="Target UI language ('en', 'ta', 'hi').")
 
 
 class ExplainDecisionRequest(BaseModel):
@@ -171,6 +176,7 @@ class ExplainDecisionRequest(BaseModel):
     fingerprint: Dict[str, Any]
     decision_status: Optional[str] = "REVIEW_REQUIRED"
     evidence_count: Optional[int] = 1
+    ui_language: Optional[str] = Field(default="en", description="Target UI language ('en', 'ta', 'hi').")
 
 
 class TranslationRequest(BaseModel):
@@ -184,8 +190,8 @@ class RealtimeSignalRequest(BaseModel):
 
 # --- Helper Function: Full Pipeline Orchestrator ---
 
-def run_pipeline(fingerprint: InnovationFingerprint) -> FullAnalysisResponse:
-    """Executes the complete IP-SAKTI hybrid pipeline for a given fingerprint."""
+def run_pipeline(fingerprint: InnovationFingerprint, ui_language: str = "en") -> FullAnalysisResponse:
+    """Executes the complete IP-SAKTI hybrid pipeline for a given fingerprint, translating output into ui_language."""
     # 1. Multi-Regime Decision Engine Evaluation
     multi_decisions = decision_engine.evaluate(fingerprint)
 
@@ -220,7 +226,7 @@ def run_pipeline(fingerprint: InnovationFingerprint) -> FullAnalysisResponse:
     for reg in ["PATENT", "TRADITIONAL_KNOWLEDGE", "ABS", "REGULATORY"]:
         policies[reg] = policy_explainer.explain_policy(reg, fingerprint).model_dump()
 
-    return FullAnalysisResponse(
+    raw_response = FullAnalysisResponse(
         fingerprint=fingerprint.model_to_dict(),
         decision_map=decision_map,
         retrieved_evidence=retrieved_evidence_map,
@@ -231,6 +237,14 @@ def run_pipeline(fingerprint: InnovationFingerprint) -> FullAnalysisResponse:
         complexity_analysis=comp_res.model_dump(),
         policy_explanations=policies,
     )
+
+    # If target UI language is Tamil ('ta') or Hindi ('hi'), translate payload fields before returning
+    if ui_language and ui_language.lower().strip() in ["ta", "hi"]:
+        payload_dict = raw_response.model_dump()
+        translated_dict = multilingual_service.translate_payload(payload_dict, ui_language)
+        return FullAnalysisResponse(**translated_dict)
+
+    return raw_response
 
 
 # --- REST API Endpoints ---
@@ -314,13 +328,18 @@ def analyze_innovation(req: AnalyzeRequest):
         fingerprint.biological_resource.source_location = req.source_location
         fingerprint.biological_resource.detected = True
 
-    return run_pipeline(fingerprint)
+    return run_pipeline(fingerprint, ui_language=req.ui_language or "en")
 
 
 @app.post("/analyze/category", response_model=CategoryDetectionResult, tags=["Analysis Intelligence"])
 def detect_category_endpoint(req: CategoryRequest):
     """Auto-detects innovation category with confidence score and reasoning."""
-    return category_detector.detect_category(req.innovation_name, req.description)
+    res = category_detector.detect_category(req.innovation_name, req.description)
+    if req.ui_language and req.ui_language.lower().strip() in ["ta", "hi"]:
+        res_dict = res.model_dump()
+        res_dict = multilingual_service.translate_payload(res_dict, req.ui_language)
+        return CategoryDetectionResult(**res_dict)
+    return res
 
 
 @app.post("/analyze/complexity", response_model=ComplexityAnalysisResult, tags=["Analysis Intelligence"])
@@ -334,7 +353,12 @@ def analyze_complexity_endpoint(req: ComplexityRequest):
         biological_resource_used=req.biological_resource_used,
         source_location=req.source_location
     )
-    return complexity_analyzer.analyze_complexity(fp, text=req.description)
+    res = complexity_analyzer.analyze_complexity(fp, text=req.description)
+    if req.ui_language and req.ui_language.lower().strip() in ["ta", "hi"]:
+        res_dict = res.model_dump()
+        res_dict = multilingual_service.translate_payload(res_dict, req.ui_language)
+        return ComplexityAnalysisResult(**res_dict)
+    return res
 
 
 @app.post("/interview/start", response_model=StartInterviewResponse, tags=["Smart Interview"])
@@ -345,7 +369,7 @@ def start_interview(req: StartInterviewRequest):
     agent.start_interview(initial_inputs=req.initial_inputs)
     
     INTERVIEW_SESSIONS[session_id] = agent
-    next_q = agent.get_next_question()
+    next_q = agent.get_next_question(ui_language=req.ui_language or "en")
 
     return StartInterviewResponse(
         session_id=session_id,
@@ -369,7 +393,7 @@ def submit_answer(
 
     agent = INTERVIEW_SESSIONS[session_id]
     agent.submit_answer(req.field_name, req.answer)
-    next_q = agent.get_next_question()
+    next_q = agent.get_next_question(ui_language=req.ui_language or "en")
 
     return SubmitAnswerResponse(
         session_id=session_id,
@@ -394,7 +418,7 @@ def skip_question(
 
     agent = INTERVIEW_SESSIONS[session_id]
     agent.submit_answer(req.field_name, "UNKNOWN")
-    next_q = agent.get_next_question()
+    next_q = agent.get_next_question(ui_language=req.ui_language or "en")
 
     return SubmitAnswerResponse(
         session_id=session_id,
@@ -407,7 +431,8 @@ def skip_question(
 
 @app.get("/interview/{session_id}/status", response_model=InterviewStatusResponse, tags=["Smart Interview"])
 def get_interview_status(
-    session_id: str = APIPath(..., description="Active interview session ID.")
+    session_id: str = APIPath(..., description="Active interview session ID."),
+    ui_language: str = "en",
 ):
     """Retrieves current interview session progress and missing fields."""
     if session_id not in INTERVIEW_SESSIONS:
@@ -417,7 +442,7 @@ def get_interview_status(
         )
 
     agent = INTERVIEW_SESSIONS[session_id]
-    next_q = agent.get_next_question()
+    next_q = agent.get_next_question(ui_language=ui_language)
 
     return InterviewStatusResponse(
         session_id=session_id,
@@ -430,7 +455,8 @@ def get_interview_status(
 
 @app.post("/interview/{session_id}/complete", response_model=FullAnalysisResponse, tags=["Smart Interview"])
 def complete_interview_and_analyze(
-    session_id: str = APIPath(..., description="Active interview session ID.")
+    session_id: str = APIPath(..., description="Active interview session ID."),
+    ui_language: str = "en",
 ):
     """
     Finalizes the interview session, builds the InnovationFingerprint, and executes the full pipeline.
@@ -444,17 +470,22 @@ def complete_interview_and_analyze(
     agent = INTERVIEW_SESSIONS[session_id]
     fingerprint = agent.build_fingerprint()
     
-    return run_pipeline(fingerprint)
+    return run_pipeline(fingerprint, ui_language=ui_language)
 
 
 @app.get("/policy/{regime}/explain", response_model=SimplePolicyBreakdown, tags=["Policy Explainer"])
-def get_policy_explanation(regime: str):
-    """Returns simple plain-language breakdown for a given regime policy (PATENT, TRADITIONAL_KNOWLEDGE, ABS, REGULATORY)."""
+def get_policy_explanation(regime: str, ui_language: str = "en"):
+    """Returns simple plain-language breakdown for a given regime policy."""
     dummy_fp = InnovationFingerprint.from_user_input(
         innovation_name="Ayurvedic Innovation",
         description="Ayurvedic formulation using traditional herbs",
     )
-    return policy_explainer.explain_policy(regime, dummy_fp)
+    res = policy_explainer.explain_policy(regime, dummy_fp)
+    if ui_language and ui_language.lower().strip() in ["ta", "hi"]:
+        res_dict = res.model_dump()
+        res_dict = multilingual_service.translate_payload(res_dict, ui_language)
+        return SimplePolicyBreakdown(**res_dict)
+    return res
 
 
 @app.post("/decision/explain", response_model=DecisionExplanationDetail, tags=["Policy Explainer"])
@@ -466,6 +497,12 @@ def get_decision_explanation(req: ExplainDecisionRequest):
         status=req.decision_status or "REVIEW_REQUIRED",
         reason="Evaluated by IP-SAKTI decision engine."
     )
+    res = policy_explainer.explain_decision(req.regime, dec, fp, evidence_count=req.evidence_count or 1)
+    if req.ui_language and req.ui_language.lower().strip() in ["ta", "hi"]:
+        res_dict = res.model_dump()
+        res_dict = multilingual_service.translate_payload(res_dict, req.ui_language)
+        return DecisionExplanationDetail(**res_dict)
+    return res
     return policy_explainer.explain_decision(req.regime, dec, fp, evidence_count=req.evidence_count or 1)
 
 

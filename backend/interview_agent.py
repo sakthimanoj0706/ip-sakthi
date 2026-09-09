@@ -247,10 +247,9 @@ class AdaptiveInterviewAgent:
         else:
             self.state.completed = len(unasked_active) == 0
 
-    def get_next_question(self) -> Optional[QuestionPrompt]:
+    def get_next_question(self, ui_language: str = "en") -> Optional[QuestionPrompt]:
         """
-        Returns the next required question prompt adaptively, or None if complete.
-        Uses Gemini for natural question generation if available, with static fallback.
+        Returns the next required question prompt adaptively, localized into requested ui_language ('en', 'ta', 'hi').
         """
         self._update_missing_fields()
 
@@ -258,11 +257,17 @@ class AdaptiveInterviewAgent:
             self.state.completed = True
             return None
 
+        lang_code = (ui_language or "en").lower().strip()
+
         for field in self._get_field_sequence():
             if self._should_ask_field(field):
                 q_info = self.QUESTIONS[field]
                 if field not in self.state.questions_asked:
                     self.state.questions_asked.append(field)
+
+                q_text = q_info.question_text
+                q_opts = q_info.options
+                q_help = q_info.help_text
 
                 # Optional Gemini AI question enhancement
                 if self.gemini_service and getattr(self.gemini_service, "enabled", False):
@@ -270,16 +275,26 @@ class AdaptiveInterviewAgent:
                         field, self.state.answers
                     )
                     if gemini_q:
-                        return QuestionPrompt(
-                            field_name=q_info.field_name,
-                            question_text=gemini_q,
-                            question_type=q_info.question_type,
-                            options=q_info.options,
-                            required=q_info.required,
-                            help_text=q_info.help_text,
-                        )
+                        q_text = gemini_q
 
-                return q_info
+                # Apply multilingual translation if target language is ta or hi
+                if lang_code in ["ta", "hi"]:
+                    from multilingual_service import MultilingualService
+                    ms = MultilingualService()
+                    q_text = ms.translate_text(q_text, lang_code, context="interview_question")
+                    if q_opts:
+                        q_opts = [ms.translate_text(opt, lang_code, context="interview_option") for opt in q_opts]
+                    if q_help:
+                        q_help = ms.translate_text(q_help, lang_code, context="interview_help")
+
+                return QuestionPrompt(
+                    field_name=q_info.field_name,
+                    question_text=q_text,
+                    question_type=q_info.question_type,
+                    options=q_opts,
+                    required=q_info.required,
+                    help_text=q_help,
+                )
 
         self.state.completed = True
         return None

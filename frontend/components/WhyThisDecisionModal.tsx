@@ -21,7 +21,7 @@ export const WhyThisDecisionModal: React.FC<WhyThisDecisionModalProps> = ({
   fingerprint,
   decisionStatus,
 }) => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [detail, setDetail] = useState<DecisionExplanationDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -32,6 +32,7 @@ export const WhyThisDecisionModal: React.FC<WhyThisDecisionModalProps> = ({
         regime,
         fingerprint,
         decision_status: decisionStatus,
+        ui_language: language,
       })
         .then((res) => {
           setDetail(res);
@@ -39,7 +40,7 @@ export const WhyThisDecisionModal: React.FC<WhyThisDecisionModalProps> = ({
         })
         .catch(() => setLoading(false));
     }
-  }, [isOpen, regime, fingerprint, decisionStatus]);
+  }, [isOpen, regime, fingerprint, decisionStatus, language]);
 
   if (!isOpen) return null;
 

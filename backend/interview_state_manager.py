@@ -180,9 +180,9 @@ class InterviewStateManager:
             self.state.completed = True
             self.state.is_sufficient = True
 
-    def get_next_question(self) -> Optional[QuestionPriorityItem]:
+    def get_next_question(self, ui_language: str = "en") -> Optional[QuestionPriorityItem]:
         """
-        Returns highest-priority unasked deduplicated question prompt, or None if interview complete.
+        Returns highest-priority unasked deduplicated question prompt, localized into requested ui_language.
         """
         self._recalculate_completeness()
         if self.state.completed:
@@ -211,16 +211,31 @@ class InterviewStateManager:
         score, priority_lvl, why_str = QuestionPriorityEngine.score_field(top_q.field, self.state.known_fields)
         current_step_num = min(self.state.max_questions, len(self.state.asked_questions))
 
+        # Localized text lookup
+        lang_code = (ui_language or "en").lower().strip()
+        q_text = top_q.question
+        q_options = top_q.options
+        q_why = why_str or top_q.why_asking
+        q_help = top_q.help_text
+
+        from question_deduplicator import LOCALIZED_QUESTIONS
+        if top_q.id in LOCALIZED_QUESTIONS and lang_code in LOCALIZED_QUESTIONS[top_q.id]:
+            loc_data = LOCALIZED_QUESTIONS[top_q.id][lang_code]
+            q_text = loc_data.get("question", q_text)
+            q_options = loc_data.get("options", q_options)
+            q_why = loc_data.get("why_asking", q_why)
+            q_help = loc_data.get("help_text", q_help)
+
         return QuestionPriorityItem(
             field_name=top_q.field,
-            question_text=top_q.question,
+            question_text=q_text,
             question_type=top_q.question_type,
-            options=top_q.options,
+            options=q_options,
             required=True,
-            help_text=top_q.help_text,
+            help_text=q_help,
             priority_level=priority_lvl,
             priority_score=score,
-            why_asking=why_str or top_q.why_asking,
+            why_asking=q_why,
             question_id=top_q.id,
             total_dynamic_questions=self.state.max_questions,
             current_dynamic_step=current_step_num,
