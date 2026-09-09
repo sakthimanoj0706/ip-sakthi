@@ -98,5 +98,26 @@
   "button.editInfo": "தகவலைத் திருத்து",
   "button.generateRoadmap": "செயல் வரைபடத்தை உருவாக்கு",
   "button.downloadReport": "பகுப்பாய்வு அறிக்கையைப் பதிவிறக்குக (JSON)",
-  "button.startNew": "புதிய பகுப்பாய்வைத் தொடங்கு"
+  "button.startNew": "புதிய பகுப்பாய்வைத் தொடங்கு",
+
+  "presets.title": "மாதிரி சோதனைக் காட்சிகள்",
+  "presets.subtitle": "செயல்முறை வரிசையை உடனடியாக சோதிக்க ஏதேனும் ஒரு காட்சியைக் கிளிக் செய்யவும்",
+  "category.title": "AI புதுமை வகைப்பாடு",
+  "category.count": "19 பிரிவுகள்",
+  "category.subtitle": "தானியங்கி பல அடுக்கு வகை கண்டறிதல்",
+  "category.confidence": "நம்பிக்கை",
+  "category.analyzing": "சிக்னல்கள் மற்றும் உரையை பகுப்பாய்வு செய்கிறது...",
+  "category.detectedCategory": "கண்டறியப்பட்ட வகை:",
+  "category.secondary": "இரண்டாம் நிலை:",
+  "category.confirm": "வகையை உறுதிப்படுத்து",
+  "category.change": "மாற்று",
+  "category.aiRationale": "AI பகுத்தறிவு:",
+  "category.signals": "சிக்னல்கள்:",
+  "category.selectCustom": "விருப்ப வகையைத் தேர்ந்தெடுக்கவும்:",
+  "category.letAiDecide": "[ AI தீர்மானிக்கட்டும் ]",
+  "complexity.rating": "புதுமை சிக்கல் மதிப்பீடு:",
+  "complexity.evaluates": "பல அடுக்கு சட்ட சிக்கல்கள் மற்றும் சட்ட அபாயங்களை மதிப்பிடுகிறது",
+  "complexity.hideDetails": "விவரங்களை மறை",
+  "complexity.viewFactors": "காரணிகளைப் பார்",
+  "complexity.factors": "கண்டறியப்பட்ட அபாய மற்றும் சிக்கல் காரணிகள்:"
 }

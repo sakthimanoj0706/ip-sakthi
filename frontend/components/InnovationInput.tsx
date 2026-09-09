@@ -14,7 +14,7 @@ import { useTranslation } from '../context/LanguageContext';
 export const InnovationInput: React.FC = () => {
   const router = useRouter();
   const { setInnovationInput, startInterview } = useAnalysis();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const [name, setName] = useState<string>('Ayurvedic Wound Healing Formulation');
   const [description, setDescription] = useState<string>(
@@ -27,11 +27,23 @@ export const InnovationInput: React.FC = () => {
 
   // Simple language detection heuristic for input indicator
   const detectedInputLanguage = useMemo(() => {
-    if (!description) return 'English';
-    if (/[\u0B80-\u0BFF]/.test(description)) return 'தமிழ் (Tamil)';
-    if (/[\u0900-\u097F]/.test(description)) return 'हिन्दी (Hindi)';
-    return 'English';
-  }, [description]);
+    let rawLang = 'English';
+    if (description) {
+      if (/[\u0B80-\u0BFF]/.test(description)) rawLang = 'Tamil';
+      else if (/[\u0900-\u097F]/.test(description)) rawLang = 'Hindi';
+    }
+    if (language === 'ta') {
+      if (rawLang === 'Tamil') return 'தமிழ்';
+      if (rawLang === 'Hindi') return 'இந்தி';
+      return 'ஆங்கிலம்';
+    }
+    if (language === 'hi') {
+      if (rawLang === 'Tamil') return 'तमिल';
+      if (rawLang === 'Hindi') return 'हिंदी';
+      return 'अंग्रेज़ी';
+    }
+    return rawLang;
+  }, [description, language]);
 
   const handleSelectExample = (scenario: ExampleScenario) => {
     setName(scenario.title);
@@ -44,6 +56,7 @@ export const InnovationInput: React.FC = () => {
       novelty_description: scenario.novelty,
       biological_resource_used: true,
       source_location: scenario.location,
+      ui_language: language,
     }).then((res) => setComplexity(res));
   };
 

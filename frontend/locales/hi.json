@@ -98,5 +98,26 @@
   "button.editInfo": "जानकारी संपादित करें",
   "button.generateRoadmap": "कार्रवाई रोडमैप बनाएं",
   "button.downloadReport": "विश्लेषण रिपोर्ट डाउनलोड करें (JSON)",
-  "button.startNew": "नया विश्लेषण शुरू करें"
+  "button.startNew": "नया विश्लेषण शुरू करें",
+
+  "presets.title": "पूर्वनिर्धारित परीक्षण परिदृश्य",
+  "presets.subtitle": "पाइपलाइन का तुरंत परीक्षण करने के लिए किसी भी परिदृश्य पर क्लिक करें",
+  "category.title": "AI नवाचार वर्गीकरण",
+  "category.count": "19 श्रेणियां",
+  "category.subtitle": "स्वचालित बहु-स्तरीय श्रेणी का पता लगाना",
+  "category.confidence": "विश्वास",
+  "category.analyzing": "संकेतों और पाठ पैटर्न का विश्लेषण...",
+  "category.detectedCategory": "पता लगाई गई श्रेणी:",
+  "category.secondary": "द्वितीयक:",
+  "category.confirm": "श्रेणी की पुष्टि करें",
+  "category.change": "बदलें",
+  "category.aiRationale": "AI तर्क:",
+  "category.signals": "संकेत:",
+  "category.selectCustom": "कस्टम श्रेणी चुनें:",
+  "category.letAiDecide": "[ AI को निर्णय लेने दें ]",
+  "complexity.rating": "नवाचार जटिलता रेटिंग:",
+  "complexity.evaluates": "बहु-स्तरीय कानूनी जटिलता और वैधानिक जोखिमों का मूल्यांकन करता है",
+  "complexity.hideDetails": "विवरण छिपाएं",
+  "complexity.viewFactors": "कारक देखें",
+  "complexity.factors": "पहचाने गए जोखिम और जटिलता कारक:"
 }

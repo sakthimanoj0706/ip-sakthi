@@ -8,5 +8,5 @@
   "hit_rate": 0.8333,
   "mrr": 0.4261,
   "ndcg": 0.3858,
-  "average_retrieval_time": 0.0034
+  "average_retrieval_time": 0.0039
 }

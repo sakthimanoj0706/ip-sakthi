@@ -55,6 +55,21 @@ DOMAIN_TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "Hinglish": "ஹிங்கிலிஷ்",
         "OPERATIONAL": "இயங்குகிறது",
 
+        # Categories & Complexity
+        "Ayurveda Aahara / Food Product": "ஆயுர்வேத ஆகார / உணவுப் பொருள்",
+        "Classical Ayurvedic Formulation": "பாரம்பரிய ஆயுர்வேத சூத்திரம்",
+        "Proprietary ASU Medicine": "தனியுரிம ASU மருந்து",
+        "Extraction Process": "பிரித்தெடுக்கும் செயல்முறை",
+        "Nano Formulation": "நானோ சூத்திரமாக்கம்",
+        "Drug Delivery System": "மருந்து விநியோக முறை",
+        "Medical Device": "மருத்துவ சாதனம்",
+        "MODERATE": "மிதமான (MODERATE)",
+        "COMPLEX": "சிக்கலானது (COMPLEX)",
+        "SIMPLE": "எளிமையானது (SIMPLE)",
+        "Polyherbal ingredients detected": "பல மூலிகை பொருட்கள் கண்டறியப்பட்டுள்ளன",
+        "Biological resource compliance evaluation required": "உயிரியல் வள இணக்க மதிப்பீடு தேவை",
+        "Rule-based Ayurvedic formulation signal detected.": "விதி அடிப்படையிலான ஆயுர்வேத சூத்திர சமிக்ஞை கண்டறியப்பட்டது.",
+
         # General Phrases
         "Why did IP-SAKTI say this?": "IP-SAKTI ஏன் இந்த முடிவை வழங்கியது?",
         "Step-by-Step Decision Reasoning": "படிப்படியான முடிவு விளக்கம்",
@@ -102,6 +117,21 @@ DOMAIN_TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "Tanglish": "टैंग्लिश",
         "Hinglish": "हिंग्लिश",
         "OPERATIONAL": "सक्रिय",
+
+        # Categories & Complexity
+        "Ayurveda Aahara / Food Product": "आयुर्वेद आहार / खाद्य उत्पाद",
+        "Classical Ayurvedic Formulation": "शास्त्रीय आयुर्वेदिक फॉर्मूलेशन",
+        "Proprietary ASU Medicine": "प्रोप्रायटरी ASU दवा",
+        "Extraction Process": "निष्कर्षण प्रक्रिया",
+        "Nano Formulation": "नैनो फॉर्मूलेशन",
+        "Drug Delivery System": "ड्रग डिलीवरी सिस्टम",
+        "Medical Device": "चिकित्सा उपकरण",
+        "MODERATE": "मध्यम (MODERATE)",
+        "COMPLEX": "जटिल (COMPLEX)",
+        "SIMPLE": "सरल (SIMPLE)",
+        "Polyherbal ingredients detected": "बहु-जड़ी-बूटी सामग्री का पता चला",
+        "Biological resource compliance evaluation required": "जैविक संसाधन अनुपालन मूल्यांकन आवश्यक",
+        "Rule-based Ayurvedic formulation signal detected.": "नियम-आधारित आयुर्वेदिक फॉर्मूलेशन संकेत का पता चला।",
 
         # General Phrases
         "Why did IP-SAKTI say this?": "IP-SAKTI ने यह क्यों कहा?",

@@ -98,5 +98,26 @@
   "button.editInfo": "Edit Information",
   "button.generateRoadmap": "Generate Action Roadmap",
   "button.downloadReport": "Download Analysis Report (JSON)",
-  "button.startNew": "Start New Analysis"
+  "button.startNew": "Start New Analysis",
+
+  "presets.title": "Preset Test Scenarios",
+  "presets.subtitle": "Click any scenario to instantly test the pipeline",
+  "category.title": "AI Innovation Classification",
+  "category.count": "19 Categories",
+  "category.subtitle": "Automatic multi-layer category detection",
+  "category.confidence": "Confidence",
+  "category.analyzing": "Analyzing signals & text patterns...",
+  "category.detectedCategory": "Detected Category:",
+  "category.secondary": "Secondary:",
+  "category.confirm": "Confirm Category",
+  "category.change": "Change",
+  "category.aiRationale": "AI Rationale:",
+  "category.signals": "Signals:",
+  "category.selectCustom": "Select Custom Category Override:",
+  "category.letAiDecide": "[ Let AI Decide ]",
+  "complexity.rating": "Innovation Complexity Rating:",
+  "complexity.evaluates": "Evaluates multi-regime legal complexity and statutory risks",
+  "complexity.hideDetails": "Hide Details",
+  "complexity.viewFactors": "View Factors",
+  "complexity.factors": "Detected Risk & Complexity Factors:"
 }

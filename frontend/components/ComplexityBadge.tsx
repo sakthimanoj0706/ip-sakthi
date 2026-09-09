@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import { ShieldAlert, ShieldCheck, Zap, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react';
 import { ComplexityAnalysisResult } from '../lib/types';
+import { useTranslation } from '../context/LanguageContext';
 
 interface ComplexityBadgeProps {
   complexity?: ComplexityAnalysisResult;
 }
 
 export const ComplexityBadge: React.FC<ComplexityBadgeProps> = ({ complexity }) => {
+  const { t } = useTranslation();
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
 
   if (!complexity) return null;
@@ -50,14 +52,14 @@ export const ComplexityBadge: React.FC<ComplexityBadgeProps> = ({ complexity }) 
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-semibold tracking-wide uppercase text-slate-200">
-                Innovation Complexity Rating:
+                {t('complexity.rating', 'Innovation Complexity Rating:')}
               </span>
               <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-bold border font-mono ${style.badgeBg}`}>
                 {level} ({score}/100)
               </span>
             </div>
             <p className="text-[11px] text-slate-400 mt-0.5">
-              Evaluates multi-regime legal complexity and statutory risks
+              {t('complexity.evaluates', 'Evaluates multi-regime legal complexity and statutory risks')}
             </p>
           </div>
         </div>
@@ -67,7 +69,7 @@ export const ComplexityBadge: React.FC<ComplexityBadgeProps> = ({ complexity }) 
           onClick={() => setShowDrawer(!showDrawer)}
           className="inline-flex items-center gap-1 text-xs font-mono text-slate-300 hover:text-white bg-slate-900/60 px-2.5 py-1 rounded-md border border-slate-800"
         >
-          {showDrawer ? 'Hide Details' : 'View Factors'}
+          {showDrawer ? t('complexity.hideDetails', 'Hide Details') : t('complexity.viewFactors', 'View Factors')}
           {showDrawer ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
         </button>
       </div>
@@ -76,7 +78,7 @@ export const ComplexityBadge: React.FC<ComplexityBadgeProps> = ({ complexity }) 
         <div className="mt-3 border-t border-slate-800/80 pt-3 space-y-2">
           <span className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
             <AlertCircle className="h-3.5 w-3.5 text-amber-400" />
-            Detected Risk & Complexity Factors:
+            {t('complexity.factors', 'Detected Risk & Complexity Factors:')}
           </span>
           <ul className="space-y-1.5 pl-2">
             {complexity.reasons.map((reason, idx) => (

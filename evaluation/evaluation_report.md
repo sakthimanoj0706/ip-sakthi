@@ -59,7 +59,7 @@ This report documents the empirical evaluation results for **IP-SAKTI Sahayak** 
 | **Precision@5** | 20.0% |
 | **Mean Reciprocal Rank (MRR)** | 0.426 |
 | **NDCG** | 0.386 |
-| **Average Retrieval Latency** | 3.40 ms |
+| **Average Retrieval Latency** | 3.90 ms |
 
 ---
 
@@ -84,7 +84,7 @@ This report documents the empirical evaluation results for **IP-SAKTI Sahayak** 
 ## 6. System Performance & Latency
 
 - **System Success Rate**: **100.0%**
-- **Average Processing Time per Innovation**: **6.540 seconds**
+- **Average Processing Time per Innovation**: **4.032 seconds**
 - **Total Test Cases**: 30 (30 passed, 0 failed)
 
 ---
