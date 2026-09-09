@@ -156,6 +156,42 @@ export interface FullActionRoadmap {
   disclaimer: string;
 }
 
+export interface IngredientDetail {
+  common_name: string;
+  scientific_name?: string | null;
+  ayurvedic_name?: string | null;
+  plant_part?: string | null;
+  form?: string | null;
+  proportion?: number | null;
+  proportion_unit?: string | null;
+  source_location?: string | null;
+}
+
+export interface MultiObjectiveScores {
+  ip_differentiation: number;
+  tk_overlap: number;
+  documentation_completeness: number;
+  evidence_strength: number;
+  regulatory_complexity: number;
+  factors: Record<string, { positive: string[]; risk: string[] }>;
+}
+
+export interface FormulationAnalysisResult {
+  documentation_status: 'COMPLETE' | 'PARTIAL' | 'INCOMPLETE' | string;
+  ratios_available: boolean;
+  total_composition_percentage?: number | null;
+  ratio_validation_status: 'COMPLETE' | 'PARTIAL' | 'EXCEEDS' | 'NO_RATIOS' | string;
+  ratio_validation_message: string;
+  ingredients: IngredientDetail[];
+  excipients: string[];
+  base_materials: string[];
+  tk_overlap_status: string;
+  technical_differentiation: string;
+  differentiation_reason: string;
+  multi_objective_scores: MultiObjectiveScores;
+  disclaimer: string;
+}
+
 export interface FullAnalysisResponse {
   fingerprint: InnovationFingerprint;
   decision_map: DecisionMapData;
@@ -166,4 +202,5 @@ export interface FullAnalysisResponse {
   category_detection?: CategoryDetectionResult;
   complexity_analysis?: ComplexityAnalysisResult;
   policy_explanations?: Record<string, SimplePolicyBreakdown>;
+  formulation_intelligence?: FormulationAnalysisResult;
 }

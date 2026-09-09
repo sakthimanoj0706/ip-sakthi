@@ -32,6 +32,8 @@ try:
     from backend.interview_state_manager import InterviewStateManager
     from backend.policy_explainer import PolicyExplainerEngine, SimplePolicyBreakdown, DecisionExplanationDetail
     from backend.multilingual_service import MultilingualService, MultilingualTextRecord
+    from backend.formulation_intelligence import analyze_formulation
+    from backend.consistency_validator import validate_decision_consistency
 except ImportError:
     from config import get_config_summary, AI_MODE
     from fingerprint_schema import InnovationFingerprint
@@ -48,6 +50,8 @@ except ImportError:
     from interview_state_manager import InterviewStateManager
     from policy_explainer import PolicyExplainerEngine, SimplePolicyBreakdown, DecisionExplanationDetail
     from multilingual_service import MultilingualService, MultilingualTextRecord
+    from formulation_intelligence import analyze_formulation
+    from consistency_validator import validate_decision_consistency
 
 
 # Initialize FastAPI app with Swagger documentation
@@ -118,6 +122,7 @@ class FullAnalysisResponse(BaseModel):
     category_detection: Optional[Dict[str, Any]] = None
     complexity_analysis: Optional[Dict[str, Any]] = None
     policy_explanations: Optional[Dict[str, Any]] = None
+    formulation_intelligence: Optional[Dict[str, Any]] = None
 
 
 class StartInterviewRequest(BaseModel):
@@ -195,22 +200,33 @@ def run_pipeline(fingerprint: InnovationFingerprint, ui_language: str = "en") ->
     # 1. Multi-Regime Decision Engine Evaluation
     multi_decisions = decision_engine.evaluate(fingerprint)
 
-    # 2. Decision Map Visualizer Transformation
+    # 2. Formulation Intelligence & Multi-Objective Analysis
+    formulation_res = analyze_formulation(fingerprint)
+
+    # 3. Decision Map Visualizer Transformation
     decision_map = generate_decision_map(multi_decisions.decisions, overall_summary=multi_decisions.overall_summary)
 
-    # 3. Regime-Aware Local Hybrid RAG Evidence Retrieval
+    # 4. Single Source of Truth Decision Consistency Audit & Enforcement
+    validate_decision_consistency(
+        canonical_decisions=multi_decisions.decisions,
+        summary_decisions=decision_map.get("regimes"),
+        roadmap_items=None,
+        detailed_report=None,
+    )
+
+    # 5. Regime-Aware Local Hybrid RAG Evidence Retrieval
     retrieved_evidence_map = retrieval_engine.retrieve_for_regimes(fingerprint, multi_decisions.decisions)
 
-    # 4. Live Web Research (Supplementary Tavily RAG with domain authority filtering)
+    # 6. Live Web Research (Supplementary Tavily RAG with domain authority filtering)
     web_research_map = web_research_engine.research_regimes(fingerprint, multi_decisions.decisions)
 
-    # 5. Evidence Validation (combines local RAG and web research sources)
+    # 7. Evidence Validation (combines local RAG and web research sources)
     validation_map = evidence_validator.validate_all_regimes(
         retrieved_evidence_map, web_research_map=web_research_map
     )
     val_json = {r: res.model_dump() for r, res in validation_map.items()}
 
-    # 6. Personalized Action Roadmap Generation
+    # 8. Personalized Action Roadmap Generation
     roadmap = roadmap_generator.generate_roadmap(
         fingerprint=fingerprint,
         decisions=multi_decisions.decisions,
@@ -218,7 +234,15 @@ def run_pipeline(fingerprint: InnovationFingerprint, ui_language: str = "en") ->
         validation_results=validation_map,
     )
 
-    # 7. Enhanced Category, Complexity & Policy Explanations
+    # Re-audit consistency across roadmap items after roadmap generation
+    validate_decision_consistency(
+        canonical_decisions=multi_decisions.decisions,
+        summary_decisions=decision_map.get("regimes"),
+        roadmap_items=roadmap.get("regime_roadmaps"),
+        detailed_report=None,
+    )
+
+    # 9. Enhanced Category, Complexity & Policy Explanations
     cat_res = category_detector.detect_category(fingerprint.innovation_name, fingerprint.description)
     comp_res = complexity_analyzer.analyze_complexity(fingerprint, text=fingerprint.description)
 
@@ -236,6 +260,7 @@ def run_pipeline(fingerprint: InnovationFingerprint, ui_language: str = "en") ->
         category_detection=cat_res.model_dump(),
         complexity_analysis=comp_res.model_dump(),
         policy_explanations=policies,
+        formulation_intelligence=formulation_res.model_dump(),
     )
 
     # If target UI language is Tamil ('ta') or Hindi ('hi'), translate payload fields before returning

@@ -53,29 +53,15 @@ export const DecisionDashboard: React.FC<DecisionDashboardProps> = ({ analysis }
           4-REGIME MAP STATUS SUMMARY:
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="rounded-xl bg-slate-950 p-4 border border-amber-500/30">
-            <span className="text-[10px] font-mono uppercase text-slate-400 block">Patent Regime</span>
-            <span className="text-sm font-bold text-amber-400 block mt-1">POSSIBLE</span>
-            <span className="text-[11px] text-slate-400 block mt-1">Process novelty claimed</span>
-          </div>
-
-          <div className="rounded-xl bg-slate-950 p-4 border border-orange-500/30">
-            <span className="text-[10px] font-mono uppercase text-slate-400 block">Traditional Knowledge</span>
-            <span className="text-sm font-bold text-orange-400 block mt-1">REVIEW REQUIRED</span>
-            <span className="text-[11px] text-slate-400 block mt-1">Classical herbs indexed in TKDL</span>
-          </div>
-
-          <div className="rounded-xl bg-slate-950 p-4 border border-emerald-500/30">
-            <span className="text-[10px] font-mono uppercase text-slate-400 block">Biological Resources</span>
-            <span className="text-sm font-bold text-emerald-400 block mt-1">REVIEW REQUIRED</span>
-            <span className="text-[11px] text-slate-400 block mt-1">Indian origin compliance</span>
-          </div>
-
-          <div className="rounded-xl bg-slate-950 p-4 border border-blue-500/30">
-            <span className="text-[10px] font-mono uppercase text-slate-400 block">Regulatory Licensing</span>
-            <span className="text-sm font-bold text-blue-400 block mt-1">APPLICABLE</span>
-            <span className="text-[11px] text-slate-400 block mt-1">ASU Drug Rule 158-B or FSSAI</span>
-          </div>
+          {(analysis.decision_map?.regimes || []).map((regimeItem, idx) => (
+            <div key={idx} className="rounded-xl bg-slate-950 p-4 border border-slate-800">
+              <span className="text-[10px] font-mono uppercase text-slate-400 block">{regimeItem.name}</span>
+              <span className="text-sm font-bold text-emerald-400 block mt-1">
+                {regimeItem.status.replace('_', ' ')}
+              </span>
+              <span className="text-[11px] text-slate-400 block mt-1 line-clamp-2">{regimeItem.reason}</span>
+            </div>
+          ))}
         </div>
       </div>
 

@@ -9,30 +9,70 @@ from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field, model_validator
 
 
-class BiologicalResourceDetails(BaseModel):
-    """Details regarding biological resources usage and compliance."""
+class IngredientDetail(BaseModel):
+    """Structured details for an individual formulation ingredient."""
 
-    detected: bool = Field(default=False)
-    resources: List[str] = Field(default_factory=list)
-    source_location: Optional[str] = Field(default=None)
-    confidence: float = Field(default=0.0)
-
-    # Backwards compatibility properties
-    @property
-    def biological_resource_used(self) -> bool:
-        return self.detected
-
-    @property
-    def source_known(self) -> bool:
-        return bool(self.source_location and self.source_location.strip())
+    common_name: str = Field(..., description="Common English herb/ingredient name.")
+    scientific_name: Optional[str] = Field(default=None, description="Latin botanical name.")
+    plant_part: Optional[str] = Field(default=None, description="Leaf, Rhizome, Root, Bark, Seed, etc.")
+    form: Optional[str] = Field(default=None, description="Extract, Powder, Oil, Gel, Base Material, etc.")
+    proportion: Optional[float] = Field(default=None, description="Percentage or ratio value.")
+    proportion_unit: str = Field(default="%", description="Unit (%, ratio, parts).")
 
 
-class TraditionalKnowledgeDetails(BaseModel):
-    """Details regarding traditional knowledge overlap and indicators."""
+class FormulationInfo(BaseModel):
+    """Formulation-level technical properties and ratio tracking."""
 
+    type: str = Field(default="", description="Cream, Gel, Patch, Syrup, Tablet, etc.")
+    ingredients_complete: bool = Field(default=False)
+    ratios_available: bool = Field(default=False)
+    total_percentage: Optional[float] = Field(default=None)
+    excipients: List[str] = Field(default_factory=list)
+    base_materials: List[str] = Field(default_factory=list)
+
+
+class IntendedUseInfo(BaseModel):
+    """Therapeutic and commercial intended use properties."""
+
+    primary: str = Field(default="", description="Primary therapeutic or commercial application.")
+    conditions: List[str] = Field(default_factory=list, description="Target conditions or symptoms.")
+    route: str = Field(default="Topical", description="Topical, Oral, Systemic, etc.")
+    therapeutic_claim: bool = Field(default=False)
+
+
+class NoveltyInfoCanonical(BaseModel):
+    """Structured novelty details preserving exact original text and normalized types."""
+
+    claimed: bool = Field(default=False)
+    types: List[str] = Field(default_factory=list, description="Normalized types e.g. ['nano_extraction', 'controlled_release_delivery'].")
+    description: str = Field(default="", description="Exact original user description of claimed novelty.")
+
+
+class DeliverySystemInfo(BaseModel):
+    """Drug delivery or application system details."""
+
+    type: str = Field(default="", description="Skin Patch, Liposome, Nano-emulsion, etc.")
+    description: str = Field(default="")
+
+
+class TraditionalKnowledgeInfo(BaseModel):
+    """Traditional knowledge claims and classical references."""
+
+    based_on_tk: Optional[bool] = Field(default=None)
+    classical_reference: Optional[str] = Field(default=None)
     possible_overlap: bool = Field(default=True)
     indicators: List[str] = Field(default_factory=list)
-    confidence: float = Field(default=0.0)
+    confidence: float = Field(default=0.85)
+
+
+class BiologicalSourceInfo(BaseModel):
+    """Geographic origin and cultivation details for biological resources."""
+
+    country: str = Field(default="India")
+    state: str = Field(default="")
+    origin_claimed: bool = Field(default=False)
+    cultivation_status: str = Field(default="", description="cultivated, wild_harvested, certified_organic, etc.")
+    source_description: str = Field(default="")
 
 
 class ExtractionSourceFlags(BaseModel):
@@ -41,6 +81,27 @@ class ExtractionSourceFlags(BaseModel):
     gemini: bool = Field(default=False)
     spacy: bool = Field(default=False)
     rules: bool = Field(default=True)
+
+
+class BiologicalResourceDetails(BaseModel):
+    """Biological resource extraction details."""
+
+    detected: bool = Field(default=False)
+    resources: List[str] = Field(default_factory=list)
+    source_location: Optional[str] = Field(default=None)
+    confidence: float = Field(default=0.0)
+
+    @property
+    def biological_resource_used(self) -> bool:
+        return self.detected
+
+
+class TraditionalKnowledgeDetails(BaseModel):
+    """Traditional knowledge extraction details."""
+
+    possible_overlap: bool = Field(default=False)
+    indicators: List[str] = Field(default_factory=list)
+    confidence: float = Field(default=0.0)
 
 
 class NoveltyInfoCompat(BaseModel):
@@ -58,8 +119,8 @@ BiologicalResourceInfo = BiologicalResourceDetails
 
 class InnovationFingerprint(BaseModel):
     """
-    Central Innovation Fingerprint data object for IP-SAKTI Sahayak.
-    Stores multi-layered extraction results, botanical normalization, language info, and confidence scores.
+    Central Canonical Innovation Fingerprint data object for IP-SAKTI Sahayak.
+    Single Source of Truth for all downstream decision, RAG, and UI modules.
     """
 
     innovation_id: str = Field(default_factory=lambda: f"INF-{uuid.uuid4().hex[:8].upper()}")
@@ -69,6 +130,16 @@ class InnovationFingerprint(BaseModel):
     innovation_name: str = Field(..., description="Title of the innovation.")
     description: str = Field(..., description="Summary description.")
 
+    # Canonical structured fields
+    ingredient_details: List[IngredientDetail] = Field(default_factory=list, description="Structured ingredient models.")
+    formulation: FormulationInfo = Field(default_factory=FormulationInfo)
+    intended_use_details: IntendedUseInfo = Field(default_factory=IntendedUseInfo)
+    novelty_details: NoveltyInfoCanonical = Field(default_factory=NoveltyInfoCanonical)
+    delivery_system: DeliverySystemInfo = Field(default_factory=DeliverySystemInfo)
+    traditional_knowledge_details: TraditionalKnowledgeInfo = Field(default_factory=TraditionalKnowledgeInfo)
+    biological_source: BiologicalSourceInfo = Field(default_factory=BiologicalSourceInfo)
+
+    # Simplified list fields & legacy aliases
     ingredients: List[str] = Field(default_factory=list, description="Common English herb names.")
     scientific_names: List[str] = Field(default_factory=list, description="Latin botanical names.")
     ayurvedic_names: List[str] = Field(default_factory=list, description="Sanskrit/Ayurvedic terms.")
@@ -81,8 +152,13 @@ class InnovationFingerprint(BaseModel):
     biological_resource: BiologicalResourceDetails = Field(default_factory=BiologicalResourceDetails)
     traditional_knowledge: TraditionalKnowledgeDetails = Field(default_factory=TraditionalKnowledgeDetails)
 
+    commercial_intent: str = Field(default="Commercial manufacturing and patent filing")
+    applicant_type: str = Field(default="Indian Entity / Innovator")
+
     missing_information: List[str] = Field(default_factory=list)
+    missing_fields: List[str] = Field(default_factory=list)
     overall_confidence: float = Field(default=0.85)
+    confidence: Dict[str, float] = Field(default_factory=dict)
     extraction_source: ExtractionSourceFlags = Field(default_factory=ExtractionSourceFlags)
 
     # Legacy fields / optional properties for backwards compatibility
@@ -95,9 +171,9 @@ class InnovationFingerprint(BaseModel):
     @property
     def novelty(self) -> NoveltyInfoCompat:
         """Backwards compatibility property for existing decision engine & evaluation modules."""
-        desc = self.novelty_indicators[0] if self.novelty_indicators else (self.process[0] if self.process else None)
-        has_novelty = bool(self.novelty_indicators or self.process)
-        types = ["extraction_method", "process"] if has_novelty else []
+        desc = self.novelty_details.description or (self.novelty_indicators[0] if self.novelty_indicators else (self.process[0] if self.process else None))
+        has_novelty = bool(self.novelty_details.claimed or self.novelty_indicators or self.process)
+        types = self.novelty_details.types or (["extraction_method", "process"] if has_novelty else [])
         return NoveltyInfoCompat(
             novelty_detected=has_novelty,
             novelty_type=types,
@@ -185,11 +261,73 @@ class InnovationFingerprint(BaseModel):
             confidence=0.85,
         )
 
+        # Build canonical structured ingredient details
+        ing_details = [
+            IngredientDetail(common_name=ing) for ing in parsed_ingredients
+        ]
+
+        # Extract plant parts or ratios if available in text
+        novelty_types_parsed = []
+        if novelty_description:
+            desc_lower = novelty_description.lower()
+            if "nano" in desc_lower:
+                novelty_types_parsed.append("nano_extraction")
+            if "patch" in desc_lower or "delivery" in desc_lower or "release" in desc_lower:
+                novelty_types_parsed.append("controlled_release_delivery")
+            if "extraction" in desc_lower:
+                novelty_types_parsed.append("extraction_method")
+
+        novelty_canon = NoveltyInfoCanonical(
+            claimed=bool(novelty_description or parsed_novelty),
+            types=novelty_types_parsed or ["process_novelty"],
+            description=novelty_description or (parsed_novelty[0] if parsed_novelty else ""),
+        )
+
+        bio_source_canon = BiologicalSourceInfo(
+            country="India",
+            state=source_location or "",
+            origin_claimed=bool(source_location),
+            cultivation_status="cultivated" if "cultivat" in description.lower() else "unknown",
+            source_description=f"Sourced from {source_location}" if source_location else "India",
+        )
+
+        tk_canon = TraditionalKnowledgeInfo(
+            based_on_tk=traditional_knowledge_claimed,
+            possible_overlap=bool(traditional_knowledge_claimed or parsed_ingredients),
+            indicators=parsed_ingredients,
+        )
+
+        use_canon = IntendedUseInfo(
+            primary=parsed_use[0] if parsed_use else "Therapeutic / Commercial Use",
+            conditions=parsed_use,
+            route="Topical" if "topical" in description.lower() or "patch" in description.lower() else "Oral",
+            therapeutic_claim=True,
+        )
+
+        delivery_canon = DeliverySystemInfo(
+            type="Skin Patch" if "patch" in description.lower() else ("Nano Formulation" if "nano" in description.lower() else "Formulation"),
+            description=description,
+        )
+
+        formulation_canon = FormulationInfo(
+            type="Patch" if "patch" in description.lower() else ("Gel" if "gel" in description.lower() else "Formulation"),
+            ingredients_complete=len(ing_details) > 0,
+            ratios_available=False,
+            total_percentage=None,
+        )
+
         return cls(
             original_input=description,
             detected_language="English",
             innovation_name=innovation_name,
             description=description,
+            ingredient_details=ing_details,
+            formulation=formulation_canon,
+            intended_use_details=use_canon,
+            novelty_details=novelty_canon,
+            delivery_system=delivery_canon,
+            traditional_knowledge_details=tk_canon,
+            biological_source=bio_source_canon,
             ingredients=parsed_ingredients,
             intended_use=parsed_use,
             novelty_indicators=parsed_novelty,

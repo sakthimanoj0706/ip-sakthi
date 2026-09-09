@@ -9,10 +9,11 @@ import { Disclaimer } from './Disclaimer';
 import { AnalysisTimeline } from './AnalysisTimeline';
 import { LegalRegimeExplorer } from './LegalRegimeExplorer';
 import { SystemStatus } from './SystemStatus';
+import { FormulationIntelligenceCard } from './FormulationIntelligenceCard';
 
 export const DecisionMap: React.FC = () => {
   const router = useRouter();
-  const { decisionMap, fingerprint, runFullAnalysis, isLoading } = useAnalysis();
+  const { decisionMap, fingerprint, fullAnalysisResponse, runFullAnalysis, isLoading } = useAnalysis();
 
   const handleGenerateRoadmap = async () => {
     await runFullAnalysis();
@@ -83,6 +84,11 @@ export const DecisionMap: React.FC = () => {
           />
         ))}
       </div>
+
+      {/* Formulation Intelligence & Multi-Objective Analysis Card */}
+      {fullAnalysisResponse?.formulation_intelligence && (
+        <FormulationIntelligenceCard formulation={fullAnalysisResponse.formulation_intelligence} />
+      )}
 
       {/* Legal Regime Explorer Component */}
       <LegalRegimeExplorer />

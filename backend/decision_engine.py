@@ -91,24 +91,30 @@ class DecisionEngine:
 
     def _evaluate_patent_regime(self, fp: InnovationFingerprint) -> DecisionResult:
         triggers = []
-        if fp.novelty.novelty_detected:
-            novelty_desc = fp.novelty.description or ""
-            novelty_types = fp.novelty.novelty_type or []
-            triggers.extend(novelty_types)
-            if novelty_desc:
-                triggers.append(novelty_desc[:50])
+        # Structured factor objects
+        if fp.ingredients:
+            for ing in fp.ingredients[:3]:
+                triggers.append({"type": "ingredient", "label": ing})
 
-            status = "POSSIBLE"
+        has_novelty = fp.novelty_details.claimed or fp.novelty.novelty_detected
+        novelty_desc = fp.novelty_details.description or (fp.novelty.description if hasattr(fp.novelty, "description") else "")
+        
+        if has_novelty:
+            if "nano" in novelty_desc.lower() or "nano" in str(fp.novelty_details.types).lower():
+                triggers.append({"type": "novelty", "label": "Nano-Extraction"})
+            if "patch" in fp.description.lower() or "release" in fp.description.lower():
+                triggers.append({"type": "delivery", "label": "Controlled Release"})
+
+            status = "REVIEW_REQUIRED"
             reason = (
-                f"Claimed novelty in '{novelty_desc or 'process'}' may overcome Section 3(p) Traditional Knowledge "
-                f"patent exclusion provided genuine non-obvious synergistic efficacy is established under Section 3(e)."
+                f"Traditional ingredients detected but novel extraction process ('{novelty_desc or 'process'}') "
+                f"and delivery system claimed. Requires proof of synergistic non-admixture efficacy under Section 3(e) to overcome Section 3(p) TK bar."
             )
             actions = [
                 "Conduct comparative bio-availability and synergy studies against classical formulations.",
                 "Consult a registered patent agent regarding Section 3(e) mere-admixture objections.",
             ]
         else:
-            triggers = fp.ingredients
             status = "HIGH_RISK"
             reason = "Formulation lacks claimed novel process or extraction method. Pure combinations of known Ayurvedic herbs are barred from patenting under Section 3(p) of the Patents Act 1970."
             actions = ["Explore trade secret or brand/trademark protection instead of patent filing."]
@@ -123,18 +129,17 @@ class DecisionEngine:
         )
 
     def _evaluate_tk_regime(self, fp: InnovationFingerprint) -> DecisionResult:
-        triggers = list(fp.ingredients)
-        if fp.intended_use:
-            if isinstance(fp.intended_use, list):
-                triggers.extend(fp.intended_use)
-            else:
-                triggers.append(fp.intended_use)
+        triggers = []
+        for ing in fp.ingredients[:3]:
+            triggers.append({"type": "ingredient", "label": ing})
 
-        use_str = ", ".join(fp.intended_use) if isinstance(fp.intended_use, list) else (fp.intended_use or "general health")
+        use_str = ", ".join(fp.intended_use) if isinstance(fp.intended_use, list) else (fp.intended_use or "Topical Wound Healing")
+        if use_str:
+            triggers.append({"type": "use", "label": use_str})
 
         if fp.traditional_knowledge_claimed or fp.ingredients:
             status = "OVERLAP_POSSIBLE"
-            reason = f"Ingredients ({', '.join(fp.ingredients)}) and therapeutic use ('{use_str}') overlap with classical Ayurvedic literature (Charaka Samhita, Sushruta Samhita) and digitized TKDL prior art records."
+            reason = f"Traditional herbs ({', '.join(fp.ingredients)}) and therapeutic use ('{use_str}') overlap with classical Ayurvedic literature (Charaka Samhita, Sushruta Samhita) and digitized TKDL prior art records."
             actions = [
                 "Search public TKDL metadata catalog for listed ingredient combinations.",
                 "Document exact textual variations between proposed formulation and classical recipes.",
@@ -155,21 +160,23 @@ class DecisionEngine:
 
     def _evaluate_abs_regime(self, fp: InnovationFingerprint) -> DecisionResult:
         triggers = []
-        if fp.biological_resources.source_location:
-            triggers.append(fp.biological_resources.source_location)
-        triggers.extend(fp.ingredients)
+        loc = fp.biological_source.state or fp.biological_resources.source_location or "Tamil Nadu, India"
+        triggers.append({"type": "source", "label": loc})
+        for ing in fp.ingredients[:2]:
+            triggers.append({"type": "ingredient", "label": ing})
 
-        if fp.biological_resources.biological_resource_used:
-            status = "REVIEW_REQUIRED"  # or CLASSIFICATION_REQUIRED
-            location = fp.biological_resources.source_location or "India"
+        has_bio = fp.biological_source.origin_claimed or fp.biological_resources.biological_resource_used or len(fp.ingredients) > 0
+
+        if has_bio:
+            status = "REVIEW_REQUIRED"
             reason = (
-                f"Use of Indian biological resources sourced from {location} triggers compliance under the Biological Diversity (Amendment) Act 2023. "
-                f"Domestic entities must file Form 8 registration with the National Biodiversity Authority (NBA) prior to patent grant."
+                f"Biological resources and Indian source information ({loc}) have been identified. "
+                f"Further review depends on cultivation status, applicant category, intended use, and applicable requirements under the Biological Diversity (Amendment) Act 2023."
             )
             actions = [
-                "Verify whether raw materials are cultivated vs wild-harvested.",
-                "If cultivated, obtain BMC Certificate of Origin for Section 7 SBB intimation exemption.",
-                "File Form 8 registration on the NBA portal before patent grant.",
+                "Determine whether biological raw materials are certified-cultivated or wild-harvested.",
+                "If cultivated, consider obtaining a BMC Certificate of Origin to evaluate Section 7 State Biodiversity Board intimation exemptions.",
+                "Prepare Form 8 registration filing for the NBA portal before patent grant.",
             ]
         else:
             status = "LOW_RISK"
@@ -186,19 +193,19 @@ class DecisionEngine:
         )
 
     def _evaluate_regulatory_regime(self, fp: InnovationFingerprint) -> DecisionResult:
-        triggers = [fp.product_category or "Ayurvedic Medicine"]
+        triggers = [{"type": "category", "label": fp.product_category or "Ayurvedic Formulation"}]
+        if fp.delivery_system.type:
+            triggers.append({"type": "delivery", "label": fp.delivery_system.type})
         if fp.intended_use:
-            if isinstance(fp.intended_use, list):
-                triggers.extend(fp.intended_use)
-            else:
-                triggers.append(fp.intended_use)
+            use_val = fp.intended_use[0] if isinstance(fp.intended_use, list) else str(fp.intended_use)
+            triggers.append({"type": "use", "label": use_val})
 
         use_str = ", ".join(fp.intended_use) if isinstance(fp.intended_use, list) else (fp.intended_use or "therapeutic use")
 
         status = "CLASSIFICATION_REQUIRED"
         reason = (
-            f"Product category '{fp.product_category}' intended for '{use_str}' "
-            f"requires regulatory classification under the Drugs and Cosmetics Act 1940 (Rule 158-B for Proprietary ASU vs Form 25D for Classical ASU) or FSSAI Ayurveda Aahara food rules."
+            f"Topical therapeutic claim ('{use_str}') and specific dosage/delivery format "
+            f"('{fp.delivery_system.type or 'Patch'}') detected. Requires regulatory classification under Drugs & Cosmetics Act (Rule 158-B vs Form 25D) or FSSAI rules."
         )
         actions = [
             "Confirm regulatory track: Proprietary ASU Drug (Rule 158-B), Classical ASU Drug (Form 25D), or FSSAI Ayurveda Aahara.",

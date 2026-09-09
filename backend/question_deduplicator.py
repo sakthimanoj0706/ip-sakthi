@@ -270,6 +270,74 @@ LOCALIZED_QUESTIONS: Dict[str, Dict[str, Dict[str, Any]]] = {
             "why_asking": "यह निर्धारित करता है कि आयुष ASU दवा लाइसेंसिंग (नियम 158-B) या FSSAI खाद्य नियम लागू होते हैं।",
         },
     },
+    "Q_ING_RATIO_01": {
+        "en": {
+            "question": "Could you provide the approximate proportion or ratio of each major ingredient in your formulation?",
+            "why_asking": "Required to validate formulation ratios, calculate 100% composition totals, and assess Section 3(e) non-admixture synergy.",
+            "help_text": "e.g. Neem leaf extract - 40%, Turmeric rhizome extract - 30%, Aloe vera gel - 20%, Polymer - 10%",
+        },
+        "ta": {
+            "question": "உங்கள் தயாரிப்பில் உள்ள ஒவ்வொரு முக்கிய மூலப்பொருளின் தோராயமான விகிதம் அல்லது சதவீதத்தை வழங்க முடியுமா?",
+            "why_asking": "தயாரிப்பு விகிதங்களை சரிபார்க்கவும், 100% கலவை மொத்தத்தை கணக்கிடவும், பிரிவு 3(e) ஒருங்கிணைந்த செயல்திறனை மதிப்பிடவும் தேவைப்படுகிறது.",
+            "help_text": "எ.கா. வேம்பு - 40%, மஞ்சள் - 30%, கற்றாழை - 20%, பாலிமர் - 10%",
+        },
+        "hi": {
+            "question": "क्या आप अपने फॉर्मूलेशन में प्रत्येक प्रमुख सामग्री का अनुमानित अनुपात या प्रतिशत प्रदान कर सकते हैं?",
+            "why_asking": "फॉर्मूलेशन अनुपातों को सत्यापित करने, 100% संरचना योग की गणना करने और धारा 3(e) गैर-मिश्रण सहक्रिया का मूल्यांकन करने के लिए आवश्यक।",
+            "help_text": "उदा. नीम - 40%, हल्दी - 30%, एलोवेरा - 20%, बहुलक - 10%",
+        },
+    },
+    "Q_EXCIPIENTS_01": {
+        "en": {
+            "question": "Are there any excipients, carriers, base materials, stabilizers, or non-active ingredients in your formulation?",
+            "options": ["Yes", "No", "Not Sure"],
+            "why_asking": "Identifies drug delivery carrier bases and differentiates active ingredients from excipients.",
+        },
+        "ta": {
+            "question": "உங்கள் தயாரிப்பில் ஏதேனும் துணைப் பொருட்கள், கேரியர்கள், அடிப்படைப் பொருட்கள் அல்லது நிலைப்படுத்திகள் உள்ளதா?",
+            "options": ["ஆம்", "இல்லை", "உறுதியாக தெரியவில்லை"],
+            "why_asking": "மருந்து விநியோக தளங்களை அடையாளம் கண்டு, செயலில் உள்ள மூலப்பொருள்களை துணைப் பொருட்களிலிருந்து வேறுபடுத்துகிறது.",
+        },
+        "hi": {
+            "question": "क्या आपके फॉर्मूलेशन में कोई एक्सीपिएंट, वाहक, आधार सामग्री, स्टेबलाइज़र या गैर-सक्रिय सामग्री है?",
+            "options": ["हाँ", "नहीं", "पक्का नहीं"],
+            "why_asking": "ड्रग डिलीवरी कैरियर बेस की पहचान करता है और सक्रिय घटकों को एक्सीपिएंट्स से अलग करता है।",
+        },
+    },
+    "Q_PLANT_PART_01": {
+        "en": {
+            "question": "Which plant part is used for each major botanical ingredient?",
+            "options": ["Leaf", "Root", "Rhizome", "Seed", "Bark", "Flower", "Whole Plant", "Not Sure"],
+            "why_asking": "Plant parts (e.g. Leaf vs Rhizome) determine specific classical text prior art citations in TKDL.",
+        },
+        "ta": {
+            "question": "ஒவ்வொரு மூலிகை மூலப்பொருளுக்கும் தாவரத்தின் எந்தப் பகுதி பயன்படுத்தப்படுகிறது?",
+            "options": ["இலை", "வேர்", "கிழங்கு", "விதை", "பட்டை", "பூ", "முழு தாவரம்", "உறுதியாக தெரியவில்லை"],
+            "why_asking": "தாவர பாகங்கள் (எ.கா. இலை vs கிழங்கு) TKDL இல் குறிப்பிட்ட முந்தைய கலை மேற்கோள்களைத் தீர்மானிக்கின்றன.",
+        },
+        "hi": {
+            "question": "प्रत्येक प्रमुख वनस्पति घटक के लिए पौधे के किस भाग का उपयोग किया जाता है?",
+            "options": ["पत्ती", "जड़", "प्रकंद (Rhizome)", "बीज", "छाल", "फूल", "पूरा पौधा", "पक्का नहीं"],
+            "why_asking": "पौधों के भाग TKDL में विशिष्ट शास्त्रीय पाठ पूर्व कला उद्धरण निर्धारित करते हैं।",
+        },
+    },
+    "Q_FORM_01": {
+        "en": {
+            "question": "What is the physical dosage form of your innovation?",
+            "options": ["Cream", "Gel", "Oil", "Patch", "Tablet", "Capsule", "Powder", "Extract", "Liquid", "Other"],
+            "why_asking": "Determines regulatory licensing track under AYUSH drug rules (Rule 158-B) vs food rules.",
+        },
+        "ta": {
+            "question": "உங்கள் புதுமையின் இயற்பியல் வடிவம் என்ன?",
+            "options": ["கிரீம்", "ஜெல்", "எண்ணெய்", "பேட்ச் (Patch)", "மாத்திரை", "கேப்சூல்", "பொடி", "சாறு", "திரவம்", "மற்றவை"],
+            "why_asking": "ஆயுஷ் மருந்து விதிகள் (விதி 158-B) அல்லது உணவு விதிகளின் கீழ் ஒழுங்குமுறை உரிமப் பாதையைத் தீர்மானிக்கிறது.",
+        },
+        "hi": {
+            "question": "आपके नवाचार का भौतिक रूप क्या है?",
+            "options": ["क्रीम", "जैल", "तेल", "पैच (Patch)", "टैबलेट", "कैप्सूल", "पाउडर", "अर्क", "तरल", "अन्य"],
+            "why_asking": "आयुष दवा नियमों (नियम 158-B) बनाम खाद्य नियमों के तहत नियामक लाइसेंसिंग मार्ग निर्धारित करता है।",
+        },
+    },
 }
 
 
@@ -287,6 +355,10 @@ CANONICAL_QUESTIONS: Dict[str, DeduplicatedQuestionItem] = {
             "Q_CULT_STATUS_01": "cultivation_status",
             "Q_TK_SRC_01": "tk_sources",
             "Q_PROD_CAT_01": "product_category",
+            "Q_ING_RATIO_01": "ingredient_ratios",
+            "Q_EXCIPIENTS_01": "excipients",
+            "Q_PLANT_PART_01": "plant_part",
+            "Q_FORM_01": "formulation_type",
         }[q_id],
         category="general",
         intent=f"{q_id}_intent",
@@ -302,6 +374,10 @@ CANONICAL_QUESTIONS: Dict[str, DeduplicatedQuestionItem] = {
             "Q_CULT_STATUS_01": "select",
             "Q_TK_SRC_01": "multiselect",
             "Q_PROD_CAT_01": "select",
+            "Q_ING_RATIO_01": "text",
+            "Q_EXCIPIENTS_01": "boolean",
+            "Q_PLANT_PART_01": "select",
+            "Q_FORM_01": "select",
         }[q_id],
         options=data["en"].get("options"),
         why_asking=data["en"].get("why_asking", ""),

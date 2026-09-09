@@ -85,6 +85,8 @@ class QuestionPriorityEngine:
             if known_fields.get("biological_resource_used") or known_fields.get("ingredients"):
                 return (85, "HIGH", "Required to assess State Biodiversity Board intimation exemptions.")
             return (60, "MEDIUM", "Helps identify geographical indication or regional access rules.")
+        elif field_lower in ["ingredients_ratio", "plant_parts", "excipients", "dosage_form"]:
+            return (82, "HIGH", "Required for formulation intelligence, total percentage validation, and regulatory track assessment.")
         elif field_lower in ["product_category", "intended_use"]:
             return (80, "HIGH", "Required to determine regulatory track (Proprietary ASU drug vs FSSAI food).")
         elif field_lower == "manufacturing_process":

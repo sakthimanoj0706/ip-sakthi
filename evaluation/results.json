@@ -51,7 +51,7 @@
     "hit_rate": 0.8333,
     "mrr": 0.4261,
     "ndcg": 0.3858,
-    "average_retrieval_time": 0.0039
+    "average_retrieval_time": 0.0033
   },
   "evidence_validation_accuracy": 1.0,
   "evidence_validation_details": {
@@ -74,7 +74,7 @@
     "question_efficiency": 61.54
   },
   "system_success_rate": 1.0,
-  "average_processing_time": 4.0319,
+  "average_processing_time": 8.2181,
   "average_confidence": 0.7087,
   "abstention_rate": 0.0667,
   "system_performance": {
@@ -82,7 +82,7 @@
     "successful_cases": 30,
     "failed_cases": 0,
     "system_success_rate": 1.0,
-    "average_processing_time": 4.0319,
+    "average_processing_time": 8.2181,
     "average_confidence": 0.7087,
     "abstention_rate": 0.0667
   },

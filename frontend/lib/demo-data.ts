@@ -245,4 +245,80 @@ export const DEMO_FULL_ANALYSIS: FullAnalysisResponse = {
     },
   },
   roadmap: DEMO_ROADMAP,
+  formulation_intelligence: {
+    documentation_status: "PARTIAL",
+    ratios_available: true,
+    total_composition_percentage: 100.0,
+    ratio_validation_status: "COMPLETE",
+    ratio_validation_message: "Formulation composition ratios fully documented at 100%.",
+    ingredients: [
+      {
+        common_name: "Neem",
+        scientific_name: "Azadirachta indica",
+        plant_part: "Leaf",
+        form: "Extract",
+        proportion: 40.0,
+        proportion_unit: "%"
+      },
+      {
+        common_name: "Turmeric",
+        scientific_name: "Curcuma longa",
+        plant_part: "Rhizome",
+        form: "Extract",
+        proportion: 30.0,
+        proportion_unit: "%"
+      },
+      {
+        common_name: "Aloe Vera",
+        scientific_name: "Aloe barbadensis miller",
+        plant_part: "Gel",
+        form: "Gel",
+        proportion: 20.0,
+        proportion_unit: "%"
+      },
+      {
+        common_name: "Biodegradable Polymer Base",
+        scientific_name: null,
+        plant_part: "Base Material",
+        form: "Patch",
+        proportion: 10.0,
+        proportion_unit: "%"
+      }
+    ],
+    excipients: ["Biodegradable Polymer Base"],
+    base_materials: ["Biodegradable Polymer Base"],
+    tk_overlap_status: "POSSIBLE",
+    technical_differentiation: "HIGH",
+    differentiation_reason: "Novel nano-extraction and controlled-release delivery mechanism detected.",
+    multi_objective_scores: {
+      ip_differentiation: 85,
+      tk_overlap: 72,
+      documentation_completeness: 100,
+      evidence_strength: 75,
+      regulatory_complexity: 70,
+      factors: {
+        ip_differentiation: {
+          positive: ["Novel nano-extraction process detected", "Controlled-release delivery mechanism claimed"],
+          risk: ["Classical Ayurvedic ingredients require process synergy proof under Section 3(e)"]
+        },
+        tk_overlap: {
+          positive: ["Non-classical technological extraction process differentiates from prior art"],
+          risk: ["Classical herbs (Neem, Turmeric) cited in TKDL records"]
+        },
+        documentation_completeness: {
+          positive: ["Multi-ingredient breakdown provided", "100% total composition validated", "Plant parts specified"],
+          risk: []
+        },
+        evidence_strength: {
+          positive: ["Process novelty supported by structured formulation breakdown"],
+          risk: []
+        },
+        regulatory_complexity: {
+          positive: [],
+          risk: ["Drug & Cosmetics Act Rule 158-B licensing for proprietary ASU drug format", "NBA Form 8 registration under Biological Diversity Act 2023"]
+        }
+      }
+    },
+    disclaimer: "Formulation analysis evaluates innovation documentation, IP differentiation, and compliance factors. It does not provide medical, dosage, safety, or therapeutic recommendations."
+  }
 };
